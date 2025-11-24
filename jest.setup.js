@@ -36,3 +36,25 @@ jest.mock('expo-constants', () => ({
     },
   },
 }));
+
+// Mock MMKV for testing
+jest.mock('react-native-mmkv', () => {
+  const mockStorage = new Map();
+  
+  return {
+    createMMKV: jest.fn(() => ({
+      set: jest.fn((key, value) => {
+        mockStorage.set(key, value);
+      }),
+      getString: jest.fn((key) => {
+        return mockStorage.get(key);
+      }),
+      remove: jest.fn((key) => {
+        mockStorage.delete(key);
+      }),
+      clearAll: jest.fn(() => {
+        mockStorage.clear();
+      }),
+    })),
+  };
+});

@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
 import ChecklistCard from './ChecklistCard';
-import { Colors } from '../constants/Colors';
+import { useThemedColors } from '../hooks/useThemedColors';
 
 interface ChecklistListProps {
   /**
@@ -41,6 +41,8 @@ export default function ChecklistList({
   onEditPress,
   emptyComponent,
 }: ChecklistListProps) {
+  const colors = useThemedColors();
+
   const renderItem = ({ item }: { item: Checklist }) => {
     const stats = getStats(item.id);
     
@@ -71,8 +73,8 @@ export default function ChecklistList({
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyIcon}>📋</Text>
-        <Text style={styles.emptyTitle}>No Checklists Yet</Text>
-        <Text style={styles.emptyText}>
+        <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>No Checklists Yet</Text>
+        <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
           Create your first checklist to get started with your sailing preparations.
         </Text>
       </View>
@@ -114,12 +116,10 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: 24,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textPrimary,  // High contrast
     marginBottom: 12,
   },
   emptyText: {
     fontSize: 16,  // Larger font
-    color: Colors.sea.textSecondary,  // High contrast
     textAlign: 'center',
     lineHeight: 24,
   },

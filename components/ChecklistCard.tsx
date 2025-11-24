@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
 import { getCategoryLabel } from '../utils/formatters';
-import { Colors, TouchTargets, Interactions } from '../constants/Colors';
+import { TouchTargets, Interactions } from '../constants/Colors';
+import { useThemedColors } from '../hooks/useThemedColors';
 
 interface ChecklistCardProps {
   /**
@@ -30,6 +31,8 @@ interface ChecklistCardProps {
  * ChecklistCard component displays a single checklist with its progress
  */
 export default function ChecklistCard({ checklist, stats, onPress, onEditPress }: ChecklistCardProps) {
+  const colors = useThemedColors();
+
   const handlePress = () => {
     if (onPress) {
       onPress(checklist);
@@ -47,6 +50,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
     <TouchableOpacity
       style={[
         styles.card,
+        { backgroundColor: colors.cardBackground, borderColor: colors.cardBorder },
         !checklist.isActive && styles.inactiveCard,
       ]}
       onPress={handlePress}
@@ -58,11 +62,11 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
             <Text style={styles.icon}>{checklist.icon}</Text>
           )}
           <View style={styles.textContainer}>
-            <Text style={styles.title} numberOfLines={1}>
+            <Text style={[styles.title, { color: colors.textPrimary }]} numberOfLines={1}>
               {checklist.name}
             </Text>
             {checklist.description && (
-              <Text style={styles.description} numberOfLines={2}>
+              <Text style={[styles.description, { color: colors.textSecondary }]} numberOfLines={2}>
                 {checklist.description}
               </Text>
             )}
@@ -78,8 +82,8 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
               <Text style={styles.editButtonText}>✏️</Text>
             </TouchableOpacity>
           )}
-          <View style={styles.categoryBadge}>
-            <Text style={styles.categoryText}>
+          <View style={[styles.categoryBadge, { backgroundColor: colors.inputBackground, borderColor: colors.cardBorder }]}>
+            <Text style={[styles.categoryText, { color: colors.textPrimary }]}>
               {getCategoryLabel(checklist.category)}
             </Text>
           </View>
@@ -87,26 +91,26 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
       </View>
 
       <View style={styles.progressContainer}>
-        <View style={styles.progressBar}>
+        <View style={[styles.progressBar, { borderColor: colors.cardBorder }]}>
           <View
             style={[
               styles.progressFill,
               {
                 width: `${stats.completionPercentage}%`,
-                backgroundColor: stats.isFullyCompleted ? Colors.sea.success : Colors.sea.primary,
+                backgroundColor: stats.isFullyCompleted ? colors.success : colors.primary,
               },
             ]}
           />
         </View>
-        <Text style={styles.progressText}>
+        <Text style={[styles.progressText, { color: colors.textPrimary }]}>
           {stats.completedTasks} / {stats.totalTasks} tasks
           {stats.isFullyCompleted && ' ✓'}
         </Text>
       </View>
 
       {!checklist.isActive && (
-        <View style={styles.inactiveBadge}>
-          <Text style={styles.inactiveText}>Inactive</Text>
+        <View style={[styles.inactiveBadge, { backgroundColor: colors.secondary }]}>
+          <Text style={[styles.inactiveText, { color: colors.textInverse }]}>Inactive</Text>
         </View>
       )}
     </TouchableOpacity>
@@ -115,7 +119,6 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
     padding: 20,  // Increased padding for larger touch target
     marginBottom: 16,  // Increased spacing
@@ -129,7 +132,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
     borderWidth: 2,  // Added border for better definition
-    borderColor: Colors.sea.cardBorder,
   },
   inactiveCard: {
     opacity: 0.6,
@@ -171,27 +173,22 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textPrimary,  // High contrast black
     marginBottom: 6,
     lineHeight: 28,  // Better readability
   },
   description: {
     fontSize: 16,  // Larger font
-    color: Colors.sea.textSecondary,  // High contrast
     lineHeight: 24,
   },
   categoryBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: Colors.sea.inputBackground,
     paddingHorizontal: 16,  // Larger padding
     paddingVertical: 8,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: Colors.sea.cardBorder,
   },
   categoryText: {
     fontSize: 14,  // Larger font
-    color: Colors.sea.textPrimary,  // High contrast
     fontWeight: 'bold',  // Bolder
   },
   progressContainer: {
@@ -204,7 +201,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginBottom: 8,
     borderWidth: 1,
-    borderColor: Colors.sea.cardBorder,
   },
   progressFill: {
     height: '100%',
@@ -212,7 +208,6 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 14,  // Larger font
-    color: Colors.sea.textPrimary,  // High contrast
     textAlign: 'right',
     fontWeight: '600',  // Bolder
   },
@@ -220,14 +215,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 12,
     right: 12,
-    backgroundColor: Colors.sea.secondary,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 6,
   },
   inactiveText: {
     fontSize: 12,  // Larger font
-    color: Colors.sea.textInverse,
     fontWeight: 'bold',
   },
 });

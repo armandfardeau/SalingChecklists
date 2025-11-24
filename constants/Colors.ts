@@ -41,6 +41,32 @@ export const Colors = {
     textDisabled: '#757575',
     textInverse: '#FFFFFF',
   },
+  seaDark: {
+    // Sea-specific high contrast colors for dark mode
+    primary: '#66B3FF',        // Lighter blue for dark mode
+    primaryDark: '#4A90E2',    // Medium blue for pressed states
+    secondary: '#FFB74D',      // Lighter orange for warnings/skipped items
+    success: '#66BB6A',        // Lighter green for completed items
+    danger: '#EF5350',         // Lighter red for critical priority
+    dangerDark: '#D32F2F',     // Medium red for danger borders/pressed states
+    warning: '#FFA726',        // Lighter amber for high priority
+    info: '#42A5F5',          // Lighter blue for medium priority
+    lowPriority: '#9CCC65',   // Lighter green for low priority
+    
+    // UI colors
+    cardBackground: '#1E1E1E',
+    cardBorder: '#424242',
+    borderLight: 'rgba(255,255,255,0.1)',  // Light border with transparency
+    inputBackground: '#2C2C2C',
+    screenBackground: '#121212',
+    disabledBackground: '#424242',
+    
+    // Text colors (high contrast)
+    textPrimary: '#FFFFFF',
+    textSecondary: '#BDBDBD',
+    textDisabled: '#757575',
+    textInverse: '#000000',
+  },
 };
 
 // Minimum touch target size for maritime conditions (iOS HIG / Material Design)
