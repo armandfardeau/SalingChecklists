@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Checklist, ChecklistStats } from '../types';
 import { getCategoryLabel } from '../utils/formatters';
 import { Colors, TouchTargets, Interactions } from '../constants/Colors';
@@ -30,6 +31,8 @@ interface ChecklistCardProps {
  * ChecklistCard component displays a single checklist with its progress
  */
 export default function ChecklistCard({ checklist, stats, onPress, onEditPress }: ChecklistCardProps) {
+  const { t } = useTranslation();
+  
   const handlePress = () => {
     if (onPress) {
       onPress(checklist);
@@ -99,14 +102,14 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
           />
         </View>
         <Text style={styles.progressText}>
-          {stats.completedTasks} / {stats.totalTasks} tasks
+          {stats.completedTasks} / {stats.totalTasks} {t('checklists.stats.tasks')}
           {stats.isFullyCompleted && ' ✓'}
         </Text>
       </View>
 
       {!checklist.isActive && (
         <View style={styles.inactiveBadge}>
-          <Text style={styles.inactiveText}>Inactive</Text>
+          <Text style={styles.inactiveText}>{t('checklistCard.inactive')}</Text>
         </View>
       )}
     </TouchableOpacity>

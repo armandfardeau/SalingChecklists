@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useChecklistStore } from '../../store';
 import { ChecklistCategory, Task, TaskPriority, TaskStatus, CreateTaskInput } from '../../types';
 import { createTask } from '../../types/examples';
@@ -22,6 +23,7 @@ import { Colors, TouchTargets } from '../../constants/Colors';
  * Supports both new checklist creation and editing existing checklists
  */
 export default function ChecklistEditor() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const isNewChecklist = id === 'new';
@@ -58,7 +60,7 @@ export default function ChecklistEditor() {
 
   const handleSave = () => {
     if (!name.trim()) {
-      Alert.alert('Error', 'Checklist name is required');
+      Alert.alert(t('common.error'), t('checklistEditor.validation.nameRequired'));
       return;
     }
 
@@ -95,7 +97,7 @@ export default function ChecklistEditor() {
 
   const handleAddTask = () => {
     if (!taskTitle.trim()) {
-      Alert.alert('Error', 'Task title is required');
+      Alert.alert(t('common.error'), t('checklistEditor.validation.taskTitleRequired'));
       return;
     }
 
@@ -140,12 +142,12 @@ export default function ChecklistEditor() {
 
   const handleDeleteTask = (taskId: string) => {
     Alert.alert(
-      'Delete Task',
-      'Are you sure you want to delete this task?',
+      t('checklistEditor.deleteTask.title'),
+      t('checklistEditor.deleteTask.message'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('common.cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: t('common.delete'),
           style: 'destructive',
           onPress: () => {
             setTasks(tasks.filter(t => t.id !== taskId));
@@ -169,7 +171,7 @@ export default function ChecklistEditor() {
   };
 
   const getPriorityLabel = (priority: TaskPriority): string => {
-    return priority.charAt(0).toUpperCase() + priority.slice(1);
+    return t(`priorities.${priority}`);
   };
 
   return (
@@ -177,42 +179,42 @@ export default function ChecklistEditor() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backButtonText}>← Cancel</Text>
+          <Text style={styles.backButtonText}>← {t('common.cancel')}</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>
-          {isNewChecklist ? 'New Checklist' : 'Edit Checklist'}
+          {isNewChecklist ? t('checklistEditor.newChecklist') : t('checklistEditor.editChecklist')}
         </Text>
         <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
-          <Text style={styles.saveButtonText}>Save</Text>
+          <Text style={styles.saveButtonText}>{t('common.save')}</Text>
         </TouchableOpacity>
       </View>
 
       <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         {/* Checklist Details Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Checklist Details</Text>
+          <Text style={styles.sectionTitle}>{t('checklistEditor.checklistDetails')}</Text>
 
-          <Text style={styles.label}>Name *</Text>
+          <Text style={styles.label}>{t('checklistEditor.name')} *</Text>
           <TextInput
             style={styles.input}
             value={name}
             onChangeText={setName}
-            placeholder="Enter checklist name"
+            placeholder={t('checklistEditor.placeholders.checklistName')}
             placeholderTextColor="#999"
           />
 
-          <Text style={styles.label}>Description</Text>
+          <Text style={styles.label}>{t('checklistEditor.description')}</Text>
           <TextInput
             style={[styles.input, styles.textArea]}
             value={description}
             onChangeText={setDescription}
-            placeholder="Enter description (optional)"
+            placeholder={t('checklistEditor.placeholders.description')}
             placeholderTextColor="#999"
             multiline
             numberOfLines={3}
           />
 
-          <Text style={styles.label}>Category</Text>
+          <Text style={styles.label}>{t('checklistEditor.category')}</Text>
           <View style={styles.categoryGrid}>
             {Object.values(ChecklistCategory).map((cat) => (
               <TouchableOpacity
@@ -235,22 +237,22 @@ export default function ChecklistEditor() {
             ))}
           </View>
 
-          <Text style={styles.label}>Icon (emoji)</Text>
+          <Text style={styles.label}>{t('checklistEditor.icon')}</Text>
           <TextInput
             style={styles.input}
             value={icon}
             onChangeText={setIcon}
-            placeholder="e.g., ⛵"
+            placeholder={t('checklistEditor.placeholders.iconExample')}
             placeholderTextColor="#999"
             maxLength={2}
           />
 
-          <Text style={styles.label}>Color (hex)</Text>
+          <Text style={styles.label}>{t('checklistEditor.color')}</Text>
           <TextInput
             style={styles.input}
             value={color}
             onChangeText={setColor}
-            placeholder="e.g., #FF6B6B"
+            placeholder={t('checklistEditor.placeholders.colorExample')}
             placeholderTextColor="#999"
             maxLength={7}
           />
@@ -258,31 +260,31 @@ export default function ChecklistEditor() {
 
         {/* Tasks Section */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Tasks</Text>
+          <Text style={styles.sectionTitle}>{t('checklistEditor.tasks')}</Text>
 
           {/* Task Form */}
           <View style={styles.taskForm}>
-            <Text style={styles.label}>Task Title *</Text>
+            <Text style={styles.label}>{t('checklistEditor.taskTitle')} *</Text>
             <TextInput
               style={styles.input}
               value={taskTitle}
               onChangeText={setTaskTitle}
-              placeholder="Enter task title"
+              placeholder={t('checklistEditor.placeholders.taskTitle')}
               placeholderTextColor="#999"
             />
 
-            <Text style={styles.label}>Task Description</Text>
+            <Text style={styles.label}>{t('checklistEditor.taskDescription')}</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
               value={taskDescription}
               onChangeText={setTaskDescription}
-              placeholder="Enter task description (optional)"
+              placeholder={t('checklistEditor.placeholders.taskDescription')}
               placeholderTextColor="#999"
               multiline
               numberOfLines={2}
             />
 
-            <Text style={styles.label}>Priority</Text>
+            <Text style={styles.label}>{t('checklistEditor.priority')}</Text>
             <View style={styles.priorityRow}>
               {Object.values(TaskPriority).map((priority) => (
                 <TouchableOpacity
@@ -311,7 +313,7 @@ export default function ChecklistEditor() {
                   style={[styles.button, styles.cancelButton]}
                   onPress={handleCancelEdit}
                 >
-                  <Text style={styles.buttonText}>Cancel</Text>
+                  <Text style={styles.buttonText}>{t('common.cancel')}</Text>
                 </TouchableOpacity>
               )}
               <TouchableOpacity
@@ -319,7 +321,7 @@ export default function ChecklistEditor() {
                 onPress={handleAddTask}
               >
                 <Text style={styles.buttonText}>
-                  {editingTaskId ? 'Update Task' : 'Add Task'}
+                  {editingTaskId ? t('checklistEditor.updateTask') : t('checklistEditor.addTask')}
                 </Text>
               </TouchableOpacity>
             </View>
@@ -340,7 +342,7 @@ export default function ChecklistEditor() {
                         </Text>
                       )}
                       <Text style={styles.taskItemPriority}>
-                        {getPriorityLabel(task.priority)} Priority
+                        {getPriorityLabel(task.priority)} {t('checklistEditor.priority')}
                       </Text>
                     </View>
                   </View>
@@ -349,14 +351,14 @@ export default function ChecklistEditor() {
                       style={styles.taskActionButton}
                       onPress={() => handleEditTask(task)}
                     >
-                      <Text style={styles.taskActionButtonText}>Edit</Text>
+                      <Text style={styles.taskActionButtonText}>{t('common.edit')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                       style={[styles.taskActionButton, styles.deleteActionButton]}
                       onPress={() => handleDeleteTask(task.id)}
                     >
                       <Text style={[styles.taskActionButtonText, styles.deleteActionButtonText]}>
-                        Delete
+                        {t('common.delete')}
                       </Text>
                     </TouchableOpacity>
                   </View>
@@ -367,7 +369,7 @@ export default function ChecklistEditor() {
 
           {tasks.length === 0 && (
             <View style={styles.emptyTaskList}>
-              <Text style={styles.emptyTaskText}>No tasks yet. Add your first task above.</Text>
+              <Text style={styles.emptyTaskText}>{t('checklistEditor.noTasksYet')}</Text>
             </View>
           )}
         </View>

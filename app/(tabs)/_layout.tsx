@@ -1,8 +1,11 @@
 import { Tabs } from 'expo-router';
 import { Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Colors, Typography } from '../../constants/Colors';
 
 export default function TabLayout() {
+  const { t } = useTranslation();
+  
   return (
     <Tabs
       screenOptions={{
@@ -34,7 +37,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Checklists',
+          title: t('tabs.checklists'),
           tabBarIcon: ({ color }) => (
             <Text style={[styles.tabIcon, { color }]}>📋</Text>
           ),
@@ -43,7 +46,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="settings"
         options={{
-          title: 'Settings',
+          title: t('tabs.settings'),
           tabBarIcon: ({ color }) => (
             <Text style={[styles.tabIcon, { color }]}>⚙️</Text>
           ),

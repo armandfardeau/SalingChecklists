@@ -1,0 +1,135 @@
+{
+  "common": {
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "reset": "Reiniciar",
+    "complete": "Completar",
+    "skip": "Omitir",
+    "add": "Añadir",
+    "update": "Actualizar",
+    "yes": "Sí",
+    "no": "No",
+    "ok": "OK",
+    "error": "Error",
+    "success": "Éxito"
+  },
+  "tabs": {
+    "checklists": "Listas de control",
+    "settings": "Configuración"
+  },
+  "checklists": {
+    "title": "Listas de control",
+    "emptyTitle": "No hay listas de control",
+    "emptyText": "Crea tu primera lista de control para comenzar con tus preparativos de navegación.",
+    "createNew": "Nueva lista de control",
+    "stats": {
+      "tasks": "tareas",
+      "completed": "completadas"
+    }
+  },
+  "checklistCard": {
+    "inactive": "Inactiva"
+  },
+  "checklistEditor": {
+    "newChecklist": "Nueva lista de control",
+    "editChecklist": "Editar lista de control",
+    "checklistDetails": "Detalles de la lista",
+    "tasks": "Tareas",
+    "name": "Nombre",
+    "description": "Descripción",
+    "category": "Categoría",
+    "icon": "Icono (emoji)",
+    "color": "Color (hex)",
+    "taskTitle": "Título de la tarea",
+    "taskDescription": "Descripción de la tarea",
+    "priority": "Prioridad",
+    "addTask": "Añadir tarea",
+    "updateTask": "Actualizar tarea",
+    "noTasksYet": "No hay tareas aún. Añade tu primera tarea arriba.",
+    "placeholders": {
+      "checklistName": "Introduce el nombre de la lista",
+      "description": "Introduce una descripción (opcional)",
+      "iconExample": "ej., ⛵",
+      "colorExample": "ej., #FF6B6B",
+      "taskTitle": "Introduce el título de la tarea",
+      "taskDescription": "Introduce la descripción de la tarea (opcional)"
+    },
+    "validation": {
+      "nameRequired": "El nombre de la lista es obligatorio",
+      "taskTitleRequired": "El título de la tarea es obligatorio"
+    },
+    "deleteTask": {
+      "title": "Eliminar tarea",
+      "message": "¿Estás seguro de que quieres eliminar esta tarea?"
+    }
+  },
+  "checklistRunner": {
+    "taskCounter": "Tarea {{current}} de {{total}}",
+    "progressCompleted": "{{completed}} / {{total}} completadas",
+    "allTasks": "Todas las tareas",
+    "status": "Estado:",
+    "completedAt": "Completada: {{date}}",
+    "completionMessage": "🎉 ¡Lista completada! Todas las tareas terminadas."
+  },
+  "settings": {
+    "title": "Configuración",
+    "description": "Configura las preferencias de tu aplicación",
+    "language": "Idioma",
+    "selectLanguage": "Seleccionar idioma",
+    "languageChanged": "Idioma cambiado correctamente"
+  },
+  "categories": {
+    "pre_departure": "Pre-salida",
+    "general": "General",
+    "safety": "Seguridad",
+    "navigation": "Navegación",
+    "maintenance": "Mantenimiento",
+    "emergency": "Emergencia",
+    "docking": "Atraque",
+    "anchoring": "Fondeo"
+  },
+  "priorities": {
+    "critical": "Crítica",
+    "high": "Alta",
+    "medium": "Media",
+    "low": "Baja"
+  },
+  "taskStatus": {
+    "pending": "Pendiente",
+    "completed": "Completada",
+    "skipped": "Omitida"
+  },
+  "defaultTasks": {
+    "preDepartureSafety": {
+      "name": "Verificación de seguridad pre-salida",
+      "description": "Controles de seguridad esenciales antes de la salida",
+      "tasks": {
+        "checkWeather": {
+          "title": "Verificar el pronóstico del tiempo",
+          "description": "Revisar las condiciones meteorológicas locales y el pronóstico marino"
+        },
+        "inspectLifeJackets": {
+          "title": "Inspeccionar chalecos salvavidas",
+          "description": "Asegurar que todos los miembros de la tripulación tengan chalecos adecuados"
+        },
+        "checkFuel": {
+          "title": "Verificar el nivel de combustible",
+          "description": "Verificar combustible suficiente para la ruta planificada"
+        },
+        "testNavLights": {
+          "title": "Probar luces de navegación",
+          "description": "Asegurar que todas las luces de navegación funcionen"
+        },
+        "verifyVHF": {
+          "title": "Verificar radio VHF",
+          "description": "Probar la comunicación por radio VHF"
+        }
+      }
+    }
+  }
+}

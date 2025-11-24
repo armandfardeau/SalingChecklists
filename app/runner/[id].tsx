@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useTranslation } from 'react-i18next';
 import { useChecklistStore } from '../../store';
 import { TaskStatus, TaskPriority } from '../../types';
 import { Colors, TouchTargets, Typography } from '../../constants/Colors';
@@ -20,6 +21,7 @@ const AUTO_ADVANCE_DELAY_MS = 300;
  * Allows users to mark tasks as completed, pending, or skipped
  */
 export default function ChecklistRunner() {
+  const { t } = useTranslation();
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   
@@ -94,7 +96,7 @@ export default function ChecklistRunner() {
   };
 
   const getPriorityLabel = (priority: TaskPriority): string => {
-    return priority.charAt(0).toUpperCase() + priority.slice(1);
+    return t(`priorities.${priority}`);
   };
 
   const getStatusColor = (status: TaskStatus): string => {
@@ -115,7 +117,7 @@ export default function ChecklistRunner() {
       {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backButtonText}>← Back</Text>
+          <Text style={styles.backButtonText}>← {t('common.back')}</Text>
         </TouchableOpacity>
         <View style={styles.headerContent}>
           <Text style={styles.checklistName} numberOfLines={1}>
@@ -123,7 +125,7 @@ export default function ChecklistRunner() {
           </Text>
           {stats && (
             <Text style={styles.progressText}>
-              {stats.completedTasks} / {stats.totalTasks} completed
+              {t('checklistRunner.progressCompleted', { completed: stats.completedTasks, total: stats.totalTasks })}
             </Text>
           )}
         </View>
@@ -152,7 +154,7 @@ export default function ChecklistRunner() {
       {/* Task Navigation */}
       <View style={styles.taskNavigation}>
         <Text style={styles.taskCounter}>
-          Task {currentTaskIndex + 1} of {sortedTasks.length}
+          {t('checklistRunner.taskCounter', { current: currentTaskIndex + 1, total: sortedTasks.length })}
         </Text>
       </View>
 
@@ -168,7 +170,7 @@ export default function ChecklistRunner() {
               ]}
             >
               <Text style={styles.priorityText}>
-                {getPriorityLabel(currentTask.priority)} Priority
+                {getPriorityLabel(currentTask.priority)} {t('checklistEditor.priority')}
               </Text>
             </View>
 
@@ -182,7 +184,7 @@ export default function ChecklistRunner() {
 
             {/* Task Status */}
             <View style={styles.statusContainer}>
-              <Text style={styles.statusLabel}>Status:</Text>
+              <Text style={styles.statusLabel}>{t('checklistRunner.status')}</Text>
               <View
                 style={[
                   styles.statusBadge,
@@ -190,7 +192,7 @@ export default function ChecklistRunner() {
                 ]}
               >
                 <Text style={styles.statusText}>
-                  {currentTask.status.charAt(0).toUpperCase() + currentTask.status.slice(1)}
+                  {t(`taskStatus.${currentTask.status}`)}
                 </Text>
               </View>
             </View>
@@ -198,7 +200,7 @@ export default function ChecklistRunner() {
             {/* Completed Timestamp */}
             {currentTask.completedAt && (
               <Text style={styles.completedText}>
-                Completed: {new Date(currentTask.completedAt).toLocaleString()}
+                {t('checklistRunner.completedAt', { date: new Date(currentTask.completedAt).toLocaleString() })}
               </Text>
             )}
           </View>
@@ -206,7 +208,7 @@ export default function ChecklistRunner() {
 
         {/* All Tasks List */}
         <View style={styles.allTasksContainer}>
-          <Text style={styles.allTasksTitle}>All Tasks</Text>
+          <Text style={styles.allTasksTitle}>{t('checklistRunner.allTasks')}</Text>
           {sortedTasks.map((task, index) => (
             <TouchableOpacity
               key={task.id}
@@ -254,13 +256,13 @@ export default function ChecklistRunner() {
               style={[styles.actionButton, styles.completeButton]}
               onPress={handleComplete}
             >
-              <Text style={styles.actionButtonText}>✓ Complete</Text>
+              <Text style={styles.actionButtonText}>✓ {t('common.complete')}</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionButton, styles.skipButton]}
               onPress={handleSkip}
             >
-              <Text style={styles.actionButtonText}>Skip</Text>
+              <Text style={styles.actionButtonText}>{t('common.skip')}</Text>
             </TouchableOpacity>
           </>
         )}
@@ -270,7 +272,7 @@ export default function ChecklistRunner() {
             style={[styles.actionButton, styles.resetButton]}
             onPress={handleReset}
           >
-            <Text style={styles.actionButtonText}>↻ Reset</Text>
+            <Text style={styles.actionButtonText}>↻ {t('common.reset')}</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -291,7 +293,7 @@ export default function ChecklistRunner() {
               currentTaskIndex === 0 && styles.navButtonTextDisabled,
             ]}
           >
-            ← Previous
+            ← {t('common.previous')}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -308,7 +310,7 @@ export default function ChecklistRunner() {
               currentTaskIndex === sortedTasks.length - 1 && styles.navButtonTextDisabled,
             ]}
           >
-            Next →
+            {t('common.next')} →
           </Text>
         </TouchableOpacity>
       </View>
@@ -317,7 +319,7 @@ export default function ChecklistRunner() {
       {stats && stats.isFullyCompleted && (
         <View style={styles.completionMessage}>
           <Text style={styles.completionText}>
-            🎉 Checklist Complete! All tasks finished.
+            {t('checklistRunner.completionMessage')}
           </Text>
         </View>
       )}

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { Checklist, ChecklistStats } from '../types';
 import ChecklistCard from './ChecklistCard';
 import { Colors } from '../constants/Colors';
@@ -41,6 +42,8 @@ export default function ChecklistList({
   onEditPress,
   emptyComponent,
 }: ChecklistListProps) {
+  const { t } = useTranslation();
+  
   const renderItem = ({ item }: { item: Checklist }) => {
     const stats = getStats(item.id);
     
@@ -71,9 +74,9 @@ export default function ChecklistList({
     return (
       <View style={styles.emptyContainer}>
         <Text style={styles.emptyIcon}>📋</Text>
-        <Text style={styles.emptyTitle}>No Checklists Yet</Text>
+        <Text style={styles.emptyTitle}>{t('checklists.emptyTitle')}</Text>
         <Text style={styles.emptyText}>
-          Create your first checklist to get started with your sailing preparations.
+          {t('checklists.emptyText')}
         </Text>
       </View>
     );

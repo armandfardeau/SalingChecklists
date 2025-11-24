@@ -1,0 +1,135 @@
+{
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "reset": "Reset",
+    "complete": "Complete",
+    "skip": "Skip",
+    "add": "Add",
+    "update": "Update",
+    "yes": "Yes",
+    "no": "No",
+    "ok": "OK",
+    "error": "Error",
+    "success": "Success"
+  },
+  "tabs": {
+    "checklists": "Checklists",
+    "settings": "Settings"
+  },
+  "checklists": {
+    "title": "Checklists",
+    "emptyTitle": "No Checklists Yet",
+    "emptyText": "Create your first checklist to get started with your sailing preparations.",
+    "createNew": "Create New Checklist",
+    "stats": {
+      "tasks": "tasks",
+      "completed": "completed"
+    }
+  },
+  "checklistCard": {
+    "inactive": "Inactive"
+  },
+  "checklistEditor": {
+    "newChecklist": "New Checklist",
+    "editChecklist": "Edit Checklist",
+    "checklistDetails": "Checklist Details",
+    "tasks": "Tasks",
+    "name": "Name",
+    "description": "Description",
+    "category": "Category",
+    "icon": "Icon (emoji)",
+    "color": "Color (hex)",
+    "taskTitle": "Task Title",
+    "taskDescription": "Task Description",
+    "priority": "Priority",
+    "addTask": "Add Task",
+    "updateTask": "Update Task",
+    "noTasksYet": "No tasks yet. Add your first task above.",
+    "placeholders": {
+      "checklistName": "Enter checklist name",
+      "description": "Enter description (optional)",
+      "iconExample": "e.g., ⛵",
+      "colorExample": "e.g., #FF6B6B",
+      "taskTitle": "Enter task title",
+      "taskDescription": "Enter task description (optional)"
+    },
+    "validation": {
+      "nameRequired": "Checklist name is required",
+      "taskTitleRequired": "Task title is required"
+    },
+    "deleteTask": {
+      "title": "Delete Task",
+      "message": "Are you sure you want to delete this task?"
+    }
+  },
+  "checklistRunner": {
+    "taskCounter": "Task {{current}} of {{total}}",
+    "progressCompleted": "{{completed}} / {{total}} completed",
+    "allTasks": "All Tasks",
+    "status": "Status:",
+    "completedAt": "Completed: {{date}}",
+    "completionMessage": "🎉 Checklist Complete! All tasks finished."
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your app preferences",
+    "language": "Language",
+    "selectLanguage": "Select Language",
+    "languageChanged": "Language changed successfully"
+  },
+  "categories": {
+    "pre_departure": "Pre Departure",
+    "general": "General",
+    "safety": "Safety",
+    "navigation": "Navigation",
+    "maintenance": "Maintenance",
+    "emergency": "Emergency",
+    "docking": "Docking",
+    "anchoring": "Anchoring"
+  },
+  "priorities": {
+    "critical": "Critical",
+    "high": "High",
+    "medium": "Medium",
+    "low": "Low"
+  },
+  "taskStatus": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "skipped": "Skipped"
+  },
+  "defaultTasks": {
+    "preDepartureSafety": {
+      "name": "Pre-Departure Safety Check",
+      "description": "Essential safety checks before departure",
+      "tasks": {
+        "checkWeather": {
+          "title": "Check weather forecast",
+          "description": "Review local weather conditions and marine forecast"
+        },
+        "inspectLifeJackets": {
+          "title": "Inspect life jackets",
+          "description": "Ensure all crew members have properly fitting life jackets"
+        },
+        "checkFuel": {
+          "title": "Check fuel level",
+          "description": "Verify sufficient fuel for planned route"
+        },
+        "testNavLights": {
+          "title": "Test navigation lights",
+          "description": "Ensure all navigation lights are functioning"
+        },
+        "verifyVHF": {
+          "title": "Verify VHF radio",
+          "description": "Test VHF radio communication"
+        }
+      }
+    }
+  }
+}
