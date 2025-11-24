@@ -91,15 +91,45 @@ SalingChecklists/
 ├── constants/             # App constants (colors, config, etc.)
 ├── hooks/                 # Custom React hooks
 ├── utils/                 # Utility functions and helpers
+│   └── loadDefaultTasks.ts # Load default checklist data from JSON
 ├── api/                   # API client and endpoints
 ├── types/                 # TypeScript type definitions
 ├── __tests__/            # Test files
 ├── assets/                # Images, icons, fonts
+│   └── defaultTasks.json  # Default checklist data
 ├── app.json              # Expo configuration
 └── package.json          # Dependencies and scripts
 ```
 
 See [STRUCTURE.md](STRUCTURE.md) for more details about the folder organization.
+
+### Default Checklists
+
+Default checklists (like the pre-departure safety check) are defined in `assets/defaultTasks.json`. This JSON file contains sample checklist data that is loaded when the app is first launched. You can modify this file to customize the default checklists without changing any code.
+
+The JSON structure follows this format:
+```json
+{
+  "checklists": [
+    {
+      "id": "unique-id",
+      "name": "Checklist Name",
+      "description": "Description",
+      "category": "pre_departure",
+      "tasks": [
+        {
+          "id": "task-id",
+          "title": "Task Title",
+          "description": "Task description",
+          "status": "pending",
+          "priority": "high",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}
+```
 
 ## 📝 Available Scripts
 
