@@ -61,6 +61,8 @@ npm run web
 - **React Native** 0.81.5
 - **Expo** ~54.0
 - **React** 19.1.0
+- **Zustand** - State management
+- **MMKV** - Fast, persistent key-value storage
 
 ## 🛠️ Project Structure
 
@@ -71,6 +73,7 @@ SalingChecklists/
 ├── app/                    # File-based routing (Expo Router)
 │   ├── _layout.tsx        # Root layout
 │   └── index.tsx          # Home screen
+├── store/                 # State management (Zustand + MMKV)
 ├── components/            # Reusable UI components
 ├── constants/             # App constants (colors, config, etc.)
 ├── hooks/                 # Custom React hooks
