@@ -2,13 +2,16 @@ import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useChecklistStore } from '../../store';
+import { useChecklistStore, useThemeStore } from '../../store';
 import { Checklist } from '../../types';
 import ChecklistList from '../../components/ChecklistList';
-import { Colors, TouchTargets, Interactions } from '../../constants/Colors';
+import { TouchTargets, Interactions } from '../../constants/Colors';
+import { useThemedColors } from '../../hooks/useThemedColors';
 
 export default function App() {
   const router = useRouter();
+  const colors = useThemedColors();
+  const mode = useThemeStore((state) => state.mode);
   const checklists = useChecklistStore((state) => state.checklists);
   const getChecklistStats = useChecklistStore((state) => state.getChecklistStats);
   const initializeSampleData = useChecklistStore((state) => state.initializeSampleData);
@@ -34,7 +37,7 @@ export default function App() {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       <ChecklistList
         checklists={checklists}
         getStats={getChecklistStats}
@@ -44,14 +47,14 @@ export default function App() {
       
       {/* Floating action button to create new checklists */}
       <TouchableOpacity
-        style={styles.fab}
+        style={[styles.fab, { backgroundColor: colors.primary, borderColor: colors.primaryDark }]}
         onPress={handleCreateChecklist}
         activeOpacity={Interactions.activeOpacity.strong}
       >
-        <Text style={styles.fabIcon}>+</Text>
+        <Text style={[styles.fabIcon, { color: colors.textInverse }]}>+</Text>
       </TouchableOpacity>
       
-      <StatusBar style="auto" />
+      <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
     </View>
   );
 }
@@ -59,7 +62,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.sea.screenBackground,
   },
   fab: {
     position: 'absolute',
@@ -68,7 +70,6 @@ const styles = StyleSheet.create({
     width: TouchTargets.large,  // 64px - larger touch target
     height: TouchTargets.large,
     borderRadius: TouchTargets.large / 2,
-    backgroundColor: Colors.sea.primary,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
@@ -80,11 +81,9 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 10,
     borderWidth: 2,  // Added border for definition
-    borderColor: Colors.sea.primaryDark,
   },
   fabIcon: {
     fontSize: 40,  // Larger icon
-    color: Colors.sea.textInverse,
     fontWeight: 'bold',
   },
 });

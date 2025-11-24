@@ -10,7 +10,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { TaskStatus, TaskPriority } from '../../types';
-import { Colors, TouchTargets, Typography } from '../../constants/Colors';
+import { TouchTargets, Typography } from '../../constants/Colors';
+import { useThemedColors } from '../../hooks/useThemedColors';
 
 // Animation delay after completing or skipping a task before auto-advancing
 const AUTO_ADVANCE_DELAY_MS = 300;
@@ -22,6 +23,7 @@ const AUTO_ADVANCE_DELAY_MS = 300;
 export default function ChecklistRunner() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
+  const colors = useThemedColors();
   
   const checklist = useChecklistStore((state) => state.getChecklist(id || ''));
   const updateTaskStatus = useChecklistStore((state) => state.updateTaskStatus);
@@ -81,15 +83,15 @@ export default function ChecklistRunner() {
   const getPriorityColor = (priority: TaskPriority): string => {
     switch (priority) {
       case TaskPriority.CRITICAL:
-        return Colors.sea.danger;
+        return colors.danger;
       case TaskPriority.HIGH:
-        return Colors.sea.warning;
+        return colors.warning;
       case TaskPriority.MEDIUM:
-        return Colors.sea.info;
+        return colors.info;
       case TaskPriority.LOW:
-        return Colors.sea.lowPriority;
+        return colors.lowPriority;
       default:
-        return Colors.sea.textDisabled;
+        return colors.textDisabled;
     }
   };
 
@@ -100,29 +102,29 @@ export default function ChecklistRunner() {
   const getStatusColor = (status: TaskStatus): string => {
     switch (status) {
       case TaskStatus.COMPLETED:
-        return Colors.sea.success;
+        return colors.success;
       case TaskStatus.SKIPPED:
-        return Colors.sea.secondary;
+        return colors.secondary;
       case TaskStatus.PENDING:
-        return Colors.sea.textDisabled;
+        return colors.textDisabled;
       default:
-        return Colors.sea.textDisabled;
+        return colors.textDisabled;
     }
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { backgroundColor: colors.primary }]}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backButtonText}>← Back</Text>
+          <Text style={[styles.backButtonText, { color: colors.textInverse }]}>← Back</Text>
         </TouchableOpacity>
         <View style={styles.headerContent}>
-          <Text style={styles.checklistName} numberOfLines={1}>
+          <Text style={[styles.checklistName, { color: colors.textInverse }]} numberOfLines={1}>
             {checklist.name}
           </Text>
           {stats && (
-            <Text style={styles.progressText}>
+            <Text style={[styles.progressText, { color: colors.textInverse }]}>
               {stats.completedTasks} / {stats.totalTasks} completed
             </Text>
           )}
@@ -131,27 +133,27 @@ export default function ChecklistRunner() {
 
       {/* Progress Bar */}
       {stats && (
-        <View style={styles.progressBarContainer}>
-          <View style={styles.progressBar}>
+        <View style={[styles.progressBarContainer, { backgroundColor: colors.cardBackground, borderBottomColor: colors.cardBorder }]}>
+          <View style={[styles.progressBar, { borderColor: colors.cardBorder }]}>
             <View
               style={[
                 styles.progressFill,
                 {
                   width: `${stats.completionPercentage}%`,
-                  backgroundColor: stats.isFullyCompleted ? Colors.sea.success : Colors.sea.primary,
+                  backgroundColor: stats.isFullyCompleted ? colors.success : colors.primary,
                 },
               ]}
             />
           </View>
-          <Text style={styles.progressPercentage}>
+          <Text style={[styles.progressPercentage, { color: colors.textPrimary }]}>
             {stats.completionPercentage}%
           </Text>
         </View>
       )}
 
       {/* Task Navigation */}
-      <View style={styles.taskNavigation}>
-        <Text style={styles.taskCounter}>
+      <View style={[styles.taskNavigation, { backgroundColor: colors.cardBackground, borderBottomColor: colors.cardBorder }]}>
+        <Text style={[styles.taskCounter, { color: colors.textPrimary }]}>
           Task {currentTaskIndex + 1} of {sortedTasks.length}
         </Text>
       </View>
@@ -159,37 +161,37 @@ export default function ChecklistRunner() {
       {/* Current Task */}
       <ScrollView style={styles.taskContent} contentContainerStyle={styles.taskContentContainer}>
         {currentTask && (
-          <View style={styles.taskCard}>
+          <View style={[styles.taskCard, { backgroundColor: colors.cardBackground, borderColor: colors.cardBorder }]}>
             {/* Priority Badge */}
             <View
               style={[
                 styles.priorityBadge,
-                { backgroundColor: getPriorityColor(currentTask.priority) },
+                { backgroundColor: getPriorityColor(currentTask.priority), borderColor: colors.borderLight },
               ]}
             >
-              <Text style={styles.priorityText}>
+              <Text style={[styles.priorityText, { color: colors.textInverse }]}>
                 {getPriorityLabel(currentTask.priority)} Priority
               </Text>
             </View>
 
             {/* Task Title */}
-            <Text style={styles.taskTitle}>{currentTask.title}</Text>
+            <Text style={[styles.taskTitle, { color: colors.textPrimary }]}>{currentTask.title}</Text>
 
             {/* Task Description */}
             {currentTask.description && (
-              <Text style={styles.taskDescription}>{currentTask.description}</Text>
+              <Text style={[styles.taskDescription, { color: colors.textSecondary }]}>{currentTask.description}</Text>
             )}
 
             {/* Task Status */}
             <View style={styles.statusContainer}>
-              <Text style={styles.statusLabel}>Status:</Text>
+              <Text style={[styles.statusLabel, { color: colors.textSecondary }]}>Status:</Text>
               <View
                 style={[
                   styles.statusBadge,
-                  { backgroundColor: getStatusColor(currentTask.status) },
+                  { backgroundColor: getStatusColor(currentTask.status), borderColor: colors.borderLight },
                 ]}
               >
-                <Text style={styles.statusText}>
+                <Text style={[styles.statusText, { color: colors.textInverse }]}>
                   {currentTask.status.charAt(0).toUpperCase() + currentTask.status.slice(1)}
                 </Text>
               </View>
@@ -197,7 +199,7 @@ export default function ChecklistRunner() {
 
             {/* Completed Timestamp */}
             {currentTask.completedAt && (
-              <Text style={styles.completedText}>
+              <Text style={[styles.completedText, { color: colors.textSecondary }]}>
                 Completed: {new Date(currentTask.completedAt).toLocaleString()}
               </Text>
             )}
@@ -205,14 +207,14 @@ export default function ChecklistRunner() {
         )}
 
         {/* All Tasks List */}
-        <View style={styles.allTasksContainer}>
-          <Text style={styles.allTasksTitle}>All Tasks</Text>
+        <View style={[styles.allTasksContainer, { backgroundColor: colors.cardBackground, borderColor: colors.cardBorder }]}>
+          <Text style={[styles.allTasksTitle, { color: colors.textPrimary }]}>All Tasks</Text>
           {sortedTasks.map((task, index) => (
             <TouchableOpacity
               key={task.id}
               style={[
                 styles.taskListItem,
-                index === currentTaskIndex && styles.taskListItemActive,
+                index === currentTaskIndex && [styles.taskListItemActive, { backgroundColor: colors.inputBackground, borderColor: colors.primary }],
               ]}
               onPress={() => setCurrentTaskIndex(index)}
             >
@@ -220,7 +222,8 @@ export default function ChecklistRunner() {
                 <Text
                   style={[
                     styles.taskListItemNumber,
-                    index === currentTaskIndex && styles.taskListItemTextActive,
+                    { color: colors.textSecondary },
+                    index === currentTaskIndex && [styles.taskListItemTextActive, { color: colors.primary }],
                   ]}
                 >
                   {index + 1}.
@@ -228,7 +231,8 @@ export default function ChecklistRunner() {
                 <Text
                   style={[
                     styles.taskListItemText,
-                    index === currentTaskIndex && styles.taskListItemTextActive,
+                    { color: colors.textSecondary },
+                    index === currentTaskIndex && [styles.taskListItemTextActive, { color: colors.primary }],
                   ]}
                   numberOfLines={1}
                 >
@@ -238,7 +242,7 @@ export default function ChecklistRunner() {
               <View
                 style={[
                   styles.taskListItemStatus,
-                  { backgroundColor: getStatusColor(task.status) },
+                  { backgroundColor: getStatusColor(task.status), borderColor: colors.borderLight },
                 ]}
               />
             </TouchableOpacity>
@@ -247,40 +251,41 @@ export default function ChecklistRunner() {
       </ScrollView>
 
       {/* Action Buttons */}
-      <View style={styles.actionButtons}>
+      <View style={[styles.actionButtons, { backgroundColor: colors.cardBackground, borderTopColor: colors.cardBorder }]}>
         {currentTask.status === TaskStatus.PENDING && (
           <>
             <TouchableOpacity
-              style={[styles.actionButton, styles.completeButton]}
+              style={[styles.actionButton, { backgroundColor: colors.success, borderColor: colors.borderLight }]}
               onPress={handleComplete}
             >
-              <Text style={styles.actionButtonText}>✓ Complete</Text>
+              <Text style={[styles.actionButtonText, { color: colors.textInverse }]}>✓ Complete</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.actionButton, styles.skipButton]}
+              style={[styles.actionButton, { backgroundColor: colors.secondary, borderColor: colors.borderLight }]}
               onPress={handleSkip}
             >
-              <Text style={styles.actionButtonText}>Skip</Text>
+              <Text style={[styles.actionButtonText, { color: colors.textInverse }]}>Skip</Text>
             </TouchableOpacity>
           </>
         )}
         {(currentTask.status === TaskStatus.COMPLETED ||
           currentTask.status === TaskStatus.SKIPPED) && (
           <TouchableOpacity
-            style={[styles.actionButton, styles.resetButton]}
+            style={[styles.actionButton, { backgroundColor: colors.textDisabled, borderColor: colors.borderLight }]}
             onPress={handleReset}
           >
-            <Text style={styles.actionButtonText}>↻ Reset</Text>
+            <Text style={[styles.actionButtonText, { color: colors.textInverse }]}>↻ Reset</Text>
           </TouchableOpacity>
         )}
       </View>
 
       {/* Navigation Buttons */}
-      <View style={styles.navigationButtons}>
+      <View style={[styles.navigationButtons, { backgroundColor: colors.cardBackground }]}>
         <TouchableOpacity
           style={[
             styles.navButton,
-            currentTaskIndex === 0 && styles.navButtonDisabled,
+            { backgroundColor: colors.primary, borderColor: colors.primaryDark },
+            currentTaskIndex === 0 && [styles.navButtonDisabled, { backgroundColor: colors.disabledBackground, borderColor: colors.cardBorder }],
           ]}
           onPress={handlePreviousTask}
           disabled={currentTaskIndex === 0}
@@ -288,7 +293,8 @@ export default function ChecklistRunner() {
           <Text
             style={[
               styles.navButtonText,
-              currentTaskIndex === 0 && styles.navButtonTextDisabled,
+              { color: colors.textInverse },
+              currentTaskIndex === 0 && [styles.navButtonTextDisabled, { color: colors.textDisabled }],
             ]}
           >
             ← Previous
@@ -297,7 +303,8 @@ export default function ChecklistRunner() {
         <TouchableOpacity
           style={[
             styles.navButton,
-            currentTaskIndex === sortedTasks.length - 1 && styles.navButtonDisabled,
+            { backgroundColor: colors.primary, borderColor: colors.primaryDark },
+            currentTaskIndex === sortedTasks.length - 1 && [styles.navButtonDisabled, { backgroundColor: colors.disabledBackground, borderColor: colors.cardBorder }],
           ]}
           onPress={handleNextTask}
           disabled={currentTaskIndex === sortedTasks.length - 1}
@@ -305,7 +312,8 @@ export default function ChecklistRunner() {
           <Text
             style={[
               styles.navButtonText,
-              currentTaskIndex === sortedTasks.length - 1 && styles.navButtonTextDisabled,
+              { color: colors.textInverse },
+              currentTaskIndex === sortedTasks.length - 1 && [styles.navButtonTextDisabled, { color: colors.textDisabled }],
             ]}
           >
             Next →
@@ -315,8 +323,8 @@ export default function ChecklistRunner() {
 
       {/* Completion Message */}
       {stats && stats.isFullyCompleted && (
-        <View style={styles.completionMessage}>
-          <Text style={styles.completionText}>
+        <View style={[styles.completionMessage, { backgroundColor: colors.success, borderColor: colors.lowPriority }]}>
+          <Text style={[styles.completionText, { color: colors.textInverse }]}>
             🎉 Checklist Complete! All tasks finished.
           </Text>
         </View>
@@ -328,10 +336,8 @@ export default function ChecklistRunner() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.sea.screenBackground,
   },
   header: {
-    backgroundColor: Colors.sea.primary,
     padding: 20,  // More padding
     paddingTop: 12,
   },
@@ -341,7 +347,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   backButtonText: {
-    color: Colors.sea.textInverse,
     fontSize: 18,  // Larger font
     fontWeight: 'bold',
   },
@@ -354,13 +359,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 24,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textInverse,
     marginRight: 16,
     lineHeight: 30,
   },
   progressText: {
     fontSize: 16,  // Larger font
-    color: Colors.sea.textInverse,
     fontWeight: 'bold',
   },
   progressBarContainer: {
@@ -368,9 +371,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 16,  // More padding
-    backgroundColor: Colors.sea.cardBackground,
     borderBottomWidth: 2,
-    borderBottomColor: Colors.sea.cardBorder,
   },
   progressBar: {
     flex: 1,
@@ -380,7 +381,6 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     marginRight: 16,
     borderWidth: 1,
-    borderColor: Colors.sea.cardBorder,
   },
   progressFill: {
     height: '100%',
@@ -389,21 +389,17 @@ const styles = StyleSheet.create({
   progressPercentage: {
     fontSize: 18,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textPrimary,
     minWidth: 55,
     textAlign: 'right',
   },
   taskNavigation: {
     paddingHorizontal: 20,
     paddingVertical: 16,  // More padding
-    backgroundColor: Colors.sea.cardBackground,
     borderBottomWidth: 2,
-    borderBottomColor: Colors.sea.cardBorder,
   },
   taskCounter: {
     fontSize: 16,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textPrimary,
     textAlign: 'center',
   },
   taskContent: {
@@ -413,7 +409,6 @@ const styles = StyleSheet.create({
     padding: 20,  // More padding
   },
   taskCard: {
-    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
     padding: 24,  // More padding
     marginBottom: 24,
@@ -426,7 +421,6 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
     borderWidth: 2,
-    borderColor: Colors.sea.cardBorder,
   },
   priorityBadge: {
     alignSelf: 'flex-start',
@@ -435,10 +429,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: Colors.sea.borderLight,
   },
   priorityText: {
-    color: Colors.sea.textInverse,
     fontSize: 14,  // Larger font
     fontWeight: 'bold',
     textTransform: 'uppercase',
@@ -446,13 +438,11 @@ const styles = StyleSheet.create({
   taskTitle: {
     fontSize: 28,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textPrimary,
     marginBottom: 16,
     lineHeight: 36,
   },
   taskDescription: {
     fontSize: 18,  // Larger font
-    color: Colors.sea.textSecondary,
     lineHeight: 28,
     marginBottom: 20,
   },
@@ -464,7 +454,6 @@ const styles = StyleSheet.create({
   statusLabel: {
     fontSize: 16,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textSecondary,
     marginRight: 12,
   },
   statusBadge: {
@@ -472,21 +461,17 @@ const styles = StyleSheet.create({
     paddingVertical: 6,  // More padding
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: Colors.sea.borderLight,
   },
   statusText: {
-    color: Colors.sea.textInverse,
     fontSize: 14,  // Larger font
     fontWeight: 'bold',
   },
   completedText: {
     fontSize: 14,  // Larger font
-    color: Colors.sea.textSecondary,
     marginTop: 12,
     fontStyle: 'italic',
   },
   allTasksContainer: {
-    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
     padding: 20,  // More padding
     shadowColor: '#000',
@@ -498,12 +483,10 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 4,
     borderWidth: 2,
-    borderColor: Colors.sea.cardBorder,
   },
   allTasksTitle: {
     fontSize: 18,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textPrimary,
     marginBottom: 16,
   },
   taskListItem: {
@@ -517,9 +500,7 @@ const styles = StyleSheet.create({
     minHeight: TouchTargets.minimum,  // Minimum touch target
   },
   taskListItemActive: {
-    backgroundColor: '#E3F2FD',
     borderWidth: 2,
-    borderColor: Colors.sea.primary,
   },
   taskListItemContent: {
     flexDirection: 'row',
@@ -529,17 +510,14 @@ const styles = StyleSheet.create({
   taskListItemNumber: {
     fontSize: 16,  // Larger font
     fontWeight: 'bold',
-    color: Colors.sea.textSecondary,
     marginRight: 12,
     minWidth: 32,
   },
   taskListItemText: {
     fontSize: 16,  // Larger font
-    color: Colors.sea.textSecondary,
     flex: 1,
   },
   taskListItemTextActive: {
-    color: Colors.sea.primary,
     fontWeight: 'bold',
   },
   taskListItemStatus: {
@@ -548,15 +526,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginLeft: 12,
     borderWidth: 1,
-    borderColor: Colors.sea.borderLight,
   },
   actionButtons: {
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingVertical: 16,  // More padding
-    backgroundColor: Colors.sea.cardBackground,
     borderTopWidth: 2,
-    borderTopColor: Colors.sea.cardBorder,
     gap: 16,  // More spacing
   },
   actionButton: {
@@ -567,19 +542,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: Colors.sea.borderLight,
-  },
-  completeButton: {
-    backgroundColor: Colors.sea.success,
-  },
-  skipButton: {
-    backgroundColor: Colors.sea.secondary,
-  },
-  resetButton: {
-    backgroundColor: Colors.sea.textDisabled,
   },
   actionButtonText: {
-    color: Colors.sea.textInverse,
     fontSize: 18,  // Larger font
     fontWeight: 'bold',
   },
@@ -587,7 +551,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 20,
     paddingBottom: 20,
-    backgroundColor: Colors.sea.cardBackground,
     gap: 16,  // More spacing
   },
   navButton: {
@@ -597,28 +560,21 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: Colors.sea.primary,
     borderWidth: 2,
-    borderColor: Colors.sea.primaryDark,
   },
   navButtonDisabled: {
-    backgroundColor: Colors.sea.disabledBackground,
-    borderColor: Colors.sea.cardBorder,
   },
   navButtonText: {
-    color: Colors.sea.textInverse,
     fontSize: 16,  // Larger font
     fontWeight: 'bold',
   },
   navButtonTextDisabled: {
-    color: Colors.sea.textDisabled,
   },
   completionMessage: {
     position: 'absolute',
     bottom: 120,
     left: 20,
     right: 20,
-    backgroundColor: Colors.sea.success,
     padding: 20,  // More padding
     borderRadius: 12,
     shadowColor: '#000',
@@ -630,10 +586,8 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 10,
     borderWidth: 2,
-    borderColor: Colors.sea.lowPriority,
   },
   completionText: {
-    color: Colors.sea.textInverse,
     fontSize: 18,  // Larger font
     fontWeight: 'bold',
     textAlign: 'center',

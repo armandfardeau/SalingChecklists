@@ -1,22 +1,25 @@
 import { Tabs } from 'expo-router';
 import { Text, StyleSheet } from 'react-native';
-import { Colors, Typography } from '../../constants/Colors';
+import { Typography } from '../../constants/Colors';
+import { useThemedColors } from '../../hooks/useThemedColors';
 
 export default function TabLayout() {
+  const colors = useThemedColors();
+
   return (
     <Tabs
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: Colors.sea.primary,
+          backgroundColor: colors.primary,
         },
-        headerTintColor: Colors.sea.textInverse,
+        headerTintColor: colors.textInverse,
         headerTitleStyle: {
           fontWeight: 'bold',
           fontSize: Typography.headerTitle,
         },
-        tabBarActiveTintColor: Colors.sea.primary,
-        tabBarInactiveTintColor: Colors.sea.tabIconDefault,
+        tabBarActiveTintColor: colors.primary,
+        tabBarInactiveTintColor: colors.textDisabled,
         tabBarLabelStyle: {
           fontSize: Typography.tabLabel,
           fontWeight: '600',
@@ -25,6 +28,9 @@ export default function TabLayout() {
           height: 64,  // Taller tab bar for larger touch targets
           paddingBottom: 8,
           paddingTop: 8,
+          backgroundColor: colors.cardBackground,
+          borderTopColor: colors.cardBorder,
+          borderTopWidth: 1,
         },
         tabBarIconStyle: {
           marginTop: 4,
