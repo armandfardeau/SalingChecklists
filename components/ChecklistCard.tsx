@@ -17,15 +17,27 @@ interface ChecklistCardProps {
    * Callback when the card is pressed
    */
   onPress?: (checklist: Checklist) => void;
+
+  /**
+   * Callback when the edit button is pressed
+   */
+  onEditPress?: (checklist: Checklist) => void;
 }
 
 /**
  * ChecklistCard component displays a single checklist with its progress
  */
-export default function ChecklistCard({ checklist, stats, onPress }: ChecklistCardProps) {
+export default function ChecklistCard({ checklist, stats, onPress, onEditPress }: ChecklistCardProps) {
   const handlePress = () => {
     if (onPress) {
       onPress(checklist);
+    }
+  };
+
+  const handleEditPress = (event: any) => {
+    event.stopPropagation();
+    if (onEditPress) {
+      onEditPress(checklist);
     }
   };
 
@@ -62,10 +74,21 @@ function getCategoryLabel(category: string): string {
             )}
           </View>
         </View>
-        <View style={styles.categoryBadge}>
-          <Text style={styles.categoryText}>
-            {getCategoryLabel(checklist.category)}
-          </Text>
+        <View style={styles.headerRight}>
+          {onEditPress && (
+            <TouchableOpacity
+              style={styles.editButton}
+              onPress={handleEditPress}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+            >
+              <Text style={styles.editButtonText}>✏️</Text>
+            </TouchableOpacity>
+          )}
+          <View style={styles.categoryBadge}>
+            <Text style={styles.categoryText}>
+              {getCategoryLabel(checklist.category)}
+            </Text>
+          </View>
         </View>
       </View>
 
@@ -116,11 +139,26 @@ const styles = StyleSheet.create({
   },
   header: {
     marginBottom: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
   },
   titleContainer: {
     flexDirection: 'row',
     alignItems: 'flex-start',
     marginBottom: 8,
+    flex: 1,
+  },
+  headerRight: {
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: 8,
+  },
+  editButton: {
+    padding: 4,
+  },
+  editButtonText: {
+    fontSize: 18,
   },
   icon: {
     fontSize: 24,

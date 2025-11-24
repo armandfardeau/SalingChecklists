@@ -20,6 +20,11 @@ interface ChecklistListProps {
   onChecklistPress?: (checklist: Checklist) => void;
 
   /**
+   * Callback when the edit button is pressed
+   */
+  onEditPress?: (checklist: Checklist) => void;
+
+  /**
    * Custom empty state component
    */
   emptyComponent?: React.ReactElement;
@@ -32,6 +37,7 @@ export default function ChecklistList({
   checklists,
   getStats,
   onChecklistPress,
+  onEditPress,
   emptyComponent,
 }: ChecklistListProps) {
   const renderItem = ({ item }: { item: Checklist }) => {
@@ -51,6 +57,7 @@ export default function ChecklistList({
         checklist={item}
         stats={stats || defaultStats}
         onPress={onChecklistPress}
+        onEditPress={onEditPress}
       />
     );
   };
