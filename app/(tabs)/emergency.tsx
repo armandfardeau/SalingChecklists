@@ -99,7 +99,7 @@ export default function Emergency() {
           </View>
         )}
 
-        <View style={[styles.infoBox, { backgroundColor: colors.warning, borderColor: colors.dangerDark }]}>
+        <View style={[styles.infoBox, { backgroundColor: colors.danger, borderColor: colors.dangerDark }]}>
           <Text style={[styles.infoTitle, { color: colors.textInverse }]}>
             ⚠️ When to Use Emergency Checklists
           </Text>
