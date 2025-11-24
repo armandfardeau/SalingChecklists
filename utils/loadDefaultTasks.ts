@@ -32,8 +32,7 @@ interface DefaultTasksJSON {
 /**
  * Converts a task from JSON format to Task type with Date objects
  */
-const parseTask = (taskData: DefaultTasksJSON['checklists'][0]['tasks'][0]): Task => {
-  const now = new Date();
+const parseTask = (taskData: DefaultTasksJSON['checklists'][0]['tasks'][0], timestamp: Date): Task => {
   return {
     id: taskData.id,
     title: taskData.title,
@@ -41,8 +40,8 @@ const parseTask = (taskData: DefaultTasksJSON['checklists'][0]['tasks'][0]): Tas
     status: taskData.status as Task['status'],
     priority: taskData.priority as Task['priority'],
     order: taskData.order,
-    createdAt: now,
-    updatedAt: now,
+    createdAt: timestamp,
+    updatedAt: timestamp,
   };
 };
 
@@ -60,7 +59,7 @@ const parseChecklist = (checklistData: DefaultTasksJSON['checklists'][0]): Check
     isTemplate: checklistData.isTemplate,
     color: checklistData.color,
     icon: checklistData.icon,
-    tasks: checklistData.tasks.map(parseTask),
+    tasks: checklistData.tasks.map(task => parseTask(task, now)),
     createdAt: now,
     updatedAt: now,
   };
