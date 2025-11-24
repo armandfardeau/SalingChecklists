@@ -233,4 +233,131 @@ describe('Checklist Store', () => {
     state._setHasHydrated(false);
     expect(useChecklistStore.getState()._hasHydrated).toBe(false);
   });
+
+  it('should reset all tasks in a checklist run to pending', () => {
+    const state = useChecklistStore.getState();
+    
+    // Create a checklist with tasks
+    const mockTasks = [
+      {
+        id: 'task-1',
+        title: 'Task 1',
+        status: TaskStatus.COMPLETED,
+        priority: TaskPriority.HIGH,
+        order: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        completedAt: new Date(),
+      },
+      {
+        id: 'task-2',
+        title: 'Task 2',
+        status: TaskStatus.SKIPPED,
+        priority: TaskPriority.MEDIUM,
+        order: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+      {
+        id: 'task-3',
+        title: 'Task 3',
+        status: TaskStatus.PENDING,
+        priority: TaskPriority.LOW,
+        order: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ];
+
+    const checklistId = state.addChecklistWithTasks(
+      {
+        name: 'Reset Test',
+        category: ChecklistCategory.PRE_DEPARTURE,
+      },
+      mockTasks
+    );
+
+    // Set lastCompletedAt
+    state.updateChecklist(checklistId, { lastCompletedAt: new Date() });
+
+    // Reset the checklist run
+    state.resetChecklistRun(checklistId);
+
+    const resetState = useChecklistStore.getState();
+    const resetChecklist = resetState.checklists.find(c => c.id === checklistId);
+
+    // All tasks should be pending
+    expect(resetChecklist.tasks[0].status).toBe(TaskStatus.PENDING);
+    expect(resetChecklist.tasks[1].status).toBe(TaskStatus.PENDING);
+    expect(resetChecklist.tasks[2].status).toBe(TaskStatus.PENDING);
+
+    // completedAt should be cleared for all tasks
+    expect(resetChecklist.tasks[0].completedAt).toBeUndefined();
+    expect(resetChecklist.tasks[1].completedAt).toBeUndefined();
+    expect(resetChecklist.tasks[2].completedAt).toBeUndefined();
+
+    // lastCompletedAt should be cleared
+    expect(resetChecklist.lastCompletedAt).toBeUndefined();
+  });
+
+  it('should not affect other checklists when resetting one', () => {
+    const state = useChecklistStore.getState();
+    
+    // Create two checklists with tasks
+    const mockTasks1 = [
+      {
+        id: 'task-1',
+        title: 'Task 1',
+        status: TaskStatus.COMPLETED,
+        priority: TaskPriority.HIGH,
+        order: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        completedAt: new Date(),
+      },
+    ];
+
+    const mockTasks2 = [
+      {
+        id: 'task-2',
+        title: 'Task 2',
+        status: TaskStatus.COMPLETED,
+        priority: TaskPriority.HIGH,
+        order: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        completedAt: new Date(),
+      },
+    ];
+
+    const checklistId1 = state.addChecklistWithTasks(
+      {
+        name: 'Checklist 1',
+        category: ChecklistCategory.PRE_DEPARTURE,
+      },
+      mockTasks1
+    );
+
+    const checklistId2 = state.addChecklistWithTasks(
+      {
+        name: 'Checklist 2',
+        category: ChecklistCategory.NAVIGATION,
+      },
+      mockTasks2
+    );
+
+    // Reset only the first checklist
+    state.resetChecklistRun(checklistId1);
+
+    const finalState = useChecklistStore.getState();
+    const checklist1 = finalState.checklists.find(c => c.id === checklistId1);
+    const checklist2 = finalState.checklists.find(c => c.id === checklistId2);
+
+    // First checklist should be reset
+    expect(checklist1.tasks[0].status).toBe(TaskStatus.PENDING);
+
+    // Second checklist should remain unchanged
+    expect(checklist2.tasks[0].status).toBe(TaskStatus.COMPLETED);
+    expect(checklist2.tasks[0].completedAt).toBeDefined();
+  });
 });

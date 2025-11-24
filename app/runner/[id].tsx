@@ -28,6 +28,7 @@ export default function ChecklistRunner() {
   const checklist = useChecklistStore((state) => state.getChecklist(id || ''));
   const updateTaskStatus = useChecklistStore((state) => state.updateTaskStatus);
   const getChecklistStats = useChecklistStore((state) => state.getChecklistStats);
+  const resetChecklistRun = useChecklistStore((state) => state.resetChecklistRun);
 
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
 
@@ -80,6 +81,11 @@ export default function ChecklistRunner() {
     handleTaskStatusChange(currentTask.id, TaskStatus.PENDING);
   };
 
+  const handleResetAll = () => {
+    resetChecklistRun(checklist.id);
+    setCurrentTaskIndex(0);
+  };
+
   const getPriorityColor = (priority: TaskPriority): string => {
     switch (priority) {
       case TaskPriority.CRITICAL:
@@ -116,9 +122,14 @@ export default function ChecklistRunner() {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       {/* Header */}
       <View style={[styles.header, { backgroundColor: colors.primary }]}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={[styles.backButtonText, { color: colors.textInverse }]}>← Back</Text>
-        </TouchableOpacity>
+        <View style={styles.headerTop}>
+          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+            <Text style={[styles.backButtonText, { color: colors.textInverse }]}>← Back</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={handleResetAll} style={styles.resetAllButton}>
+            <Text style={[styles.resetAllButtonText, { color: colors.textInverse }]}>↻ Reset All</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.headerContent}>
           <Text style={[styles.checklistName, { color: colors.textInverse }]} numberOfLines={1}>
             {checklist.name}
@@ -341,13 +352,31 @@ const styles = StyleSheet.create({
     padding: 20,  // More padding
     paddingTop: 12,
   },
-  backButton: {
+  headerTop: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     marginBottom: 12,
+  },
+  backButton: {
     minHeight: TouchTargets.minimum,
     justifyContent: 'center',
   },
   backButtonText: {
     fontSize: 18,  // Larger font
+    fontWeight: 'bold',
+  },
+  resetAllButton: {
+    minHeight: TouchTargets.minimum,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: 'rgba(255, 255, 255, 0.3)',
+  },
+  resetAllButtonText: {
+    fontSize: 16,
     fontWeight: 'bold',
   },
   headerContent: {

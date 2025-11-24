@@ -80,6 +80,11 @@ interface ChecklistStoreState {
    * Update all tasks in a checklist
    */
   updateChecklistTasks: (checklistId: string, tasks: Task[]) => void;
+
+  /**
+   * Reset all tasks in a checklist run to PENDING status
+   */
+  resetChecklistRun: (checklistId: string) => void;
 }
 
 /**
@@ -215,6 +220,28 @@ export const useChecklistStore = create<ChecklistStoreState>()(
               ? { ...checklist, tasks, updatedAt: new Date() }
               : checklist
           ),
+        }));
+      },
+
+      resetChecklistRun: (checklistId: string) => {
+        set((state) => ({
+          checklists: state.checklists.map((checklist) => {
+            if (checklist.id !== checklistId) return checklist;
+
+            const resetTasks = checklist.tasks.map((task) => ({
+              ...task,
+              status: TaskStatus.PENDING,
+              completedAt: undefined,
+              updatedAt: new Date(),
+            }));
+
+            return {
+              ...checklist,
+              tasks: resetTasks,
+              updatedAt: new Date(),
+              lastCompletedAt: undefined,
+            };
+          }),
         }));
       },
     }),
