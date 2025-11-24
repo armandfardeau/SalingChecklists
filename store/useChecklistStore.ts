@@ -21,6 +21,16 @@ interface ChecklistStoreState {
   checklists: Checklist[];
 
   /**
+   * Flag indicating if the store has been hydrated from persistent storage
+   */
+  _hasHydrated: boolean;
+
+  /**
+   * Set the hydration status
+   */
+  _setHasHydrated: (hasHydrated: boolean) => void;
+
+  /**
    * Add a new checklist
    */
   addChecklist: (input: CreateChecklistInput) => void;
@@ -103,6 +113,11 @@ export const useChecklistStore = create<ChecklistStoreState>()(
   persist(
     (set, get) => ({
       checklists: [],
+      _hasHydrated: false,
+
+      _setHasHydrated: (hasHydrated: boolean) => {
+        set({ _hasHydrated: hasHydrated });
+      },
 
       addChecklist: (input: CreateChecklistInput) => {
         const newChecklist = createChecklist(input);
@@ -204,6 +219,16 @@ export const useChecklistStore = create<ChecklistStoreState>()(
     {
       name: 'checklist-storage',
       storage: createJSONStorage(() => mmkvStorage),
+      onRehydrateStorage: () => (state, error) => {
+        // Mark store as hydrated even if there was an error
+        // This prevents the app from being stuck waiting for hydration
+        if (state) {
+          state._setHasHydrated(true);
+        }
+        // If hydration fails, we still want the app to function
+        // The store will use its initial state (empty array)
+        // and sample data will be initialized
+      },
     }
   )
 );
