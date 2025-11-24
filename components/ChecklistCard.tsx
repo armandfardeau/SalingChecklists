@@ -44,15 +44,15 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
     }
   };
 
-  const handleEditPress = (event: GestureResponderEvent) => {
-    event.stopPropagation();
+  const handleEditPress = (event?: GestureResponderEvent) => {
+    event?.stopPropagation();
     if (onEditPress) {
       onEditPress(checklist);
     }
   };
 
-  const handleDeletePress = (event: GestureResponderEvent) => {
-    event.stopPropagation();
+  const handleDeletePress = (event?: GestureResponderEvent) => {
+    event?.stopPropagation();
     if (onDeletePress) {
       onDeletePress(checklist);
     }
