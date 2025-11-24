@@ -80,16 +80,12 @@ describe('canCreateChecklist', () => {
       expect(canCreateChecklist(mockFreeCustomerInfo, 1)).toBe(true);
     });
 
-    it('should allow creation with 2 checklists (below limit)', () => {
-      expect(canCreateChecklist(mockFreeCustomerInfo, 2)).toBe(true);
-    });
-
-    it('should deny creation at limit (3 checklists)', () => {
+    it('should deny creation at limit (2 checklists)', () => {
       expect(canCreateChecklist(mockFreeCustomerInfo, FREE_CHECKLIST_LIMIT)).toBe(false);
     });
 
     it('should deny creation above limit', () => {
-      expect(canCreateChecklist(mockFreeCustomerInfo, 4)).toBe(false);
+      expect(canCreateChecklist(mockFreeCustomerInfo, 3)).toBe(false);
       expect(canCreateChecklist(mockFreeCustomerInfo, 10)).toBe(false);
     });
   });
@@ -101,7 +97,6 @@ describe('canCreateChecklist', () => {
 
     it('should allow creation below limit', () => {
       expect(canCreateChecklist(null, 1)).toBe(true);
-      expect(canCreateChecklist(null, 2)).toBe(true);
     });
 
     it('should deny creation at limit', () => {
@@ -109,13 +104,14 @@ describe('canCreateChecklist', () => {
     });
 
     it('should deny creation above limit', () => {
-      expect(canCreateChecklist(null, 4)).toBe(false);
+      expect(canCreateChecklist(null, 3)).toBe(false);
     });
   });
 });
 
 describe('FREE_CHECKLIST_LIMIT', () => {
-  it('should be set to 3', () => {
-    expect(FREE_CHECKLIST_LIMIT).toBe(3);
+  it('should be set to the number of default checklists', () => {
+    // The default JSON file contains 2 checklists
+    expect(FREE_CHECKLIST_LIMIT).toBe(2);
   });
 });

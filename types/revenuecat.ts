@@ -5,11 +5,12 @@
  */
 
 import { CustomerInfo, PurchasesPackage, PurchasesOfferings } from 'react-native-purchases';
+import defaultTasksData from '../assets/defaultTasks.json';
 
 /**
- * Free tier checklist limit
+ * Free tier checklist limit - set to the number of default checklists
  */
-export const FREE_CHECKLIST_LIMIT = 3;
+export const FREE_CHECKLIST_LIMIT = defaultTasksData.checklists.length;
 
 /**
  * Check if user has an active subscription
