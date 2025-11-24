@@ -15,6 +15,7 @@ import { ChecklistCategory, Task, TaskPriority, TaskStatus, CreateTaskInput } fr
 import { createTask } from '../../types/examples';
 import { getCategoryLabel } from '../../utils/formatters';
 import { areTaskArraysEqual } from '../../utils/comparisons';
+import { Colors, TouchTargets } from '../../constants/Colors';
 
 /**
  * ChecklistEditor screen for creating and editing checklists
@@ -378,230 +379,251 @@ export default function ChecklistEditor() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#2f95dc',
-    padding: 16,
+    backgroundColor: Colors.sea.primary,
+    padding: 20,  // More padding
+    minHeight: 68,
   },
   backButton: {
-    minWidth: 60,
+    minWidth: 80,
+    minHeight: TouchTargets.minimum,
+    justifyContent: 'center',
   },
   backButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    color: Colors.sea.textInverse,
+    fontSize: 18,  // Larger font
+    fontWeight: 'bold',
   },
   headerTitle: {
-    color: '#fff',
-    fontSize: 18,
+    color: Colors.sea.textInverse,
+    fontSize: 20,  // Larger font
     fontWeight: 'bold',
   },
   saveButton: {
-    minWidth: 60,
+    minWidth: 80,
+    minHeight: TouchTargets.minimum,
+    justifyContent: 'center',
   },
   saveButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    color: Colors.sea.textInverse,
+    fontSize: 18,  // Larger font
+    fontWeight: 'bold',
     textAlign: 'right',
   },
   content: {
     flex: 1,
   },
   contentContainer: {
-    padding: 16,
+    padding: 20,  // More padding
   },
   section: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
-    padding: 16,
-    marginBottom: 16,
+    padding: 20,  // More padding
+    marginBottom: 20,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
   },
   sectionTitle: {
-    fontSize: 18,
+    fontSize: 22,  // Larger font
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 16,
+    color: Colors.sea.textPrimary,
+    marginBottom: 20,
   },
   label: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-    marginBottom: 8,
-    marginTop: 12,
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textPrimary,
+    marginBottom: 10,
+    marginTop: 16,
   },
   input: {
-    backgroundColor: '#f5f5f5',
+    backgroundColor: Colors.sea.inputBackground,
     borderRadius: 8,
-    padding: 12,
-    fontSize: 16,
-    color: '#333',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    padding: 16,  // Larger padding
+    fontSize: 18,  // Larger font
+    color: Colors.sea.textPrimary,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
+    minHeight: TouchTargets.minimum,  // Minimum touch target
   },
   textArea: {
-    minHeight: 80,
+    minHeight: 100,  // Taller text area
     textAlignVertical: 'top',
   },
   categoryGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
-    marginTop: 4,
+    gap: 12,  // More spacing
+    marginTop: 8,
   },
   categoryButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 8,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    paddingHorizontal: 16,  // More padding
+    paddingVertical: 12,
+    minHeight: TouchTargets.minimum,  // Minimum touch target
+    borderRadius: 10,
+    backgroundColor: Colors.sea.inputBackground,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
   },
   categoryButtonActive: {
-    backgroundColor: '#2f95dc',
-    borderColor: '#2f95dc',
+    backgroundColor: Colors.sea.primary,
+    borderColor: Colors.sea.primaryDark,
   },
   categoryButtonText: {
-    fontSize: 12,
-    color: '#666',
-    fontWeight: '600',
+    fontSize: 14,  // Larger font
+    color: Colors.sea.textSecondary,
+    fontWeight: 'bold',
   },
   categoryButtonTextActive: {
-    color: '#fff',
+    color: Colors.sea.textInverse,
   },
   taskForm: {
-    marginBottom: 16,
+    marginBottom: 20,
   },
   priorityRow: {
     flexDirection: 'row',
-    gap: 8,
-    marginTop: 4,
+    gap: 12,  // More spacing
+    marginTop: 8,
   },
   priorityButton: {
     flex: 1,
-    paddingVertical: 8,
-    borderRadius: 8,
-    backgroundColor: '#f5f5f5',
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
-    alignItems: 'center',
-  },
-  priorityButtonActive: {
-    backgroundColor: '#2f95dc',
-    borderColor: '#2f95dc',
-  },
-  priorityButtonText: {
-    fontSize: 12,
-    color: '#666',
-    fontWeight: '600',
-  },
-  priorityButtonTextActive: {
-    color: '#fff',
-  },
-  taskFormButtons: {
-    flexDirection: 'row',
-    gap: 12,
-    marginTop: 16,
-  },
-  button: {
-    flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 12,  // More padding
+    minHeight: TouchTargets.minimum,  // Minimum touch target
+    borderRadius: 10,
+    backgroundColor: Colors.sea.inputBackground,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  priorityButtonActive: {
+    backgroundColor: Colors.sea.primary,
+    borderColor: Colors.sea.primaryDark,
+  },
+  priorityButtonText: {
+    fontSize: 14,  // Larger font
+    color: Colors.sea.textSecondary,
+    fontWeight: 'bold',
+  },
+  priorityButtonTextActive: {
+    color: Colors.sea.textInverse,
+  },
+  taskFormButtons: {
+    flexDirection: 'row',
+    gap: 16,  // More spacing
+    marginTop: 20,
+  },
+  button: {
+    flex: 1,
+    paddingVertical: 16,  // Larger padding
+    minHeight: TouchTargets.comfortable,  // Minimum 56px
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+  },
   addButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.sea.success,
+    borderColor: Colors.sea.lowPriority,
   },
   cancelButton: {
-    backgroundColor: '#757575',
+    backgroundColor: Colors.sea.textDisabled,
+    borderColor: Colors.sea.cardBorder,
   },
   buttonText: {
-    color: '#fff',
-    fontSize: 14,
+    color: Colors.sea.textInverse,
+    fontSize: 16,  // Larger font
     fontWeight: 'bold',
   },
   taskList: {
-    marginTop: 16,
+    marginTop: 20,
   },
   taskItem: {
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    padding: 12,
-    marginBottom: 8,
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+    backgroundColor: Colors.sea.inputBackground,
+    borderRadius: 10,
+    padding: 16,  // More padding
+    marginBottom: 12,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
   },
   taskItemContent: {
     flexDirection: 'row',
-    marginBottom: 8,
+    marginBottom: 12,
   },
   taskItemNumber: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-    marginRight: 8,
-    minWidth: 24,
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textSecondary,
+    marginRight: 12,
+    minWidth: 32,
   },
   taskItemText: {
     flex: 1,
   },
   taskItemTitle: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 4,
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textPrimary,
+    marginBottom: 6,
   },
   taskItemDescription: {
-    fontSize: 12,
-    color: '#666',
-    marginBottom: 4,
+    fontSize: 14,  // Larger font
+    color: Colors.sea.textSecondary,
+    marginBottom: 6,
   },
   taskItemPriority: {
-    fontSize: 11,
-    color: '#999',
+    fontSize: 13,  // Larger font
+    color: Colors.sea.textSecondary,
+    fontWeight: '600',
   },
   taskItemActions: {
     flexDirection: 'row',
-    gap: 8,
+    gap: 12,  // More spacing
     justifyContent: 'flex-end',
   },
   taskActionButton: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 6,
-    backgroundColor: '#2f95dc',
+    paddingHorizontal: 16,  // More padding
+    paddingVertical: 10,
+    minHeight: TouchTargets.minimum,  // Minimum touch target
+    borderRadius: 8,
+    backgroundColor: Colors.sea.primary,
+    borderWidth: 1,
+    borderColor: Colors.sea.primaryDark,
   },
   deleteActionButton: {
-    backgroundColor: '#f44336',
+    backgroundColor: Colors.sea.danger,
+    borderColor: '#8B1A1A',
   },
   taskActionButtonText: {
-    color: '#fff',
-    fontSize: 12,
-    fontWeight: '600',
+    color: Colors.sea.textInverse,
+    fontSize: 14,  // Larger font
+    fontWeight: 'bold',
   },
   deleteActionButtonText: {
-    color: '#fff',
+    color: Colors.sea.textInverse,
   },
   emptyTaskList: {
-    padding: 24,
+    padding: 32,  // More padding
     alignItems: 'center',
   },
   emptyTaskText: {
-    fontSize: 14,
-    color: '#999',
+    fontSize: 16,  // Larger font
+    color: Colors.sea.textSecondary,
     textAlign: 'center',
+    lineHeight: 24,
   },
 });

@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { TaskStatus, TaskPriority } from '../../types';
+import { Colors, TouchTargets } from '../../constants/Colors';
 
 // Animation delay after completing or skipping a task before auto-advancing
 const AUTO_ADVANCE_DELAY_MS = 300;
@@ -80,15 +81,15 @@ export default function ChecklistRunner() {
   const getPriorityColor = (priority: TaskPriority): string => {
     switch (priority) {
       case TaskPriority.CRITICAL:
-        return '#d32f2f';
+        return Colors.sea.danger;
       case TaskPriority.HIGH:
-        return '#f57c00';
+        return Colors.sea.warning;
       case TaskPriority.MEDIUM:
-        return '#fbc02d';
+        return Colors.sea.info;
       case TaskPriority.LOW:
-        return '#689f38';
+        return Colors.sea.lowPriority;
       default:
-        return '#757575';
+        return Colors.sea.textDisabled;
     }
   };
 
@@ -99,13 +100,13 @@ export default function ChecklistRunner() {
   const getStatusColor = (status: TaskStatus): string => {
     switch (status) {
       case TaskStatus.COMPLETED:
-        return '#4CAF50';
+        return Colors.sea.success;
       case TaskStatus.SKIPPED:
-        return '#FF9800';
+        return Colors.sea.secondary;
       case TaskStatus.PENDING:
-        return '#757575';
+        return Colors.sea.textDisabled;
       default:
-        return '#757575';
+        return Colors.sea.textDisabled;
     }
   };
 
@@ -137,7 +138,7 @@ export default function ChecklistRunner() {
                 styles.progressFill,
                 {
                   width: `${stats.completionPercentage}%`,
-                  backgroundColor: stats.isFullyCompleted ? '#4CAF50' : '#2f95dc',
+                  backgroundColor: stats.isFullyCompleted ? Colors.sea.success : Colors.sea.primary,
                 },
               ]}
             />
@@ -327,20 +328,22 @@ export default function ChecklistRunner() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
   },
   header: {
-    backgroundColor: '#2f95dc',
-    padding: 16,
-    paddingTop: 8,
+    backgroundColor: Colors.sea.primary,
+    padding: 20,  // More padding
+    paddingTop: 12,
   },
   backButton: {
-    marginBottom: 8,
+    marginBottom: 12,
+    minHeight: TouchTargets.minimum,
+    justifyContent: 'center',
   },
   backButtonText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+    color: Colors.sea.textInverse,
+    fontSize: 18,  // Larger font
+    fontWeight: 'bold',
   },
   headerContent: {
     flexDirection: 'row',
@@ -349,160 +352,174 @@ const styles = StyleSheet.create({
   },
   checklistName: {
     flex: 1,
-    fontSize: 20,
+    fontSize: 24,  // Larger font
     fontWeight: 'bold',
-    color: '#fff',
+    color: Colors.sea.textInverse,
     marginRight: 16,
+    lineHeight: 30,
   },
   progressText: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: '500',
+    fontSize: 16,  // Larger font
+    color: Colors.sea.textInverse,
+    fontWeight: 'bold',
   },
   progressBarContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    paddingHorizontal: 20,
+    paddingVertical: 16,  // More padding
+    backgroundColor: Colors.sea.cardBackground,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.sea.cardBorder,
   },
   progressBar: {
     flex: 1,
-    height: 10,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 5,
+    height: 14,  // Thicker progress bar
+    backgroundColor: '#E0E0E0',
+    borderRadius: 7,
     overflow: 'hidden',
-    marginRight: 12,
+    marginRight: 16,
+    borderWidth: 1,
+    borderColor: Colors.sea.cardBorder,
   },
   progressFill: {
     height: '100%',
-    borderRadius: 5,
+    borderRadius: 7,
   },
   progressPercentage: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#333',
-    minWidth: 45,
+    fontSize: 18,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textPrimary,
+    minWidth: 55,
     textAlign: 'right',
   },
   taskNavigation: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e0e0e0',
+    paddingHorizontal: 20,
+    paddingVertical: 16,  // More padding
+    backgroundColor: Colors.sea.cardBackground,
+    borderBottomWidth: 2,
+    borderBottomColor: Colors.sea.cardBorder,
   },
   taskCounter: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textPrimary,
     textAlign: 'center',
   },
   taskContent: {
     flex: 1,
   },
   taskContentContainer: {
-    padding: 16,
+    padding: 20,  // More padding
   },
   taskCard: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
-    padding: 20,
+    padding: 24,  // More padding
     marginBottom: 24,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
   },
   priorityBadge: {
     alignSelf: 'flex-start',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-    marginBottom: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,  // More padding
+    borderRadius: 20,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
   priorityText: {
-    color: '#fff',
-    fontSize: 12,
+    color: Colors.sea.textInverse,
+    fontSize: 14,  // Larger font
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   taskTitle: {
-    fontSize: 24,
+    fontSize: 28,  // Larger font
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
-    lineHeight: 32,
+    color: Colors.sea.textPrimary,
+    marginBottom: 16,
+    lineHeight: 36,
   },
   taskDescription: {
-    fontSize: 16,
-    color: '#666',
-    lineHeight: 24,
-    marginBottom: 16,
+    fontSize: 18,  // Larger font
+    color: Colors.sea.textSecondary,
+    lineHeight: 28,
+    marginBottom: 20,
   },
   statusContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 8,
+    marginTop: 12,
   },
   statusLabel: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-    marginRight: 8,
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textSecondary,
+    marginRight: 12,
   },
   statusBadge: {
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 6,  // More padding
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
   statusText: {
-    color: '#fff',
-    fontSize: 12,
+    color: Colors.sea.textInverse,
+    fontSize: 14,  // Larger font
     fontWeight: 'bold',
   },
   completedText: {
-    fontSize: 12,
-    color: '#666',
-    marginTop: 8,
+    fontSize: 14,  // Larger font
+    color: Colors.sea.textSecondary,
+    marginTop: 12,
     fontStyle: 'italic',
   },
   allTasksContainer: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
-    padding: 16,
+    padding: 20,  // More padding
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,
+    shadowRadius: 6,
+    elevation: 4,
+    borderWidth: 2,
+    borderColor: Colors.sea.cardBorder,
   },
   allTasksTitle: {
-    fontSize: 16,
+    fontSize: 18,  // Larger font
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 12,
+    color: Colors.sea.textPrimary,
+    marginBottom: 16,
   },
   taskListItem: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 12,
-    paddingHorizontal: 12,
+    paddingVertical: 16,  // More padding for larger touch target
+    paddingHorizontal: 16,
     borderRadius: 8,
-    marginBottom: 4,
+    marginBottom: 8,
+    minHeight: TouchTargets.minimum,  // Minimum touch target
   },
   taskListItemActive: {
-    backgroundColor: '#e3f2fd',
+    backgroundColor: '#E3F2FD',
+    borderWidth: 2,
+    borderColor: Colors.sea.primary,
   },
   taskListItemContent: {
     flexDirection: 'row',
@@ -510,103 +527,114 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   taskListItemNumber: {
-    fontSize: 14,
-    fontWeight: '600',
-    color: '#666',
-    marginRight: 8,
-    minWidth: 24,
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
+    color: Colors.sea.textSecondary,
+    marginRight: 12,
+    minWidth: 32,
   },
   taskListItemText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,  // Larger font
+    color: Colors.sea.textSecondary,
     flex: 1,
   },
   taskListItemTextActive: {
-    color: '#2f95dc',
-    fontWeight: '600',
+    color: Colors.sea.primary,
+    fontWeight: 'bold',
   },
   taskListItemStatus: {
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    marginLeft: 8,
+    width: 16,  // Larger indicator
+    height: 16,
+    borderRadius: 8,
+    marginLeft: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
   actionButtons: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#e0e0e0',
-    gap: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 16,  // More padding
+    backgroundColor: Colors.sea.cardBackground,
+    borderTopWidth: 2,
+    borderTopColor: Colors.sea.cardBorder,
+    gap: 16,  // More spacing
   },
   actionButton: {
     flex: 1,
-    paddingVertical: 16,
-    borderRadius: 8,
+    paddingVertical: 20,  // Larger touch target
+    minHeight: TouchTargets.comfortable,  // Minimum 56px
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'rgba(0,0,0,0.1)',
   },
   completeButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: Colors.sea.success,
   },
   skipButton: {
-    backgroundColor: '#FF9800',
+    backgroundColor: Colors.sea.secondary,
   },
   resetButton: {
-    backgroundColor: '#757575',
+    backgroundColor: Colors.sea.textDisabled,
   },
   actionButtonText: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.sea.textInverse,
+    fontSize: 18,  // Larger font
     fontWeight: 'bold',
   },
   navigationButtons: {
     flexDirection: 'row',
-    paddingHorizontal: 16,
-    paddingBottom: 16,
-    backgroundColor: '#fff',
-    gap: 12,
+    paddingHorizontal: 20,
+    paddingBottom: 20,
+    backgroundColor: Colors.sea.cardBackground,
+    gap: 16,  // More spacing
   },
   navButton: {
     flex: 1,
-    paddingVertical: 12,
-    borderRadius: 8,
+    paddingVertical: 16,  // Larger touch target
+    minHeight: TouchTargets.minimum,  // Minimum 48px
+    borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#2f95dc',
+    backgroundColor: Colors.sea.primary,
+    borderWidth: 2,
+    borderColor: Colors.sea.primaryDark,
   },
   navButtonDisabled: {
-    backgroundColor: '#e0e0e0',
+    backgroundColor: Colors.sea.disabledBackground,
+    borderColor: Colors.sea.cardBorder,
   },
   navButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
+    color: Colors.sea.textInverse,
+    fontSize: 16,  // Larger font
+    fontWeight: 'bold',
   },
   navButtonTextDisabled: {
-    color: '#999',
+    color: Colors.sea.textDisabled,
   },
   completionMessage: {
     position: 'absolute',
-    bottom: 100,
-    left: 16,
-    right: 16,
-    backgroundColor: '#4CAF50',
-    padding: 16,
+    bottom: 120,
+    left: 20,
+    right: 20,
+    backgroundColor: Colors.sea.success,
+    padding: 20,  // More padding
     borderRadius: 12,
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 6,
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOpacity: 0.4,
+    shadowRadius: 10,
+    elevation: 10,
+    borderWidth: 2,
+    borderColor: Colors.sea.lowPriority,
   },
   completionText: {
-    color: '#fff',
-    fontSize: 16,
+    color: Colors.sea.textInverse,
+    fontSize: 18,  // Larger font
     fontWeight: 'bold',
     textAlign: 'center',
   },

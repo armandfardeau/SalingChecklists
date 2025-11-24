@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import { Text, StyleSheet } from 'react-native';
+import { Colors } from '../../constants/Colors';
 
 export default function TabLayout() {
   return (
@@ -7,13 +8,27 @@ export default function TabLayout() {
       screenOptions={{
         headerShown: true,
         headerStyle: {
-          backgroundColor: '#2f95dc',
+          backgroundColor: Colors.sea.primary,
         },
-        headerTintColor: '#fff',
+        headerTintColor: Colors.sea.textInverse,
         headerTitleStyle: {
           fontWeight: 'bold',
+          fontSize: 20,  // Larger header title
         },
-        tabBarActiveTintColor: '#2f95dc',
+        tabBarActiveTintColor: Colors.sea.primary,
+        tabBarInactiveTintColor: Colors.sea.tabIconDefault,
+        tabBarLabelStyle: {
+          fontSize: 14,  // Larger tab labels
+          fontWeight: '600',
+        },
+        tabBarStyle: {
+          height: 64,  // Taller tab bar for larger touch targets
+          paddingBottom: 8,
+          paddingTop: 8,
+        },
+        tabBarIconStyle: {
+          marginTop: 4,
+        },
       }}
     >
       <Tabs.Screen
@@ -40,6 +55,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   tabIcon: {
-    fontSize: 24,
+    fontSize: 28,  // Larger tab icons for better visibility
   },
 });

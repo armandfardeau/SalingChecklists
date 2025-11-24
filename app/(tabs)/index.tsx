@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { Checklist } from '../../types';
 import ChecklistList from '../../components/ChecklistList';
+import { Colors, TouchTargets } from '../../constants/Colors';
 
 export default function App() {
   const router = useRouter();
@@ -55,30 +56,32 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#F5F5F5',
   },
   fab: {
     position: 'absolute',
-    right: 16,
-    bottom: 16,
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    backgroundColor: '#2f95dc',
+    right: 20,  // More spacing from edge
+    bottom: 20,
+    width: TouchTargets.large,  // 64px - larger touch target
+    height: TouchTargets.large,
+    borderRadius: TouchTargets.large / 2,
+    backgroundColor: Colors.sea.primary,
     alignItems: 'center',
     justifyContent: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 6,  // Stronger shadow
     },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 8,
+    shadowOpacity: 0.4,
+    shadowRadius: 8,
+    elevation: 10,
+    borderWidth: 2,  // Added border for definition
+    borderColor: Colors.sea.primaryDark,
   },
   fabIcon: {
-    fontSize: 32,
-    color: '#fff',
+    fontSize: 40,  // Larger icon
+    color: Colors.sea.textInverse,
     fontWeight: 'bold',
   },
 });

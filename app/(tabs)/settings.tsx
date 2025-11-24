@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Colors } from '../../constants/Colors';
 
 export default function SettingsScreen() {
   return (
@@ -19,21 +20,23 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F5F5F5',
   },
   scrollView: {
     flex: 1,
   },
   content: {
-    padding: 20,
+    padding: 24,  // More padding
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,  // Larger font
     fontWeight: 'bold',
-    marginBottom: 8,
+    marginBottom: 12,
+    color: Colors.sea.textPrimary,  // High contrast
   },
   description: {
-    fontSize: 16,
-    color: '#666',
+    fontSize: 18,  // Larger font
+    color: Colors.sea.textSecondary,  // High contrast
+    lineHeight: 26,
   },
 });

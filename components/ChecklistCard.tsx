@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
 import { getCategoryLabel } from '../utils/formatters';
+import { Colors, TouchTargets } from '../constants/Colors';
 
 interface ChecklistCardProps {
   /**
@@ -72,7 +73,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
             <TouchableOpacity
               style={styles.editButton}
               onPress={handleEditPress}
-              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              activeOpacity={0.6}
             >
               <Text style={styles.editButtonText}>✏️</Text>
             </TouchableOpacity>
@@ -92,7 +93,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
               styles.progressFill,
               {
                 width: `${stats.completionPercentage}%`,
-                backgroundColor: stats.isFullyCompleted ? '#4CAF50' : '#2f95dc',
+                backgroundColor: stats.isFullyCompleted ? Colors.sea.success : Colors.sea.primary,
               },
             ]}
           />
@@ -114,24 +115,27 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: Colors.sea.cardBackground,
     borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
+    padding: 20,  // Increased padding for larger touch target
+    marginBottom: 16,  // Increased spacing
+    minHeight: TouchTargets.minimum,  // Minimum touch target
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowOpacity: 0.15,  // Slightly stronger shadow
+    shadowRadius: 6,
+    elevation: 4,
+    borderWidth: 2,  // Added border for better definition
+    borderColor: Colors.sea.cardBorder,
   },
   inactiveCard: {
     opacity: 0.6,
   },
   header: {
-    marginBottom: 12,
+    marginBottom: 16,  // Increased spacing
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
@@ -145,75 +149,85 @@ const styles = StyleSheet.create({
   headerRight: {
     flexDirection: 'column',
     alignItems: 'flex-end',
-    gap: 8,
+    gap: 12,  // Increased spacing
   },
   editButton: {
-    padding: 4,
+    padding: 12,  // Larger touch target
+    minWidth: TouchTargets.minimum,
+    minHeight: TouchTargets.minimum,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   editButtonText: {
-    fontSize: 18,
+    fontSize: 24,  // Larger icon
   },
   icon: {
-    fontSize: 24,
-    marginRight: 8,
+    fontSize: 32,  // Larger icon
+    marginRight: 12,
   },
   textContainer: {
     flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 20,  // Larger font
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 4,
+    color: Colors.sea.textPrimary,  // High contrast black
+    marginBottom: 6,
+    lineHeight: 28,  // Better readability
   },
   description: {
-    fontSize: 14,
-    color: '#666',
-    lineHeight: 20,
+    fontSize: 16,  // Larger font
+    color: Colors.sea.textSecondary,  // High contrast
+    lineHeight: 24,
   },
   categoryBadge: {
     alignSelf: 'flex-start',
-    backgroundColor: '#f0f0f0',
-    paddingHorizontal: 12,
-    paddingVertical: 4,
-    borderRadius: 12,
+    backgroundColor: Colors.sea.inputBackground,
+    paddingHorizontal: 16,  // Larger padding
+    paddingVertical: 8,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.sea.cardBorder,
   },
   categoryText: {
-    fontSize: 12,
-    color: '#666',
-    fontWeight: '600',
+    fontSize: 14,  // Larger font
+    color: Colors.sea.textPrimary,  // High contrast
+    fontWeight: 'bold',  // Bolder
   },
   progressContainer: {
-    marginTop: 8,
+    marginTop: 12,
   },
   progressBar: {
-    height: 8,
-    backgroundColor: '#e0e0e0',
-    borderRadius: 4,
+    height: 12,  // Thicker progress bar
+    backgroundColor: '#E0E0E0',
+    borderRadius: 6,
     overflow: 'hidden',
-    marginBottom: 6,
+    marginBottom: 8,
+    borderWidth: 1,
+    borderColor: Colors.sea.cardBorder,
   },
   progressFill: {
     height: '100%',
-    borderRadius: 4,
+    borderRadius: 6,
   },
   progressText: {
-    fontSize: 12,
-    color: '#666',
+    fontSize: 14,  // Larger font
+    color: Colors.sea.textPrimary,  // High contrast
     textAlign: 'right',
+    fontWeight: '600',  // Bolder
   },
   inactiveBadge: {
     position: 'absolute',
-    top: 8,
-    right: 8,
-    backgroundColor: '#ff9800',
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 4,
+    top: 12,
+    right: 12,
+    backgroundColor: Colors.sea.secondary,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 6,
   },
   inactiveText: {
-    fontSize: 10,
-    color: '#fff',
+    fontSize: 12,  // Larger font
+    color: Colors.sea.textInverse,
     fontWeight: 'bold',
   },
 });
