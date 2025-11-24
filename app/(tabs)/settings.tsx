@@ -3,6 +3,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useThemeStore } from '../../store';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { TouchTargets, Typography } from '../../constants/Colors';
+import { Colors } from '../../constants/Colors';
+import SubscriptionStatus from '../../components/SubscriptionStatus';
 
 export default function SettingsScreen() {
   const colors = useThemedColors();
@@ -17,14 +19,10 @@ export default function SettingsScreen() {
           <Text style={[styles.description, { color: colors.textSecondary }]}>
             Configure your app preferences
           </Text>
-
-          {/* Theme Section */}
           <View style={styles.section}>
             <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
               Appearance
             </Text>
-            
-            {/* Dark Mode Toggle */}
             <View style={[styles.settingItem, { backgroundColor: colors.cardBackground, borderColor: colors.cardBorder }]}>
               <View style={styles.settingInfo}>
                 <Text style={[styles.settingLabel, { color: colors.textPrimary }]}>
@@ -42,6 +40,8 @@ export default function SettingsScreen() {
               />
             </View>
           </View>
+          
+          <SubscriptionStatus />
         </View>
       </ScrollView>
     </SafeAreaView>

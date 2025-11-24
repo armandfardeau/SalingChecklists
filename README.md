@@ -76,6 +76,7 @@ npm run web
 - **React** 19.1.0
 - **Zustand** - State management
 - **MMKV** - Fast, persistent key-value storage
+- **Vexo** - Product analytics and user insights
 
 ## 🛠️ Project Structure
 
@@ -91,15 +92,45 @@ SalingChecklists/
 ├── constants/             # App constants (colors, config, etc.)
 ├── hooks/                 # Custom React hooks
 ├── utils/                 # Utility functions and helpers
+│   └── loadDefaultTasks.ts # Load default checklist data from JSON
 ├── api/                   # API client and endpoints
 ├── types/                 # TypeScript type definitions
 ├── __tests__/            # Test files
 ├── assets/                # Images, icons, fonts
+│   └── defaultTasks.json  # Default checklist data
 ├── app.json              # Expo configuration
 └── package.json          # Dependencies and scripts
 ```
 
 See [STRUCTURE.md](STRUCTURE.md) for more details about the folder organization.
+
+### Default Checklists
+
+Default checklists (like the pre-departure safety check) are defined in `assets/defaultTasks.json`. This JSON file contains sample checklist data that is loaded when the app is first launched. You can modify this file to customize the default checklists without changing any code.
+
+The JSON structure follows this format:
+```json
+{
+  "checklists": [
+    {
+      "id": "unique-id",
+      "name": "Checklist Name",
+      "description": "Description",
+      "category": "pre_departure",
+      "tasks": [
+        {
+          "id": "task-id",
+          "title": "Task Title",
+          "description": "Task description",
+          "status": "pending",
+          "priority": "high",
+          "order": 1
+        }
+      ]
+    }
+  ]
+}
+```
 
 ## 📝 Available Scripts
 
@@ -107,6 +138,37 @@ See [STRUCTURE.md](STRUCTURE.md) for more details about the folder organization.
 - `npm run android` - Launch app on Android
 - `npm run ios` - Launch app on iOS (macOS only)
 - `npm run web` - Launch app in browser
+- `npm test` - Run Jest tests
+
+## 📊 Analytics Configuration
+
+This app integrates [Vexo.co](https://vexo.co) for product analytics and user insights.
+
+### Setting up Vexo Analytics
+
+1. Create a free account at [vexo.co](https://vexo.co)
+2. Create a new app in the Vexo dashboard and copy your API key
+3. Create a `.env` file in the project root (you can copy `.env.example`):
+   ```bash
+   cp .env.example .env
+   ```
+4. Add your Vexo API key to the `.env` file:
+   ```
+   EXPO_PUBLIC_VEXO_API_KEY=your_actual_api_key_here
+   ```
+5. Rebuild your app to include the analytics
+
+**Note:** By default, analytics are only sent in production builds. To test analytics in development, modify the `productionOnly` setting in `constants/Analytics.ts`.
+
+### What Vexo Tracks
+
+- User sessions and engagement
+- Screen navigation and user flows
+- App performance metrics
+- Session replays (optional)
+- Custom events (can be added as needed)
+
+For more information, visit the [Vexo documentation](https://docs.vexo.co/).
 
 ## 🤝 Contributing
 

@@ -34,6 +34,7 @@ export const Colors = {
     inputBackground: '#F5F5F5',
     screenBackground: '#F5F5F5',
     disabledBackground: '#BDBDBD',
+    tabIconDefault: '#757575',  // Darker gray for inactive tabs
     
     // Text colors (high contrast)
     textPrimary: '#000000',
