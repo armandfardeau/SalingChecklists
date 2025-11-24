@@ -2,6 +2,7 @@ import React from 'react';
 import { FlatList, View, Text, StyleSheet } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
 import ChecklistCard from './ChecklistCard';
+import { Colors } from '../constants/Colors';
 
 interface ChecklistListProps {
   /**
@@ -107,19 +108,19 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   emptyIcon: {
-    fontSize: 64,
-    marginBottom: 16,
+    fontSize: 72,  // Larger icon
+    marginBottom: 20,
   },
   emptyTitle: {
-    fontSize: 20,
+    fontSize: 24,  // Larger font
     fontWeight: 'bold',
-    color: '#333',
-    marginBottom: 8,
+    color: Colors.sea.textPrimary,  // High contrast
+    marginBottom: 12,
   },
   emptyText: {
-    fontSize: 14,
-    color: '#666',
+    fontSize: 16,  // Larger font
+    color: Colors.sea.textSecondary,  // High contrast
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: 24,
   },
 });
