@@ -1,5 +1,5 @@
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -21,7 +21,7 @@ export default function TabLayout() {
         options={{
           title: 'Checklists',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>📋</Text>
+            <Text style={[styles.tabIcon, { color }]}>📋</Text>
           ),
         }}
       />
@@ -30,10 +30,16 @@ export default function TabLayout() {
         options={{
           title: 'Settings',
           tabBarIcon: ({ color }) => (
-            <Text style={{ fontSize: 24, color }}>⚙️</Text>
+            <Text style={[styles.tabIcon, { color }]}>⚙️</Text>
           ),
         }}
       />
     </Tabs>
   );
 }
+
+const styles = StyleSheet.create({
+  tabIcon: {
+    fontSize: 24,
+  },
+});
