@@ -8,7 +8,7 @@ import { useThemeStore } from '../store/useThemeStore';
  * 
  * Usage:
  * ```tsx
- * import { useThemedColors } from '@/hooks/useThemedColors';
+ * import { useThemedColors } from '../hooks/useThemedColors';
  * 
  * function MyComponent() {
  *   const colors = useThemedColors();

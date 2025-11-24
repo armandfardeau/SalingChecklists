@@ -38,7 +38,7 @@ export default function SettingsScreen() {
                 value={mode === 'dark'}
                 onValueChange={toggleTheme}
                 trackColor={{ false: colors.disabledBackground, true: colors.primary }}
-                thumbColor="#FFFFFF"
+                thumbColor={colors.cardBackground}
               />
             </View>
           </View>
