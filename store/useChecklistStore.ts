@@ -7,6 +7,7 @@ import {
   UpdateChecklistInput,
   ChecklistStats,
   TaskStatus,
+  Task,
 } from '../types';
 import { createChecklist, calculateChecklistStats, examplePreDepartureChecklist, updateTask } from '../types/examples';
 
@@ -23,6 +24,11 @@ interface ChecklistStoreState {
    * Add a new checklist
    */
   addChecklist: (input: CreateChecklistInput) => void;
+
+  /**
+   * Add a new checklist with tasks
+   */
+  addChecklistWithTasks: (input: CreateChecklistInput, tasks: Task[]) => string;
 
   /**
    * Update an existing checklist
@@ -58,6 +64,11 @@ interface ChecklistStoreState {
    * Update task status in a checklist
    */
   updateTaskStatus: (checklistId: string, taskId: string, status: TaskStatus) => void;
+
+  /**
+   * Update all tasks in a checklist
+   */
+  updateChecklistTasks: (checklistId: string, tasks: Task[]) => void;
 }
 
 /**
@@ -98,6 +109,14 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         set((state) => ({
           checklists: [...state.checklists, newChecklist],
         }));
+      },
+
+      addChecklistWithTasks: (input: CreateChecklistInput, tasks: Task[]) => {
+        const newChecklist = { ...createChecklist(input), tasks };
+        set((state) => ({
+          checklists: [...state.checklists, newChecklist],
+        }));
+        return newChecklist.id;
       },
 
       updateChecklist: (id: string, updates: UpdateChecklistInput) => {
@@ -169,6 +188,16 @@ export const useChecklistStore = create<ChecklistStoreState>()(
               lastCompletedAt: allTasksCompleted ? new Date() : checklist.lastCompletedAt,
             };
           }),
+        }));
+      },
+
+      updateChecklistTasks: (checklistId: string, tasks: Task[]) => {
+        set((state) => ({
+          checklists: state.checklists.map((checklist) =>
+            checklist.id === checklistId
+              ? { ...checklist, tasks, updatedAt: new Date() }
+              : checklist
+          ),
         }));
       },
     }),

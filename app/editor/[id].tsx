@@ -26,8 +26,9 @@ export default function ChecklistEditor() {
   const existingChecklist = useChecklistStore((state) => 
     isNewChecklist ? undefined : state.getChecklist(id || '')
   );
-  const addChecklist = useChecklistStore((state) => state.addChecklist);
+  const addChecklistWithTasks = useChecklistStore((state) => state.addChecklistWithTasks);
   const updateChecklist = useChecklistStore((state) => state.updateChecklist);
+  const updateChecklistTasks = useChecklistStore((state) => state.updateChecklistTasks);
 
   // Form state
   const [name, setName] = useState(existingChecklist?.name || '');
@@ -59,29 +60,19 @@ export default function ChecklistEditor() {
     }
 
     if (isNewChecklist) {
-      // Create new checklist with tasks
-      const newChecklistId = `checklist-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-      const now = new Date();
-      const newChecklist = {
-        id: newChecklistId,
-        name: name.trim(),
-        description: description.trim() || undefined,
-        category,
-        tasks,
-        isActive: true,
-        isTemplate: false,
-        icon: icon.trim() || undefined,
-        color: color.trim() || undefined,
-        createdAt: now,
-        updatedAt: now,
-      };
-      
-      // Use the store's internal method to add the full checklist
-      useChecklistStore.setState((state) => ({
-        checklists: [...state.checklists, newChecklist],
-      }));
+      // Create new checklist with tasks using store method
+      addChecklistWithTasks(
+        {
+          name: name.trim(),
+          description: description.trim() || undefined,
+          category,
+          icon: icon.trim() || undefined,
+          color: color.trim() || undefined,
+        },
+        tasks
+      );
     } else if (existingChecklist) {
-      // Update existing checklist
+      // Update existing checklist metadata
       updateChecklist(existingChecklist.id, {
         name: name.trim(),
         description: description.trim() || undefined,
@@ -90,15 +81,9 @@ export default function ChecklistEditor() {
         color: color.trim() || undefined,
       });
       
-      // Update tasks by setting state directly if they changed
+      // Update tasks if they changed
       if (JSON.stringify(tasks) !== JSON.stringify(existingChecklist.tasks)) {
-        useChecklistStore.setState((state) => ({
-          checklists: state.checklists.map((checklist) =>
-            checklist.id === existingChecklist.id
-              ? { ...checklist, tasks, updatedAt: new Date() }
-              : checklist
-          ),
-        }));
+        updateChecklistTasks(existingChecklist.id, tasks);
       }
     }
 
