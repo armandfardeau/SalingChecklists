@@ -6,8 +6,9 @@ import {
   CreateChecklistInput,
   UpdateChecklistInput,
   ChecklistStats,
+  TaskStatus,
 } from '../types';
-import { createChecklist, calculateChecklistStats, examplePreDepartureChecklist } from '../types/examples';
+import { createChecklist, calculateChecklistStats, examplePreDepartureChecklist, updateTask } from '../types/examples';
 
 /**
  * Checklist store state interface
@@ -52,6 +53,11 @@ interface ChecklistStoreState {
    * Initialize with sample data (for demo purposes)
    */
   initializeSampleData: () => void;
+
+  /**
+   * Update task status in a checklist
+   */
+  updateTaskStatus: (checklistId: string, taskId: string, status: TaskStatus) => void;
 }
 
 /**
@@ -141,6 +147,28 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         if (get().checklists.length === 0) {
           set({ checklists: [examplePreDepartureChecklist] });
         }
+      },
+
+      updateTaskStatus: (checklistId: string, taskId: string, status: TaskStatus) => {
+        set((state) => ({
+          checklists: state.checklists.map((checklist) => {
+            if (checklist.id !== checklistId) return checklist;
+
+            return {
+              ...checklist,
+              tasks: checklist.tasks.map((task) => {
+                if (task.id !== taskId) return task;
+                return updateTask(task, { status });
+              }),
+              updatedAt: new Date(),
+              lastCompletedAt: 
+                status === TaskStatus.COMPLETED && 
+                checklist.tasks.every(t => t.id === taskId ? status === TaskStatus.COMPLETED : t.status === TaskStatus.COMPLETED)
+                  ? new Date()
+                  : checklist.lastCompletedAt,
+            };
+          }),
+        }));
       },
     }),
     {
