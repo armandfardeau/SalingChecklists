@@ -2,6 +2,19 @@
 
 Mobile checklist management application for sailing navigation, built with React Native and Expo.
 
+## 🚀 Quick Start with GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/armandfardeau/SalingChecklists)
+
+Get started instantly with a fully configured development environment in the cloud:
+
+1. Click the badge above or the "Code" → "Codespaces" button
+2. Wait for the container to build (~2-3 minutes)
+3. Run `npm start` to launch the development server
+4. Access the web version or use Expo Go on your phone
+
+For detailed Codespaces instructions, see [CODESPACES.md](.github/CODESPACES.md).
+
 ## 📋 Prerequisites
 
 - Node.js (version 20 or higher)
