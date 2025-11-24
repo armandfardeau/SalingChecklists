@@ -13,6 +13,8 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { ChecklistCategory, Task, TaskPriority, TaskStatus, CreateTaskInput } from '../../types';
 import { createTask } from '../../types/examples';
+import { getCategoryLabel } from '../../utils/formatters';
+import { areTaskArraysEqual } from '../../utils/comparisons';
 
 /**
  * ChecklistEditor screen for creating and editing checklists
@@ -81,8 +83,8 @@ export default function ChecklistEditor() {
         color: color.trim() || undefined,
       });
       
-      // Update tasks if they changed
-      if (JSON.stringify(tasks) !== JSON.stringify(existingChecklist.tasks)) {
+      // Update tasks if they changed (using efficient comparison)
+      if (!areTaskArraysEqual(tasks, existingChecklist.tasks)) {
         updateChecklistTasks(existingChecklist.id, tasks);
       }
     }
@@ -163,13 +165,6 @@ export default function ChecklistEditor() {
     setTaskDescription('');
     setTaskPriority(TaskPriority.MEDIUM);
     setEditingTaskId(null);
-  };
-
-  const getCategoryLabel = (cat: ChecklistCategory): string => {
-    return cat
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
   };
 
   const getPriorityLabel = (priority: TaskPriority): string => {

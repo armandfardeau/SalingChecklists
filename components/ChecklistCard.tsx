@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
+import { getCategoryLabel } from '../utils/formatters';
 
 interface ChecklistCardProps {
   /**
@@ -34,20 +35,12 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
     }
   };
 
-  const handleEditPress = (event: any) => {
+  const handleEditPress = (event: GestureResponderEvent) => {
     event.stopPropagation();
     if (onEditPress) {
       onEditPress(checklist);
     }
   };
-
-// Get category display name
-function getCategoryLabel(category: string): string {
-  return category
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-}
 
   return (
     <TouchableOpacity
