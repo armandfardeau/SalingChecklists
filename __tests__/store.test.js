@@ -8,14 +8,14 @@ jest.mock('react-native-mmkv', () => {
   const mockStorage = new Map();
   
   return {
-    MMKV: jest.fn().mockImplementation(() => ({
+    createMMKV: jest.fn(() => ({
       set: jest.fn((key, value) => {
         mockStorage.set(key, value);
       }),
       getString: jest.fn((key) => {
         return mockStorage.get(key);
       }),
-      delete: jest.fn((key) => {
+      remove: jest.fn((key) => {
         mockStorage.delete(key);
       }),
       clearAll: jest.fn(() => {
