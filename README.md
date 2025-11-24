@@ -4,7 +4,7 @@ Mobile checklist management application for sailing navigation, built with React
 
 ## 📋 Prerequisites
 
-- Node.js (version 18 or higher)
+- Node.js (version 20 or higher)
 - npm or yarn
 - Expo Go on your mobile device ([iOS](https://apps.apple.com/app/expo-go/id982107779) | [Android](https://play.google.com/store/apps/details?id=host.exp.exponent))
 
