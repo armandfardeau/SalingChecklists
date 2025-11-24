@@ -40,6 +40,9 @@ jobs:
         run: npm ci
 
       - name: Create preview
-        uses: expo/expo-github-action/preview@v8
+        run: eas update --auto --branch pr-${{ github.event.number }}
+
+      - name: Comment on PR
+        uses: expo/expo-github-action/preview-comment@v8
         with:
-          command: eas update --auto --branch pr-${{ github.event.number }}
+          channel: pr-${{ github.event.number }}
