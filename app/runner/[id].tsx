@@ -11,6 +11,9 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { TaskStatus, TaskPriority } from '../../types';
 
+// Animation delay after completing or skipping a task before auto-advancing
+const AUTO_ADVANCE_DELAY_MS = 300;
+
 /**
  * ChecklistRunner screen for executing checklists
  * Allows users to mark tasks as completed, pending, or skipped
@@ -59,14 +62,14 @@ export default function ChecklistRunner() {
   const handleComplete = () => {
     handleTaskStatusChange(currentTask.id, TaskStatus.COMPLETED);
     if (currentTaskIndex < sortedTasks.length - 1) {
-      setTimeout(() => handleNextTask(), 300);
+      setTimeout(() => handleNextTask(), AUTO_ADVANCE_DELAY_MS);
     }
   };
 
   const handleSkip = () => {
     handleTaskStatusChange(currentTask.id, TaskStatus.SKIPPED);
     if (currentTaskIndex < sortedTasks.length - 1) {
-      setTimeout(() => handleNextTask(), 300);
+      setTimeout(() => handleNextTask(), AUTO_ADVANCE_DELAY_MS);
     }
   };
 

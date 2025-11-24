@@ -154,18 +154,19 @@ export const useChecklistStore = create<ChecklistStoreState>()(
           checklists: state.checklists.map((checklist) => {
             if (checklist.id !== checklistId) return checklist;
 
+            const updatedTasks = checklist.tasks.map((task) => {
+              if (task.id !== taskId) return task;
+              return updateTask(task, { status });
+            });
+
+            // Check if all tasks are now completed
+            const allTasksCompleted = updatedTasks.every(t => t.status === TaskStatus.COMPLETED);
+
             return {
               ...checklist,
-              tasks: checklist.tasks.map((task) => {
-                if (task.id !== taskId) return task;
-                return updateTask(task, { status });
-              }),
+              tasks: updatedTasks,
               updatedAt: new Date(),
-              lastCompletedAt: 
-                status === TaskStatus.COMPLETED && 
-                checklist.tasks.every(t => t.id === taskId ? status === TaskStatus.COMPLETED : t.status === TaskStatus.COMPLETED)
-                  ? new Date()
-                  : checklist.lastCompletedAt,
+              lastCompletedAt: allTasksCompleted ? new Date() : checklist.lastCompletedAt,
             };
           }),
         }));
