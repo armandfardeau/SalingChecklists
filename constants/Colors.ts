@@ -57,7 +57,7 @@ export const Colors = {
     // UI colors
     cardBackground: '#1E1E1E',
     cardBorder: '#424242',
-    borderLight: 'rgba(255,255,255,0.1)',  // Light border with transparency
+    borderLight: 'rgba(255,255,255,0.1)',  // Subtle border with transparency
     inputBackground: '#2C2C2C',
     screenBackground: '#121212',
     disabledBackground: '#424242',
