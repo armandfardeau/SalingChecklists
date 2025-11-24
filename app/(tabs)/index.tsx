@@ -13,7 +13,7 @@ export default function App() {
   // Initialize sample data on first load
   useEffect(() => {
     initializeSampleData();
-  }, [initializeSampleData]);
+  }, []);
 
   const handleChecklistPress = (checklist: Checklist) => {
     // TODO: Navigate to checklist detail screen
