@@ -379,7 +379,7 @@ export default function ChecklistEditor() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: Colors.sea.screenBackground,
   },
   header: {
     flexDirection: 'row',

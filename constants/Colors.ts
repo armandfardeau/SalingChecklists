@@ -30,6 +30,7 @@ export const Colors = {
     cardBackground: '#FFFFFF',
     cardBorder: '#E0E0E0',
     inputBackground: '#F5F5F5',
+    screenBackground: '#F5F5F5',
     disabledBackground: '#BDBDBD',
     
     // Text colors (high contrast)
