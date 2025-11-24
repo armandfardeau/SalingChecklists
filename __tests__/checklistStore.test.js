@@ -217,4 +217,20 @@ describe('Checklist Store', () => {
     const secondCount = useChecklistStore.getState().checklists.length;
     expect(secondCount).toBe(firstCount);
   });
+
+  it('should track hydration state', () => {
+    const state = useChecklistStore.getState();
+    
+    // Initially should not be hydrated (but in test environment it may start as true)
+    // The important thing is that _hasHydrated flag exists and can be set
+    expect(state._hasHydrated).toBeDefined();
+    expect(typeof state._hasHydrated).toBe('boolean');
+    
+    // Should be able to set hydration state
+    state._setHasHydrated(true);
+    expect(useChecklistStore.getState()._hasHydrated).toBe(true);
+    
+    state._setHasHydrated(false);
+    expect(useChecklistStore.getState()._hasHydrated).toBe(false);
+  });
 });
