@@ -66,19 +66,6 @@
           "id": "emerg-task-1",
           "title": "Assess the situation",
           "description": "Determine the nature and severity of the emergency",
-      "id": "arrival-1",
-      "name": "Arrival Procedures",
-      "description": "Essential tasks to complete upon arrival at destination.",
-      "category": "arrival",
-      "isActive": true,
-      "isTemplate": false,
-      "color": "#3498db",
-      "icon": "anchor",
-      "tasks": [
-        {
-          "id": "arrival-task-1",
-          "title": "Secure the boat at the dock or anchorage",
-          "description": "Properly moor the vessel with appropriate lines and fenders",
           "status": "pending",
           "priority": "critical",
           "order": 1
@@ -130,6 +117,28 @@
           "status": "pending",
           "priority": "high",
           "order": 7
+        }
+      ]
+    },
+    {
+      "id": "arrival-1",
+      "name": "Arrival Procedures",
+      "description": "Essential tasks to complete upon arrival at destination.",
+      "category": "arrival",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#3498db",
+      "icon": "anchor",
+      "tasks": [
+        {
+          "id": "arrival-task-1",
+          "title": "Secure the boat at the dock or anchorage",
+          "description": "Properly moor the vessel with appropriate lines and fenders",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
           "id": "arrival-task-2",
           "title": "Engine shutdown and post-operation checks",
           "description": "Turn off engine and perform post-operation inspection",
