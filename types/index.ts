@@ -1,5 +1,5 @@
 /**
- * Type definitions for SalingChecklists application
+ * Type definitions for SailingChecklists application
  * 
  * This module exports all TypeScript types and interfaces used throughout the application.
  */

@@ -35,13 +35,24 @@ const createTask = (input: CreateTaskInput): Task => {
 // Example 2: Updating a task
 const updateTask = (task: Task, updates: UpdateTaskInput): Task => {
   const wasCompleted = task.status === TaskStatus.COMPLETED;
-  const isNowCompleted = updates.status === TaskStatus.COMPLETED;
+  const newStatus = updates.status ?? task.status;
+  const isNowCompleted = newStatus === TaskStatus.COMPLETED;
+  
+  // Set completedAt when transitioning to COMPLETED, clear it when transitioning away
+  let completedAt = task.completedAt;
+  if (updates.status !== undefined) {
+    if (isNowCompleted && !wasCompleted) {
+      completedAt = new Date();
+    } else if (!isNowCompleted && wasCompleted) {
+      completedAt = undefined;
+    }
+  }
   
   return {
     ...task,
     ...updates,
     updatedAt: new Date(),
-    completedAt: isNowCompleted && !wasCompleted ? new Date() : task.completedAt,
+    completedAt,
   };
 };
 
