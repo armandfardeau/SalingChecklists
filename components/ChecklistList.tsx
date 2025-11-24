@@ -94,8 +94,6 @@ export default function ChecklistList({
   );
 }
 
-import { Colors } from '../constants/Colors';
-
 const styles = StyleSheet.create({
   listContent: {
     padding: 16,
