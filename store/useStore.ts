@@ -23,7 +23,7 @@ interface StoreState {
  * 
  * Usage:
  * ```tsx
- * import { useStore } from '@/store/useStore';
+ * import { useStore } from '@/store';
  * 
  * function MyComponent() {
  *   const count = useStore((state) => state.count);
