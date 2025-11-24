@@ -47,6 +47,15 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="emergency"
+        options={{
+          title: 'Emergency',
+          tabBarIcon: ({ color }) => (
+            <Text style={[styles.tabIcon, { color }]}>🚨</Text>
+          ),
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: 'Settings',

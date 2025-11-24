@@ -53,6 +53,74 @@
       ]
     },
     {
+      "id": "emergency-1",
+      "name": "Emergency Procedures",
+      "description": "Critical emergency response checklist",
+      "category": "emergency",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#C62828",
+      "icon": "🚨",
+      "tasks": [
+        {
+          "id": "emerg-task-1",
+          "title": "Assess the situation",
+          "description": "Determine the nature and severity of the emergency",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "emerg-task-2",
+          "title": "Alert crew and passengers",
+          "description": "Inform all persons on board of the emergency",
+          "status": "pending",
+          "priority": "critical",
+          "order": 2
+        },
+        {
+          "id": "emerg-task-3",
+          "title": "Put on life jackets",
+          "description": "Ensure everyone dons their life jackets immediately",
+          "status": "pending",
+          "priority": "critical",
+          "order": 3
+        },
+        {
+          "id": "emerg-task-4",
+          "title": "Make distress call",
+          "description": "Send MAYDAY on VHF Channel 16 if life-threatening",
+          "status": "pending",
+          "priority": "critical",
+          "order": 4
+        },
+        {
+          "id": "emerg-task-5",
+          "title": "Deploy safety equipment",
+          "description": "Prepare life raft, flares, and emergency beacon (EPIRB)",
+          "status": "pending",
+          "priority": "critical",
+          "order": 5
+        },
+        {
+          "id": "emerg-task-6",
+          "title": "Attempt to control situation",
+          "description": "Take immediate action to contain/resolve the emergency",
+          "status": "pending",
+          "priority": "high",
+          "order": 6
+        },
+        {
+          "id": "emerg-task-7",
+          "title": "Prepare for evacuation",
+          "description": "If necessary, prepare to abandon ship",
+          "status": "pending",
+          "priority": "high",
+          "order": 7
+        }
+      ]
+    },
+    {
       "id": "arrival-1",
       "name": "Arrival Procedures",
       "description": "Essential tasks to complete upon arrival at destination.",
