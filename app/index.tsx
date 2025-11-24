@@ -76,8 +76,8 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    gap: 15,
     marginBottom: 40,
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: '#2f95dc',
@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     minWidth: 80,
     alignItems: 'center',
+    marginHorizontal: 7.5,
   },
   resetButton: {
     backgroundColor: '#666',
