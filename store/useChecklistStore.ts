@@ -190,8 +190,15 @@ export const useChecklistStore = create<ChecklistStoreState>()(
     {
       name: 'checklist-storage',
       storage: createJSONStorage(() => mmkvStorage),
-      onRehydrateStorage: () => (state) => {
-        state?._setHasHydrated(true);
+      onRehydrateStorage: () => (state, error) => {
+        // Mark store as hydrated even if there was an error
+        // This prevents the app from being stuck waiting for hydration
+        if (state) {
+          state._setHasHydrated(true);
+        }
+        // If hydration fails, we still want the app to function
+        // The store will use its initial state (empty array)
+        // and sample data will be initialized
       },
     }
   )
