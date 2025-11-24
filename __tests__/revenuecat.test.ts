@@ -10,44 +10,50 @@ import {
 import { CustomerInfo } from 'react-native-purchases';
 
 // Mock customer info with active subscription
-const mockActiveCustomerInfo: Partial<CustomerInfo> = {
+const mockActiveCustomerInfo = {
   entitlements: {
     active: {
-      premium: {
-        identifier: 'premium',
-        isActive: true,
-        willRenew: true,
-        periodType: 'NORMAL',
-        latestPurchaseDate: '2024-01-01',
-        originalPurchaseDate: '2024-01-01',
-        expirationDate: '2024-12-31',
-        store: 'APP_STORE',
-        productIdentifier: 'premium_monthly',
-        isSandbox: true,
-        unsubscribeDetectedAt: null,
-        billingIssueDetectedAt: null,
-        ownershipType: 'PURCHASED',
-        productPlanIdentifier: null,
-        verification: 'NOT_REQUESTED',
-      },
+      premium: {},
     },
     all: {},
+    verification: 'NOT_REQUESTED',
   },
   originalAppUserId: 'test-user-123',
   firstSeen: '2024-01-01T00:00:00Z',
   originalApplicationVersion: '1.0.0',
-} as CustomerInfo;
+  originalPurchaseDate: null,
+  activeSubscriptions: [],
+  allPurchasedProductIdentifiers: [],
+  allPurchaseDates: {},
+  latestExpirationDate: null,
+  requestDate: '2024-01-01T00:00:00Z',
+  nonSubscriptionTransactions: [],
+  allExpirationDates: {},
+  managementURL: null,
+  subscriptionsByProductIdentifier: {},
+} as unknown as CustomerInfo;
 
 // Mock customer info without active subscription
-const mockInactiveCustomerInfo: Partial<CustomerInfo> = {
+const mockInactiveCustomerInfo = {
   entitlements: {
     active: {},
     all: {},
+    verification: 'NOT_REQUESTED',
   },
   originalAppUserId: 'test-user-456',
   firstSeen: '2024-01-01T00:00:00Z',
   originalApplicationVersion: '1.0.0',
-} as CustomerInfo;
+  originalPurchaseDate: null,
+  activeSubscriptions: [],
+  allPurchasedProductIdentifiers: [],
+  allPurchaseDates: {},
+  latestExpirationDate: null,
+  requestDate: '2024-01-01T00:00:00Z',
+  nonSubscriptionTransactions: [],
+  allExpirationDates: {},
+  managementURL: null,
+  subscriptionsByProductIdentifier: {},
+} as unknown as CustomerInfo;
 
 describe('hasActiveSubscription', () => {
   it('should return true when customer has active entitlements', () => {
