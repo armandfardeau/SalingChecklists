@@ -9,7 +9,8 @@ import {
   TaskStatus,
   Task,
 } from '../types';
-import { createChecklist, calculateChecklistStats, examplePreDepartureChecklist, updateTask } from '../types/examples';
+import { createChecklist, calculateChecklistStats, updateTask } from '../types/examples';
+import { loadDefaultChecklists } from '../utils/loadDefaultTasks';
 
 /**
  * Checklist store state interface
@@ -179,7 +180,8 @@ export const useChecklistStore = create<ChecklistStoreState>()(
       initializeSampleData: () => {
         // Only initialize if there are no checklists yet
         if (get().checklists.length === 0) {
-          set({ checklists: [examplePreDepartureChecklist] });
+          const defaultChecklists = loadDefaultChecklists();
+          set({ checklists: defaultChecklists });
         }
       },
 
