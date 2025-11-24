@@ -45,7 +45,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
   };
 
   const handleEditPress = (event: GestureResponderEvent) => {
-    if (event && event.stopPropagation) {
+    if (event) {
       event.stopPropagation();
     }
     if (onEditPress) {
@@ -54,7 +54,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
   };
 
   const handleDeletePress = (event: GestureResponderEvent) => {
-    if (event && event.stopPropagation) {
+    if (event) {
       event.stopPropagation();
     }
     if (onDeletePress) {
