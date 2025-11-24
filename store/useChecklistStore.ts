@@ -7,7 +7,7 @@ import {
   UpdateChecklistInput,
   ChecklistStats,
 } from '../types';
-import { createChecklist, calculateChecklistStats } from '../types/examples';
+import { createChecklist, calculateChecklistStats, examplePreDepartureChecklist } from '../types/examples';
 
 /**
  * Checklist store state interface
@@ -137,8 +137,6 @@ export const useChecklistStore = create<ChecklistStoreState>()(
       },
 
       initializeSampleData: () => {
-        const { examplePreDepartureChecklist } = require('../types/examples');
-        
         // Only initialize if there are no checklists yet
         if (get().checklists.length === 0) {
           set({ checklists: [examplePreDepartureChecklist] });
