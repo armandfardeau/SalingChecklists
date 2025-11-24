@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useChecklistStore, useThemeStore } from '../../store';
 import { Checklist } from '../../types';
@@ -14,6 +14,7 @@ export default function App() {
   const mode = useThemeStore((state) => state.mode);
   const checklists = useChecklistStore((state) => state.checklists);
   const getChecklistStats = useChecklistStore((state) => state.getChecklistStats);
+  const deleteChecklist = useChecklistStore((state) => state.deleteChecklist);
   const initializeSampleData = useChecklistStore((state) => state.initializeSampleData);
   const hasHydrated = useChecklistStore((state) => state._hasHydrated);
 
@@ -36,6 +37,21 @@ export default function App() {
     router.push('/editor/new');
   };
 
+  const handleDeleteChecklist = (checklist: Checklist) => {
+    Alert.alert(
+      'Delete Checklist',
+      `Are you sure you want to delete "${checklist.name}"? This action cannot be undone.`,
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => deleteChecklist(checklist.id),
+        },
+      ]
+    );
+  };
+
   return (
     <View style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       <ChecklistList
@@ -43,6 +59,7 @@ export default function App() {
         getStats={getChecklistStats}
         onChecklistPress={handleChecklistPress}
         onEditPress={handleEditChecklist}
+        onDeletePress={handleDeleteChecklist}
       />
       
       {/* Floating action button to create new checklists */}

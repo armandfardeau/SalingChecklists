@@ -26,6 +26,11 @@ interface ChecklistListProps {
   onEditPress?: (checklist: Checklist) => void;
 
   /**
+   * Callback when the delete button is pressed
+   */
+  onDeletePress?: (checklist: Checklist) => void;
+
+  /**
    * Custom empty state component
    */
   emptyComponent?: React.ReactElement;
@@ -39,6 +44,7 @@ export default function ChecklistList({
   getStats,
   onChecklistPress,
   onEditPress,
+  onDeletePress,
   emptyComponent,
 }: ChecklistListProps) {
   const colors = useThemedColors();
@@ -61,6 +67,7 @@ export default function ChecklistList({
         stats={stats || defaultStats}
         onPress={onChecklistPress}
         onEditPress={onEditPress}
+        onDeletePress={onDeletePress}
       />
     );
   };

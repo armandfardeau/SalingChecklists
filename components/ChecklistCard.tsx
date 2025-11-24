@@ -25,12 +25,17 @@ interface ChecklistCardProps {
    * Callback when the edit button is pressed
    */
   onEditPress?: (checklist: Checklist) => void;
+
+  /**
+   * Callback when the delete button is pressed
+   */
+  onDeletePress?: (checklist: Checklist) => void;
 }
 
 /**
  * ChecklistCard component displays a single checklist with its progress
  */
-export default function ChecklistCard({ checklist, stats, onPress, onEditPress }: ChecklistCardProps) {
+export default function ChecklistCard({ checklist, stats, onPress, onEditPress, onDeletePress }: ChecklistCardProps) {
   const colors = useThemedColors();
 
   const handlePress = () => {
@@ -43,6 +48,13 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
     event.stopPropagation();
     if (onEditPress) {
       onEditPress(checklist);
+    }
+  };
+
+  const handleDeletePress = (event: GestureResponderEvent) => {
+    event.stopPropagation();
+    if (onDeletePress) {
+      onDeletePress(checklist);
     }
   };
 
@@ -73,15 +85,26 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
           </View>
         </View>
         <View style={styles.headerRight}>
-          {onEditPress && (
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={handleEditPress}
-              activeOpacity={Interactions.activeOpacity.light}
-            >
-              <Text style={styles.editButtonText}>✏️</Text>
-            </TouchableOpacity>
-          )}
+          <View style={styles.actionButtons}>
+            {onEditPress && (
+              <TouchableOpacity
+                style={styles.editButton}
+                onPress={handleEditPress}
+                activeOpacity={Interactions.activeOpacity.light}
+              >
+                <Text style={styles.editButtonText}>✏️</Text>
+              </TouchableOpacity>
+            )}
+            {onDeletePress && (
+              <TouchableOpacity
+                style={styles.deleteButton}
+                onPress={handleDeletePress}
+                activeOpacity={Interactions.activeOpacity.light}
+              >
+                <Text style={styles.deleteButtonText}>🗑️</Text>
+              </TouchableOpacity>
+            )}
+          </View>
           <View style={[styles.categoryBadge, { backgroundColor: colors.inputBackground, borderColor: colors.cardBorder }]}>
             <Text style={[styles.categoryText, { color: colors.textPrimary }]}>
               {getCategoryLabel(checklist.category)}
@@ -153,6 +176,10 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     gap: 12,  // Increased spacing
   },
+  actionButtons: {
+    flexDirection: 'row',
+    gap: 8,
+  },
   editButton: {
     padding: 12,  // Larger touch target
     minWidth: TouchTargets.minimum,
@@ -161,6 +188,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   editButtonText: {
+    fontSize: 24,  // Larger icon
+  },
+  deleteButton: {
+    padding: 12,  // Larger touch target
+    minWidth: TouchTargets.minimum,
+    minHeight: TouchTargets.minimum,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  deleteButtonText: {
     fontSize: 24,  // Larger icon
   },
   icon: {
