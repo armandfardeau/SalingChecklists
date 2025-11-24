@@ -5,7 +5,7 @@ import { useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { Checklist } from '../../types';
 import ChecklistList from '../../components/ChecklistList';
-import { Colors, TouchTargets } from '../../constants/Colors';
+import { Colors, TouchTargets, Interactions } from '../../constants/Colors';
 
 export default function App() {
   const router = useRouter();
@@ -43,7 +43,7 @@ export default function App() {
       <TouchableOpacity
         style={styles.fab}
         onPress={handleCreateChecklist}
-        activeOpacity={0.8}
+        activeOpacity={Interactions.activeOpacity.strong}
       >
         <Text style={styles.fabIcon}>+</Text>
       </TouchableOpacity>

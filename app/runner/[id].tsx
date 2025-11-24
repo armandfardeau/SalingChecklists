@@ -10,7 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { TaskStatus, TaskPriority } from '../../types';
-import { Colors, TouchTargets } from '../../constants/Colors';
+import { Colors, TouchTargets, Typography } from '../../constants/Colors';
 
 // Animation delay after completing or skipping a task before auto-advancing
 const AUTO_ADVANCE_DELAY_MS = 300;
@@ -435,7 +435,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: Colors.sea.borderLight,
   },
   priorityText: {
     color: Colors.sea.textInverse,
@@ -472,7 +472,7 @@ const styles = StyleSheet.create({
     paddingVertical: 6,  // More padding
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: Colors.sea.borderLight,
   },
   statusText: {
     color: Colors.sea.textInverse,
@@ -548,7 +548,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginLeft: 12,
     borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: Colors.sea.borderLight,
   },
   actionButtons: {
     flexDirection: 'row',
@@ -567,7 +567,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 2,
-    borderColor: 'rgba(0,0,0,0.1)',
+    borderColor: Colors.sea.borderLight,
   },
   completeButton: {
     backgroundColor: Colors.sea.success,

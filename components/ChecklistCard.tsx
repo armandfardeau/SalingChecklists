@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
 import { getCategoryLabel } from '../utils/formatters';
-import { Colors, TouchTargets } from '../constants/Colors';
+import { Colors, TouchTargets, Interactions } from '../constants/Colors';
 
 interface ChecklistCardProps {
   /**
@@ -50,7 +50,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
         !checklist.isActive && styles.inactiveCard,
       ]}
       onPress={handlePress}
-      activeOpacity={0.7}
+      activeOpacity={Interactions.activeOpacity.default}
     >
       <View style={styles.header}>
         <View style={styles.titleContainer}>
@@ -73,7 +73,7 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress }
             <TouchableOpacity
               style={styles.editButton}
               onPress={handleEditPress}
-              activeOpacity={0.6}
+              activeOpacity={Interactions.activeOpacity.light}
             >
               <Text style={styles.editButtonText}>✏️</Text>
             </TouchableOpacity>

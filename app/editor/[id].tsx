@@ -606,7 +606,7 @@ const styles = StyleSheet.create({
   },
   deleteActionButton: {
     backgroundColor: Colors.sea.danger,
-    borderColor: '#8B1A1A',
+    borderColor: Colors.sea.dangerDark,
   },
   taskActionButtonText: {
     color: Colors.sea.textInverse,
