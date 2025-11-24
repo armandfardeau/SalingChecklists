@@ -29,13 +29,13 @@ export default function ChecklistCard({ checklist, stats, onPress }: ChecklistCa
     }
   };
 
-  // Get category display name
-  const getCategoryLabel = (category: string): string => {
-    return category
-      .split('_')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
-  };
+// Get category display name
+function getCategoryLabel(category: string): string {
+  return category
+    .split('_')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
 
   return (
     <TouchableOpacity
