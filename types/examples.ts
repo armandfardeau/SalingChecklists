@@ -17,13 +17,13 @@ import {
 } from './index';
 
 // Example 1: Creating a new task
+// Note: In production, use crypto.randomUUID() or a proper UUID library
 const createTask = (input: CreateTaskInput): Task => {
   const now = new Date();
   return {
-    id: Math.random().toString(36).substring(7),
+    id: `task-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
     title: input.title,
     description: input.description,
-    completed: false,
     status: TaskStatus.PENDING,
     priority: input.priority || TaskPriority.MEDIUM,
     order: input.order,
@@ -34,19 +34,23 @@ const createTask = (input: CreateTaskInput): Task => {
 
 // Example 2: Updating a task
 const updateTask = (task: Task, updates: UpdateTaskInput): Task => {
+  const wasCompleted = task.status === TaskStatus.COMPLETED;
+  const isNowCompleted = updates.status === TaskStatus.COMPLETED;
+  
   return {
     ...task,
     ...updates,
     updatedAt: new Date(),
-    completedAt: updates.completed && !task.completed ? new Date() : task.completedAt,
+    completedAt: isNowCompleted && !wasCompleted ? new Date() : task.completedAt,
   };
 };
 
 // Example 3: Creating a new checklist
+// Note: In production, use crypto.randomUUID() or a proper UUID library
 const createChecklist = (input: CreateChecklistInput): Checklist => {
   const now = new Date();
   return {
-    id: Math.random().toString(36).substring(7),
+    id: `checklist-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
     name: input.name,
     description: input.description,
     category: input.category,
@@ -63,7 +67,7 @@ const createChecklist = (input: CreateChecklistInput): Checklist => {
 // Example 4: Calculating checklist statistics
 const calculateChecklistStats = (checklist: Checklist): ChecklistStats => {
   const totalTasks = checklist.tasks.length;
-  const completedTasks = checklist.tasks.filter(t => t.completed).length;
+  const completedTasks = checklist.tasks.filter(t => t.status === TaskStatus.COMPLETED).length;
   const pendingTasks = totalTasks - completedTasks;
   const completionPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
   const isFullyCompleted = totalTasks > 0 && completedTasks === totalTasks;
@@ -94,7 +98,6 @@ export const examplePreDepartureChecklist: Checklist = {
       id: 'task-1',
       title: 'Check weather forecast',
       description: 'Review local weather conditions and marine forecast',
-      completed: false,
       status: TaskStatus.PENDING,
       priority: TaskPriority.CRITICAL,
       order: 1,
@@ -105,7 +108,6 @@ export const examplePreDepartureChecklist: Checklist = {
       id: 'task-2',
       title: 'Inspect life jackets',
       description: 'Ensure all crew members have properly fitting life jackets',
-      completed: false,
       status: TaskStatus.PENDING,
       priority: TaskPriority.HIGH,
       order: 2,
@@ -116,7 +118,6 @@ export const examplePreDepartureChecklist: Checklist = {
       id: 'task-3',
       title: 'Check fuel level',
       description: 'Verify sufficient fuel for planned route',
-      completed: false,
       status: TaskStatus.PENDING,
       priority: TaskPriority.HIGH,
       order: 3,
@@ -127,7 +128,6 @@ export const examplePreDepartureChecklist: Checklist = {
       id: 'task-4',
       title: 'Test navigation lights',
       description: 'Ensure all navigation lights are functioning',
-      completed: false,
       status: TaskStatus.PENDING,
       priority: TaskPriority.MEDIUM,
       order: 4,
@@ -138,7 +138,6 @@ export const examplePreDepartureChecklist: Checklist = {
       id: 'task-5',
       title: 'Verify VHF radio',
       description: 'Test VHF radio communication',
-      completed: false,
       status: TaskStatus.PENDING,
       priority: TaskPriority.HIGH,
       order: 5,

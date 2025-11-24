@@ -37,11 +37,6 @@ export interface Task {
   description?: string;
 
   /**
-   * Whether the task is completed
-   */
-  completed: boolean;
-
-  /**
    * Status of the task
    */
   status: TaskStatus;
@@ -82,5 +77,5 @@ export type CreateTaskInput = Pick<Task, 'title' | 'order'> &
  * Input type for updating an existing task
  */
 export type UpdateTaskInput = Partial<
-  Pick<Task, 'title' | 'description' | 'completed' | 'status' | 'priority' | 'order'>
+  Pick<Task, 'title' | 'description' | 'status' | 'priority' | 'order'>
 >;

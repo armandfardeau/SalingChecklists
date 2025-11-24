@@ -16,7 +16,6 @@ Represents a single task within a checklist.
 - `id`: Unique identifier
 - `title`: Task title (required)
 - `description`: Optional detailed description
-- `completed`: Boolean completion status
 - `status`: Task status (pending, completed, skipped)
 - `priority`: Priority level (low, medium, high, critical)
 - `order`: Position in the checklist
