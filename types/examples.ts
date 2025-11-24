@@ -92,71 +92,8 @@ const calculateChecklistStats = (checklist: Checklist): ChecklistStats => {
   };
 };
 
-// Example 5: Sample data - Pre-departure checklist
-export const examplePreDepartureChecklist: Checklist = {
-  id: 'pre-dep-1',
-  name: 'Pre-Departure Safety Check',
-  description: 'Essential safety checks before departure',
-  category: ChecklistCategory.PRE_DEPARTURE,
-  isActive: true,
-  isTemplate: false,
-  color: '#FF6B6B',
-  icon: 'sailboat',
-  createdAt: new Date(),
-  updatedAt: new Date(),
-  tasks: [
-    {
-      id: 'task-1',
-      title: 'Check weather forecast',
-      description: 'Review local weather conditions and marine forecast',
-      status: TaskStatus.PENDING,
-      priority: TaskPriority.CRITICAL,
-      order: 1,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'task-2',
-      title: 'Inspect life jackets',
-      description: 'Ensure all crew members have properly fitting life jackets',
-      status: TaskStatus.PENDING,
-      priority: TaskPriority.HIGH,
-      order: 2,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'task-3',
-      title: 'Check fuel level',
-      description: 'Verify sufficient fuel for planned route',
-      status: TaskStatus.PENDING,
-      priority: TaskPriority.HIGH,
-      order: 3,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'task-4',
-      title: 'Test navigation lights',
-      description: 'Ensure all navigation lights are functioning',
-      status: TaskStatus.PENDING,
-      priority: TaskPriority.MEDIUM,
-      order: 4,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-    {
-      id: 'task-5',
-      title: 'Verify VHF radio',
-      description: 'Test VHF radio communication',
-      status: TaskStatus.PENDING,
-      priority: TaskPriority.HIGH,
-      order: 5,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    },
-  ],
-};
+// Note: Default checklist data has been moved to assets/defaultTasks.json
+// Use the loadDefaultChecklists() function from utils/loadDefaultTasks.ts to load sample data
 
 // Export utility functions for use in the application
 export {

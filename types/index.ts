@@ -27,3 +27,16 @@ export type {
 export {
   ChecklistCategory,
 } from './checklist';
+
+// RevenueCat types
+export type {
+  CustomerInfo,
+  PurchasesPackage,
+  PurchasesOfferings,
+} from './revenuecat';
+
+export {
+  hasActiveSubscription,
+  getActiveEntitlements,
+  hasEntitlement,
+} from './revenuecat';

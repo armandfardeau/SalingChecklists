@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../constants/Colors';
+import SubscriptionStatus from '../../components/SubscriptionStatus';
 
 export default function SettingsScreen() {
   return (
@@ -11,6 +12,8 @@ export default function SettingsScreen() {
           <Text style={styles.description}>
             Configure your app preferences
           </Text>
+          
+          <SubscriptionStatus />
         </View>
       </ScrollView>
     </SafeAreaView>
