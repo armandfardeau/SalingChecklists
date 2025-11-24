@@ -42,6 +42,17 @@ jest.mock('react-native-safe-area-context', () => ({
   SafeAreaView: ({ children }) => children,
 }));
 
+// Mock RevenueCat Provider
+jest.mock('../contexts/RevenueCatProvider', () => ({
+  useRevenueCat: jest.fn(() => ({
+    isConfigured: false,
+    customerInfo: null,
+    isLoading: false,
+    refreshCustomerInfo: jest.fn(),
+  })),
+  RevenueCatProvider: ({ children }) => children,
+}));
+
 import ChecklistEditor from '../app/editor/[id]';
 import { useChecklistStore } from '../store';
 import { ChecklistCategory, TaskPriority } from '../types';
