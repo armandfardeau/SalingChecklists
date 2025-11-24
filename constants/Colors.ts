@@ -44,28 +44,104 @@ export const Colors = {
   },
   seaDark: {
     // Sea-specific high contrast colors for dark mode
-    primary: '#66B3FF',        // Lighter blue for dark mode
-    primaryDark: '#4A90E2',    // Medium blue for pressed states
-    secondary: '#FFB74D',      // Lighter orange for warnings/skipped items
-    success: '#66BB6A',        // Lighter green for completed items
-    danger: '#EF5350',         // Lighter red for critical priority
-    dangerDark: '#D32F2F',     // Medium red for danger borders/pressed states
-    warning: '#FFA726',        // Lighter amber for high priority
-    info: '#42A5F5',          // Lighter blue for medium priority
-    lowPriority: '#9CCC65',   // Lighter green for low priority
+    /**
+     * Primary action color for dark mode (maritime theme, high contrast)
+     * Used for main buttons, highlights, and active elements
+     */
+    primary: '#66B3FF',
+    /**
+     * Darker variant of primary for pressed states in dark mode
+     * Used for button press feedback and active states
+     */
+    primaryDark: '#4A90E2',
+    /**
+     * Secondary color for warnings/skipped items in dark mode
+     * Used for alert banners, warning icons, and secondary actions
+     */
+    secondary: '#FFB74D',
+    /**
+     * Success color for completed items in dark mode (high contrast)
+     * Used for checkmarks, completed checklist items, and success banners
+     */
+    success: '#66BB6A',
+    /**
+     * Danger color for critical priority in dark mode
+     * Used for error states, critical alerts, and destructive actions
+     */
+    danger: '#EF5350',
+    /**
+     * Darker red for danger borders/pressed states in dark mode
+     * Used for border highlights and pressed feedback on danger actions
+     */
+    dangerDark: '#D32F2F',
+    /**
+     * Warning color for high priority in dark mode
+     * Used for warning icons, banners, and high priority checklist items
+     */
+    warning: '#FFA726',
+    /**
+     * Info color for medium priority in dark mode
+     * Used for informational banners, icons, and medium priority items
+     */
+    info: '#42A5F5',
+    /**
+     * Low priority color for checklist items in dark mode
+     * Used for low priority indicators and checklist backgrounds
+     */
+    lowPriority: '#9CCC65',
     
     // UI colors
+    /**
+     * Card background color for dark mode
+     * Used for checklist cards and modal backgrounds
+     */
     cardBackground: '#1E1E1E',
+    /**
+     * Card border color for dark mode
+     * Used for card outlines and separators
+     */
     cardBorder: '#424242',
-    borderLight: 'rgba(255,255,255,0.1)',  // Subtle border with transparency
+    /**
+     * Light border with transparency for dark mode
+     * Used for subtle dividers and input borders
+     */
+    borderLight: 'rgba(255,255,255,0.1)',
+    /**
+     * Input background color for dark mode
+     * Used for text fields and input areas
+     */
     inputBackground: '#2C2C2C',
+    /**
+     * Screen background color for dark mode
+     * Used for main app background
+     */
     screenBackground: '#121212',
+    /**
+     * Disabled background color for dark mode
+     * Used for disabled buttons and inactive UI elements
+     */
     disabledBackground: '#424242',
     
     // Text colors (high contrast)
+    /**
+     * Primary text color for dark mode (high contrast)
+     * Used for main text and headings
+     */
     textPrimary: '#FFFFFF',
+    /**
+     * Secondary text color for dark mode
+     * Used for subheadings, labels, and secondary information
+     */
     textSecondary: '#BDBDBD',
+    /**
+     * Disabled text color for dark mode
+     * Used for disabled labels and inactive text
+     */
     textDisabled: '#757575',
+    /**
+     * Inverse text color for dark mode
+     * Used for text on colored backgrounds (e.g., buttons)
+     */
     textInverse: '#000000',
   },
 };
