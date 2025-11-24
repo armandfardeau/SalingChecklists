@@ -69,6 +69,49 @@ describe('loadDefaultTasks', () => {
       expect(preDepartureChecklist.description).toBe('Essential safety checks before departure');
     });
 
+    it('should load arrival checklist', () => {
+      const checklists = loadDefaultChecklists();
+      const arrivalChecklist = checklists.find(
+        c => c.category === ChecklistCategory.ARRIVAL
+      );
+      
+      expect(arrivalChecklist).toBeDefined();
+      expect(arrivalChecklist.id).toBe('arrival-1');
+      expect(arrivalChecklist.name).toBe('Arrival Procedures');
+      expect(arrivalChecklist.description).toBe('Essential tasks to complete upon arrival at destination.');
+      expect(arrivalChecklist.color).toBe('#3498db');
+      expect(arrivalChecklist.icon).toBe('anchor');
+      expect(arrivalChecklist.tasks.length).toBe(5);
+    });
+
+    it('should have correct arrival tasks', () => {
+      const checklists = loadDefaultChecklists();
+      const arrivalChecklist = checklists.find(
+        c => c.category === ChecklistCategory.ARRIVAL
+      );
+      
+      expect(arrivalChecklist).toBeDefined();
+      
+      // Verify all required tasks are present
+      const taskTitles = arrivalChecklist.tasks.map(t => t.title);
+      expect(taskTitles).toContain('Secure the boat at the dock or anchorage');
+      expect(taskTitles).toContain('Engine shutdown and post-operation checks');
+      expect(taskTitles).toContain('Check all lines and fenders');
+      expect(taskTitles).toContain('Log arrival time and location');
+      expect(taskTitles).toContain('Check crew and passengers');
+      
+      // Verify task priorities
+      const secureBoatTask = arrivalChecklist.tasks.find(
+        t => t.title === 'Secure the boat at the dock or anchorage'
+      );
+      expect(secureBoatTask.priority).toBe(TaskPriority.CRITICAL);
+      
+      const engineTask = arrivalChecklist.tasks.find(
+        t => t.title === 'Engine shutdown and post-operation checks'
+      );
+      expect(engineTask.priority).toBe(TaskPriority.HIGH);
+    });
+
     it('should have tasks with correct priorities', () => {
       const checklists = loadDefaultChecklists();
       const checklist = checklists[0];
@@ -111,6 +154,14 @@ describe('loadDefaultTasks', () => {
       expect(checklist).toBeDefined();
       expect(checklist.id).toBe('pre-dep-1');
       expect(checklist.name).toBe('Pre-Departure Safety Check');
+    });
+
+    it('should find arrival checklist by ID', () => {
+      const checklist = getDefaultChecklistById('arrival-1');
+      
+      expect(checklist).toBeDefined();
+      expect(checklist.id).toBe('arrival-1');
+      expect(checklist.name).toBe('Arrival Procedures');
     });
 
     it('should return undefined for non-existent ID', () => {
