@@ -11,11 +11,14 @@ export default function App() {
   const checklists = useChecklistStore((state) => state.checklists);
   const getChecklistStats = useChecklistStore((state) => state.getChecklistStats);
   const initializeSampleData = useChecklistStore((state) => state.initializeSampleData);
+  const hasHydrated = useChecklistStore((state) => state._hasHydrated);
 
-  // Initialize sample data on first load
+  // Initialize sample data after store has hydrated from storage
   useEffect(() => {
-    initializeSampleData();
-  }, []);
+    if (hasHydrated) {
+      initializeSampleData();
+    }
+  }, [hasHydrated, initializeSampleData]);
 
   const handleChecklistPress = (checklist: Checklist) => {
     router.push(`/runner/${checklist.id}`);

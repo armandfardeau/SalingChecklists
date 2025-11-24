@@ -20,6 +20,16 @@ interface ChecklistStoreState {
   checklists: Checklist[];
 
   /**
+   * Flag indicating if the store has been hydrated from persistent storage
+   */
+  _hasHydrated: boolean;
+
+  /**
+   * Set the hydration status
+   */
+  _setHasHydrated: (hasHydrated: boolean) => void;
+
+  /**
    * Add a new checklist
    */
   addChecklist: (input: CreateChecklistInput) => void;
@@ -92,6 +102,11 @@ export const useChecklistStore = create<ChecklistStoreState>()(
   persist(
     (set, get) => ({
       checklists: [],
+      _hasHydrated: false,
+
+      _setHasHydrated: (hasHydrated: boolean) => {
+        set({ _hasHydrated: hasHydrated });
+      },
 
       addChecklist: (input: CreateChecklistInput) => {
         const newChecklist = createChecklist(input);
@@ -175,6 +190,9 @@ export const useChecklistStore = create<ChecklistStoreState>()(
     {
       name: 'checklist-storage',
       storage: createJSONStorage(() => mmkvStorage),
+      onRehydrateStorage: () => (state) => {
+        state?._setHasHydrated(true);
+      },
     }
   )
 );
