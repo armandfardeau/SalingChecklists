@@ -1,4 +1,4 @@
-# GitHub Copilot Instructions for SalingChecklists
+# GitHub Copilot Instructions for SailingChecklists
 
 ## Project Overview
 
