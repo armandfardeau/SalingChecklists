@@ -1,6 +1,6 @@
 # Type Definitions
 
-This directory contains all TypeScript type definitions and interfaces for the SalingChecklists application.
+This directory contains all TypeScript type definitions and interfaces for the SailingChecklists application.
 
 ## Overview
 
