@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { storage } from './mmkv-storage';
+import { mmkvStorage } from './mmkv-storage';
 import i18n from '../utils/i18n';
 import type { LanguageCode } from '../utils/i18n';
 
@@ -24,7 +24,7 @@ export const useLanguageStore = create<LanguageStore>()(
     }),
     {
       name: 'language-storage',
-      storage: createJSONStorage(() => storage),
+      storage: createJSONStorage(() => mmkvStorage),
       onRehydrateStorage: () => (state) => {
         if (state) {
           // Restore language to i18n when rehydrated
