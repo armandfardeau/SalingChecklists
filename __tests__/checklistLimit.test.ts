@@ -4,6 +4,7 @@
 
 import { canCreateChecklist, FREE_CHECKLIST_LIMIT } from '../types/revenuecat';
 import { CustomerInfo } from 'react-native-purchases';
+import defaultTasksData from '../assets/defaultTasks.json';
 
 // Mock customer info with active subscription
 const mockActiveCustomerInfo = {
@@ -111,7 +112,8 @@ describe('canCreateChecklist', () => {
 
 describe('FREE_CHECKLIST_LIMIT', () => {
   it('should be set to the number of default checklists', () => {
-    // The default JSON file contains 2 checklists
-    expect(FREE_CHECKLIST_LIMIT).toBe(2);
+    // Dynamically check against the actual default JSON file
+    const expectedCount = defaultTasksData.checklists.length;
+    expect(FREE_CHECKLIST_LIMIT).toBe(expectedCount);
   });
 });
