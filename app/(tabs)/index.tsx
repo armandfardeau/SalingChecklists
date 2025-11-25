@@ -10,6 +10,7 @@ import { useThemedColors } from '../../hooks/useThemedColors';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useRevenueCat } from '../../contexts/RevenueCatProvider';
 import { canCreateChecklist, FREE_CHECKLIST_LIMIT } from '../../types/revenuecat';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const router = useRouter();
@@ -74,6 +75,7 @@ export default function App() {
   };
 
   return (
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.screenBackground }]}>
     <View style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       <ChecklistList
         checklists={checklists}
@@ -94,6 +96,7 @@ export default function App() {
       
       <StatusBar style={mode === 'dark' ? 'light' : 'dark'} />
     </View>
+    </SafeAreaView>
   );
 }
 
@@ -104,7 +107,7 @@ const styles = StyleSheet.create({
   fab: {
     position: 'absolute',
     right: 20,  // More spacing from edge
-    bottom: 20,
+    bottom: -5,
     width: TouchTargets.large,  // 64px - larger touch target
     height: TouchTargets.large,
     borderRadius: TouchTargets.large / 2,
