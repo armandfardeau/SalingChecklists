@@ -3,6 +3,7 @@
  */
 
 import { ChecklistCategory } from '../types';
+import i18n from './i18n';
 
 /**
  * Converts a ChecklistCategory enum value to a human-readable label
@@ -10,8 +11,5 @@ import { ChecklistCategory } from '../types';
  * @returns Formatted category label (e.g., "Pre Departure")
  */
 export function getCategoryLabel(category: ChecklistCategory): string {
-  return category
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
+  return i18n.t(`category.${category}`);
 }

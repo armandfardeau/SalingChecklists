@@ -1,0 +1,137 @@
+{
+  "tabs": {
+    "checklists": "Checklists",
+    "emergency": "Emergency",
+    "settings": "Settings"
+  },
+  "home": {
+    "createChecklist": "Create Checklist",
+    "deleteChecklistTitle": "Delete Checklist",
+    "deleteChecklistMessage": "Are you sure you want to delete \"{{name}}\"? This action cannot be undone.",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "checklistLimitTitle": "Checklist Limit Reached",
+    "checklistLimitMessage": "Free users can create up to {{limit}} checklists. Subscribe to unlock unlimited checklists.",
+    "viewSubscription": "View Subscription"
+  },
+  "settings": {
+    "title": "Settings",
+    "description": "Configure your app preferences",
+    "appearance": "Appearance",
+    "darkMode": "Dark Mode",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "language": "Language",
+    "languageDescription": "Select your preferred language"
+  },
+  "emergency": {
+    "title": "EMERGENCY",
+    "subtitle": "Quick access to critical procedures",
+    "noChecklistsTitle": "No Emergency Checklists",
+    "noChecklistsText": "Add an emergency checklist to have quick access to critical procedures.",
+    "start": "START",
+    "infoTitle": "When to Use Emergency Checklists",
+    "infoItems": "• Life-threatening situations\n• Equipment failure\n• Man overboard\n• Fire or flooding\n• Medical emergencies\n• Any situation requiring immediate action",
+    "criticalTasks": "{{count}} critical tasks"
+  },
+  "checklist": {
+    "inactive": "Inactive",
+    "tasksProgress": "{{completed}} / {{total}} tasks"
+  },
+  "category": {
+    "pre_departure": "Pre Departure",
+    "emergency": "Emergency",
+    "arrival": "Arrival",
+    "maintenance": "Maintenance",
+    "navigation": "Navigation",
+    "safety": "Safety"
+  },
+  "defaultChecklists": {
+    "preDeparture": {
+      "name": "Pre-Departure Safety Check",
+      "description": "Essential safety checks before departure",
+      "tasks": {
+        "checkWeather": {
+          "title": "Check weather forecast",
+          "description": "Review local weather conditions and marine forecast"
+        },
+        "inspectLifeJackets": {
+          "title": "Inspect life jackets",
+          "description": "Ensure all crew members have properly fitting life jackets"
+        },
+        "checkFuel": {
+          "title": "Check fuel level",
+          "description": "Verify sufficient fuel for planned route"
+        },
+        "testLights": {
+          "title": "Test navigation lights",
+          "description": "Ensure all navigation lights are functioning"
+        },
+        "verifyRadio": {
+          "title": "Verify VHF radio",
+          "description": "Test VHF radio communication"
+        }
+      }
+    },
+    "emergency": {
+      "name": "Emergency Procedures",
+      "description": "Critical emergency response checklist",
+      "tasks": {
+        "assessSituation": {
+          "title": "Assess the situation",
+          "description": "Determine the nature and severity of the emergency"
+        },
+        "alertCrew": {
+          "title": "Alert crew and passengers",
+          "description": "Inform all persons on board of the emergency"
+        },
+        "lifeJackets": {
+          "title": "Put on life jackets",
+          "description": "Ensure everyone dons their life jackets immediately"
+        },
+        "distressCall": {
+          "title": "Make distress call",
+          "description": "Send MAYDAY on VHF Channel 16 if life-threatening"
+        },
+        "deploySafety": {
+          "title": "Deploy safety equipment",
+          "description": "Prepare life raft, flares, and emergency beacon (EPIRB)"
+        },
+        "controlSituation": {
+          "title": "Attempt to control situation",
+          "description": "Take immediate action to contain/resolve the emergency"
+        },
+        "prepareEvacuation": {
+          "title": "Prepare for evacuation",
+          "description": "If necessary, prepare to abandon ship"
+        }
+      }
+    },
+    "arrival": {
+      "name": "Arrival Procedures",
+      "description": "Essential tasks to complete upon arrival at destination.",
+      "tasks": {
+        "secureBoat": {
+          "title": "Secure the boat at the dock or anchorage",
+          "description": "Properly moor the vessel with appropriate lines and fenders"
+        },
+        "engineShutdown": {
+          "title": "Engine shutdown and post-operation checks",
+          "description": "Turn off engine and perform post-operation inspection"
+        },
+        "checkLines": {
+          "title": "Check all lines and fenders",
+          "description": "Verify all mooring lines and fenders are properly secured and positioned"
+        },
+        "logArrival": {
+          "title": "Log arrival time and location",
+          "description": "Record arrival time, location, and relevant navigation notes"
+        },
+        "checkCrew": {
+          "title": "Check crew and passengers",
+          "description": "Ensure all crew and passengers are safely disembarked or accounted for"
+        }
+      }
+    }
+  }
+}
