@@ -402,11 +402,14 @@ describe('Checklist Store', () => {
     // First load defaults
     state.reloadDefaultChecklists();
     
-    // Get a default checklist and modify it
-    const defaultChecklist = useChecklistStore.getState().checklists.find(c => c.id === 'pre-dep-1');
-    expect(defaultChecklist).toBeDefined();
+    // Get the first default checklist and store its original name
+    const firstDefaultChecklist = useChecklistStore.getState().checklists[0];
+    expect(firstDefaultChecklist).toBeDefined();
+    const originalName = firstDefaultChecklist.name;
+    const defaultId = firstDefaultChecklist.id;
     
-    state.updateChecklist(defaultChecklist.id, { 
+    // Modify the default checklist
+    state.updateChecklist(defaultId, { 
       name: 'Modified Default Name',
       description: 'This was modified by user'
     });
@@ -418,7 +421,7 @@ describe('Checklist Store', () => {
     });
 
     const beforeReload = useChecklistStore.getState().checklists;
-    const modifiedChecklist = beforeReload.find(c => c.id === 'pre-dep-1');
+    const modifiedChecklist = beforeReload.find(c => c.id === defaultId);
     expect(modifiedChecklist?.name).toBe('Modified Default Name');
 
     // Reload default checklists
@@ -427,9 +430,9 @@ describe('Checklist Store', () => {
     const afterReload = useChecklistStore.getState().checklists;
     
     // Default checklist should be reset to original
-    const resetChecklist = afterReload.find(c => c.id === 'pre-dep-1');
+    const resetChecklist = afterReload.find(c => c.id === defaultId);
     expect(resetChecklist?.name).not.toBe('Modified Default Name');
-    expect(resetChecklist?.name).toBe('Pre-Departure Safety Check');
+    expect(resetChecklist?.name).toBe(originalName);
     
     // Custom checklist should still exist
     expect(afterReload.find(c => c.name === 'My Custom Checklist')).toBeDefined();

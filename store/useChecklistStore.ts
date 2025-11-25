@@ -254,7 +254,7 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         const defaultChecklists = loadDefaultChecklists();
         const currentChecklists = get().checklists;
         
-        // Create a map of default checklist IDs for quick lookup
+        // Create a set of default checklist IDs for quick lookup
         const defaultIds = new Set(defaultChecklists.map(c => c.id));
         
         // Keep all user-created checklists (not in defaults)
