@@ -1,8 +1,8 @@
 import { Tabs } from 'expo-router';
-import { Text, StyleSheet } from 'react-native';
 import { Typography } from '../../constants/Colors';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { useTranslation } from '../../hooks/useTranslation';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function TabLayout() {
   const colors = useThemedColors();
@@ -44,7 +44,7 @@ export default function TabLayout() {
         options={{
           title: t('tabs.checklists'),
           tabBarIcon: ({ color }) => (
-            <Text style={[styles.tabIcon, { color }]}>📋</Text>
+            <MaterialIcons name="checklist" size={Typography.tabIcon} color={color} />
           ),
         }}
       />
@@ -53,7 +53,7 @@ export default function TabLayout() {
         options={{
           title: t('tabs.emergency'),
           tabBarIcon: ({ color }) => (
-            <Text style={[styles.tabIcon, { color }]}>🚨</Text>
+            <MaterialIcons name="emergency" size={Typography.tabIcon} color={color} />
           ),
         }}
       />
@@ -62,16 +62,10 @@ export default function TabLayout() {
         options={{
           title: t('tabs.settings'),
           tabBarIcon: ({ color }) => (
-            <Text style={[styles.tabIcon, { color }]}>⚙️</Text>
+            <MaterialIcons name="settings" size={Typography.tabIcon} color={color} />
           ),
         }}
       />
     </Tabs>
   );
 }
-
-const styles = StyleSheet.create({
-  tabIcon: {
-    fontSize: Typography.tabIcon,
-  },
-});

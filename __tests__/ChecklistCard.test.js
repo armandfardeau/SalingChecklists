@@ -104,7 +104,7 @@ describe('ChecklistCard', () => {
       <ChecklistCard checklist={mockChecklist} stats={completedStats} />
     );
 
-    expect(getByText('5 / 5 tasks ✓')).toBeTruthy();
+    expect(getByText('5 / 5 tasks')).toBeTruthy();
   });
 
   it('should render icon if provided', () => {

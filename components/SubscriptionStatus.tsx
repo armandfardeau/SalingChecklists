@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'rea
 import { useRevenueCat } from '../contexts/RevenueCatProvider';
 import { hasActiveSubscription, getActiveEntitlements } from '../types/revenuecat';
 import { Colors } from '../constants/Colors';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function SubscriptionStatus() {
   const { isConfigured, customerInfo, isLoading, refreshCustomerInfo } = useRevenueCat();
@@ -11,7 +12,10 @@ export default function SubscriptionStatus() {
     return (
       <View style={styles.container}>
         <View style={styles.card}>
-          <Text style={styles.title}>💳 Subscription</Text>
+          <View style={styles.titleContainer}>
+            <MaterialIcons name="credit-card" size={24} color="#333" style={styles.titleIcon} />
+            <Text style={styles.title}>Subscription</Text>
+          </View>
           <View style={styles.warningBox}>
             <Text style={styles.warningText}>
               RevenueCat is not configured yet.
@@ -38,7 +42,10 @@ export default function SubscriptionStatus() {
     return (
       <View style={styles.container}>
         <View style={styles.card}>
-          <Text style={styles.title}>💳 Subscription</Text>
+          <View style={styles.titleContainer}>
+            <MaterialIcons name="credit-card" size={24} color="#333" style={styles.titleIcon} />
+            <Text style={styles.title}>Subscription</Text>
+          </View>
           <ActivityIndicator size="large" color={Colors.sea.primary} style={styles.loader} />
         </View>
       </View>
@@ -51,12 +58,20 @@ export default function SubscriptionStatus() {
   return (
     <View style={styles.container}>
       <View style={styles.card}>
-        <Text style={styles.title}>💳 Subscription</Text>
+        <View style={styles.titleContainer}>
+          <MaterialIcons name="credit-card" size={24} color="#333" style={styles.titleIcon} />
+          <Text style={styles.title}>Subscription</Text>
+        </View>
         
         <View style={hasSubscription ? styles.activeBox : styles.inactiveBox}>
-          <Text style={styles.statusTitle}>
-            {hasSubscription ? '✓ Active' : 'No Active Subscription'}
-          </Text>
+          <View style={styles.statusTitleContainer}>
+            {hasSubscription && (
+              <MaterialIcons name="check-circle" size={20} color="#4CAF50" style={styles.statusIcon} />
+            )}
+            <Text style={styles.statusTitle}>
+              {hasSubscription ? 'Active' : 'No Active Subscription'}
+            </Text>
+          </View>
           
           {hasSubscription && activeEntitlements.length > 0 && (
             <View style={styles.entitlementsContainer}>
@@ -80,7 +95,10 @@ export default function SubscriptionStatus() {
           style={styles.refreshButton}
           onPress={refreshCustomerInfo}
         >
-          <Text style={styles.refreshButtonText}>🔄 Refresh Status</Text>
+          <View style={styles.refreshButtonContent}>
+            <MaterialIcons name="refresh" size={20} color={Colors.sea.textInverse} />
+            <Text style={styles.refreshButtonText}>Refresh Status</Text>
+          </View>
         </TouchableOpacity>
 
         {customerInfo && (
@@ -113,11 +131,25 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 3,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  titleIcon: {
+    marginRight: 8,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 16,
     color: Colors.sea.textPrimary,
+  },
+  statusTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  statusIcon: {
+    marginRight: 8,
   },
   loader: {
     marginVertical: 20,
@@ -190,6 +222,11 @@ const styles = StyleSheet.create({
     padding: 14,
     alignItems: 'center',
     marginBottom: 16,
+  },
+  refreshButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   refreshButtonText: {
     color: Colors.sea.textInverse,

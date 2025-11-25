@@ -56,7 +56,7 @@ describe('Delete Checklist Functionality', () => {
   it('renders delete button when onDeletePress is provided', () => {
     const mockDelete = jest.fn();
     
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ChecklistCard
         checklist={mockChecklist}
         stats={mockStats}
@@ -64,24 +64,24 @@ describe('Delete Checklist Functionality', () => {
       />
     );
     
-    expect(getByText('🗑️')).toBeTruthy();
+    expect(getByTestId('delete-button')).toBeTruthy();
   });
 
   it('does not render delete button when onDeletePress is not provided', () => {
-    const { queryByText } = render(
+    const { queryByTestId } = render(
       <ChecklistCard
         checklist={mockChecklist}
         stats={mockStats}
       />
     );
     
-    expect(queryByText('🗑️')).toBeNull();
+    expect(queryByTestId('delete-button')).toBeNull();
   });
 
   it('calls onDeletePress when delete button is pressed', () => {
     const mockDelete = jest.fn();
     
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ChecklistCard
         checklist={mockChecklist}
         stats={mockStats}
@@ -89,7 +89,7 @@ describe('Delete Checklist Functionality', () => {
       />
     );
     
-    const deleteButton = getByText('🗑️').parent;
+    const deleteButton = getByTestId('delete-button');
     fireEvent.press(deleteButton);
     
     expect(mockDelete).toHaveBeenCalledWith(mockChecklist);
@@ -99,7 +99,7 @@ describe('Delete Checklist Functionality', () => {
     const mockDelete = jest.fn();
     const mockPress = jest.fn();
     
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ChecklistCard
         checklist={mockChecklist}
         stats={mockStats}
@@ -108,7 +108,7 @@ describe('Delete Checklist Functionality', () => {
       />
     );
     
-    const deleteButton = getByText('🗑️').parent;
+    const deleteButton = getByTestId('delete-button');
     fireEvent.press(deleteButton);
     
     expect(mockDelete).toHaveBeenCalledWith(mockChecklist);
@@ -119,7 +119,7 @@ describe('Delete Checklist Functionality', () => {
     const mockEdit = jest.fn();
     const mockDelete = jest.fn();
     
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ChecklistCard
         checklist={mockChecklist}
         stats={mockStats}
@@ -128,14 +128,14 @@ describe('Delete Checklist Functionality', () => {
       />
     );
     
-    expect(getByText('✏️')).toBeTruthy();
-    expect(getByText('🗑️')).toBeTruthy();
+    expect(getByTestId('edit-button')).toBeTruthy();
+    expect(getByTestId('delete-button')).toBeTruthy();
   });
 
   it('action buttons have proper touch target', () => {
     const mockDelete = jest.fn();
     
-    const { getByText } = render(
+    const { getByTestId } = render(
       <ChecklistCard
         checklist={mockChecklist}
         stats={mockStats}
@@ -144,11 +144,10 @@ describe('Delete Checklist Functionality', () => {
     );
     
     // The button should exist and be pressable
-    const deleteIcon = getByText('🗑️');
-    expect(deleteIcon).toBeTruthy();
+    const deleteButton = getByTestId('delete-button');
+    expect(deleteButton).toBeTruthy();
     
     // Can successfully press the delete button
-    const deleteButton = deleteIcon.parent;
     fireEvent.press(deleteButton);
     expect(mockDelete).toHaveBeenCalledWith(mockChecklist);
   });

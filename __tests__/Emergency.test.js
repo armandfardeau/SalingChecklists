@@ -45,7 +45,7 @@ describe('Emergency Tab', () => {
   it('renders emergency screen with header', () => {
     const { getByText } = render(<Emergency />);
     
-    expect(getByText('🚨 EMERGENCY')).toBeTruthy();
+    expect(getByText('EMERGENCY')).toBeTruthy();
     expect(getByText('Quick access to critical procedures')).toBeTruthy();
   });
 
@@ -156,7 +156,7 @@ describe('Emergency Tab', () => {
   it('displays warning information box', () => {
     const { getByText } = render(<Emergency />);
     
-    expect(getByText('⚠️ When to Use Emergency Checklists')).toBeTruthy();
+    expect(getByText('When to Use Emergency Checklists')).toBeTruthy();
     expect(getByText(/Life-threatening situations/)).toBeTruthy();
     expect(getByText(/Man overboard/)).toBeTruthy();
   });

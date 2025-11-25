@@ -10,8 +10,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useChecklistStore } from '../../store';
 import { TaskStatus, TaskPriority } from '../../types';
-import { TouchTargets, Typography } from '../../constants/Colors';
+import { TouchTargets } from '../../constants/Colors';
 import { useThemedColors } from '../../hooks/useThemedColors';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // Animation delay after completing or skipping a task before auto-advancing
 const AUTO_ADVANCE_DELAY_MS = 300;
@@ -269,7 +270,10 @@ export default function ChecklistRunner() {
               style={[styles.actionButton, { backgroundColor: colors.success, borderColor: colors.borderLight }]}
               onPress={handleComplete}
             >
-              <Text style={[styles.actionButtonText, { color: colors.textInverse }]}>✓ Complete</Text>
+              <View style={styles.actionButtonContent}>
+                <MaterialIcons name="check" size={24} color={colors.textInverse} />
+                <Text style={[styles.actionButtonText, { color: colors.textInverse }]}>Complete</Text>
+              </View>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.actionButton, { backgroundColor: colors.secondary, borderColor: colors.borderLight }]}
@@ -335,8 +339,9 @@ export default function ChecklistRunner() {
       {/* Completion Message */}
       {stats && stats.isFullyCompleted && (
         <View style={[styles.completionMessage, { backgroundColor: colors.success, borderColor: colors.lowPriority }]}>
+          <MaterialIcons name="check-circle" size={24} color={colors.textInverse} style={styles.completionIcon} />
           <Text style={[styles.completionText, { color: colors.textInverse }]}>
-            🎉 Checklist Complete! All tasks finished.
+            Checklist Complete! All tasks finished.
           </Text>
         </View>
       )}
@@ -572,6 +577,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 2,
   },
+  actionButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   actionButtonText: {
     fontSize: 18,  // Larger font
     fontWeight: 'bold',
@@ -615,6 +625,12 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     elevation: 10,
     borderWidth: 2,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  completionIcon: {
+    marginRight: 12,
   },
   completionText: {
     fontSize: 18,  // Larger font
