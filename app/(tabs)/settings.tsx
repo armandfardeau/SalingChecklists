@@ -26,6 +26,7 @@ export default function SettingsScreen() {
               reloadDefaultChecklists();
               Alert.alert('Success', 'Default checklists have been reloaded.');
             } catch (error) {
+              console.error('Failed to reload default checklists:', error);
               Alert.alert('Error', 'Failed to reload default checklists. Please try again.');
             }
           },
