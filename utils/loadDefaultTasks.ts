@@ -72,13 +72,12 @@ const parseChecklist = (checklistData: DefaultTasksJSON['checklists'][0]): Check
 
 /**
  * Map of locale to task data
+ * Only includes locales with actual translations
  */
-const localeTasksMap: Record<SupportedLocale, DefaultTasksJSON> = {
+const localeTasksMap: Partial<Record<SupportedLocale, DefaultTasksJSON>> = {
   en: enTasks as DefaultTasksJSON,
   fr: frTasks as DefaultTasksJSON,
-  es: enTasks as DefaultTasksJSON, // Fallback to English for now
-  de: enTasks as DefaultTasksJSON, // Fallback to English for now
-  it: enTasks as DefaultTasksJSON, // Fallback to English for now
+  // Additional translations can be added here as they become available
 };
 
 /**
@@ -109,5 +108,6 @@ export const getDefaultChecklistById = (id: string, locale?: SupportedLocale): C
  * @returns Array of supported locales that have translations
  */
 export const getAvailableLocales = (): SupportedLocale[] => {
-  return ['en', 'fr'];
+  // Derive available locales from the localeTasksMap to ensure consistency
+  return Object.keys(localeTasksMap) as SupportedLocale[];
 };

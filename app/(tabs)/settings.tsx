@@ -1,6 +1,8 @@
 import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useThemeStore, useChecklistStore, useLocaleStore, type SupportedLocale } from '../../store';
+import { useThemeStore } from '../../store';
+import { useChecklistStore } from '../../store';
+import { useLocaleStore, type SupportedLocale } from '../../store';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { TouchTargets, Typography } from '../../constants/Colors';
 import SubscriptionStatus from '../../components/SubscriptionStatus';
