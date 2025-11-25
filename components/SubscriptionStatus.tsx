@@ -95,7 +95,10 @@ export default function SubscriptionStatus() {
           style={styles.refreshButton}
           onPress={refreshCustomerInfo}
         >
-          <Text style={styles.refreshButtonText}>🔄 Refresh Status</Text>
+          <View style={styles.refreshButtonContent}>
+            <MaterialIcons name="refresh" size={20} color={Colors.sea.textInverse} />
+            <Text style={styles.refreshButtonText}>Refresh Status</Text>
+          </View>
         </TouchableOpacity>
 
         {customerInfo && (
@@ -219,6 +222,11 @@ const styles = StyleSheet.create({
     padding: 14,
     alignItems: 'center',
     marginBottom: 16,
+  },
+  refreshButtonContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   refreshButtonText: {
     color: Colors.sea.textInverse,
