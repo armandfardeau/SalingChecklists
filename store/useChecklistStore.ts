@@ -257,27 +257,45 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         // Create a map of default checklists by ID
         const defaultMap = new Map(defaultChecklists.map(c => [c.id, c]));
         
-        // Helper function to check if a checklist has been modified from default
+        /**
+         * Helper function to check if a checklist has been modified from default.
+         * Compares structural properties that indicate user customization.
+         * Excludes: timestamps (createdAt, updatedAt, lastCompletedAt), 
+         *           isActive, isTemplate, and task completion status.
+         * These are runtime properties that don't indicate user modification.
+         */
         const isModified = (current: Checklist, defaultVersion: Checklist): boolean => {
+          // Normalize empty/undefined values for comparison
+          const normalizeStr = (val: string | undefined): string => val || '';
+          
           // Check if basic properties have been modified
           if (current.name !== defaultVersion.name) return true;
-          if (current.description !== defaultVersion.description) return true;
+          if (normalizeStr(current.description) !== normalizeStr(defaultVersion.description)) return true;
           if (current.category !== defaultVersion.category) return true;
-          if (current.color !== defaultVersion.color) return true;
-          if (current.icon !== defaultVersion.icon) return true;
+          if (normalizeStr(current.color) !== normalizeStr(defaultVersion.color)) return true;
+          if (normalizeStr(current.icon) !== normalizeStr(defaultVersion.icon)) return true;
           
           // Check if tasks have been modified (compare count and content)
           if (current.tasks.length !== defaultVersion.tasks.length) return true;
           
-          // Check if any task differs
-          for (let i = 0; i < current.tasks.length; i++) {
-            const currentTask = current.tasks[i];
-            const defaultTask = defaultVersion.tasks[i];
+          // Create maps of tasks by ID for proper comparison
+          const currentTaskMap = new Map(current.tasks.map(t => [t.id, t]));
+          const defaultTaskMap = new Map(defaultVersion.tasks.map(t => [t.id, t]));
+          
+          // Check if all default tasks exist and match
+          for (const [id, defaultTask] of defaultTaskMap) {
+            const currentTask = currentTaskMap.get(id);
+            if (!currentTask) return true; // Task removed
             
             if (currentTask.title !== defaultTask.title) return true;
-            if (currentTask.description !== defaultTask.description) return true;
+            if (normalizeStr(currentTask.description) !== normalizeStr(defaultTask.description)) return true;
             if (currentTask.priority !== defaultTask.priority) return true;
             if (currentTask.order !== defaultTask.order) return true;
+          }
+          
+          // Check if any new tasks were added
+          for (const id of currentTaskMap.keys()) {
+            if (!defaultTaskMap.has(id)) return true; // Task added
           }
           
           return false;
