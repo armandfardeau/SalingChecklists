@@ -7,6 +7,7 @@ import { Checklist } from '../../types';
 import ChecklistList from '../../components/ChecklistList';
 import { TouchTargets, Interactions } from '../../constants/Colors';
 import { useThemedColors } from '../../hooks/useThemedColors';
+import { useTranslation } from '../../hooks/useTranslation';
 import { useRevenueCat } from '../../contexts/RevenueCatProvider';
 import { canCreateChecklist, FREE_CHECKLIST_LIMIT } from '../../types/revenuecat';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -15,6 +16,7 @@ export default function App() {
   const router = useRouter();
   const colors = useThemedColors();
   const mode = useThemeStore((state) => state.mode);
+  const { t } = useTranslation();
   const checklists = useChecklistStore((state) => state.checklists);
   const getChecklistStats = useChecklistStore((state) => state.getChecklistStats);
   const deleteChecklist = useChecklistStore((state) => state.deleteChecklist);
@@ -41,12 +43,12 @@ export default function App() {
     // Check if user can create more checklists
     if (!canCreateChecklist(customerInfo, checklists.length)) {
       Alert.alert(
-        'Checklist Limit Reached',
-        `Free users can create up to ${FREE_CHECKLIST_LIMIT} checklists. Subscribe to unlock unlimited checklists.`,
+        t('home.checklistLimitTitle'),
+        t('home.checklistLimitMessage', { limit: FREE_CHECKLIST_LIMIT }),
         [
-          { text: 'Cancel', style: 'cancel' },
+          { text: t('home.cancel'), style: 'cancel' },
           { 
-            text: 'View Subscription', 
+            text: t('home.viewSubscription'), 
             onPress: () => router.push('/(tabs)/settings'),
           },
         ]
@@ -59,12 +61,12 @@ export default function App() {
 
   const handleDeleteChecklist = (checklist: Checklist) => {
     Alert.alert(
-      'Delete Checklist',
-      `Are you sure you want to delete "${checklist.name}"? This action cannot be undone.`,
+      t('home.deleteChecklistTitle'),
+      t('home.deleteChecklistMessage', { name: checklist.name }),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: t('home.cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: t('home.delete'),
           style: 'destructive',
           onPress: () => deleteChecklist(checklist.id),
         },

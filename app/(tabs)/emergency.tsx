@@ -7,6 +7,7 @@ import { useChecklistStore, useThemeStore } from '../../store';
 import { ChecklistCategory } from '../../types';
 import { TouchTargets } from '../../constants/Colors';
 import { useThemedColors } from '../../hooks/useThemedColors';
+import { useTranslation } from '../../hooks/useTranslation';
 
 /**
  * Emergency tab - Quick access to emergency checklists
@@ -16,6 +17,7 @@ export default function Emergency() {
   const router = useRouter();
   const colors = useThemedColors();
   const mode = useThemeStore((state) => state.mode);
+  const { t } = useTranslation();
   const checklists = useChecklistStore((state) => state.checklists);
   const getChecklistStats = useChecklistStore((state) => state.getChecklistStats);
   const initializeSampleData = useChecklistStore((state) => state.initializeSampleData);
@@ -40,9 +42,9 @@ export default function Emergency() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       <View style={[styles.header, { backgroundColor: colors.danger }]}>
-        <Text style={[styles.headerTitle, { color: colors.textInverse }]}>🚨 EMERGENCY</Text>
+        <Text style={[styles.headerTitle, { color: colors.textInverse }]}>🚨 {t('emergency.title')}</Text>
         <Text style={[styles.headerSubtitle, { color: colors.textInverse }]}>
-          Quick access to critical procedures
+          {t('emergency.subtitle')}
         </Text>
       </View>
 
@@ -74,14 +76,14 @@ export default function Emergency() {
                     )}
                     {stats && (
                       <Text style={[styles.taskCount, { color: colors.textSecondary }]}>
-                        {stats.totalTasks} critical tasks
+                        {t('emergency.criticalTasks', { count: stats.totalTasks })}
                       </Text>
                     )}
                   </View>
                 </View>
                 <View style={[styles.accessButton, { backgroundColor: colors.danger }]}>
                   <Text style={[styles.accessButtonText, { color: colors.textInverse }]}>
-                    START →
+                    {t('emergency.start')} →
                   </Text>
                 </View>
               </TouchableOpacity>
@@ -91,25 +93,20 @@ export default function Emergency() {
           <View style={styles.emptyState}>
             <Text style={styles.emptyIcon}>⚠️</Text>
             <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>
-              No Emergency Checklists
+              {t('emergency.noChecklistsTitle')}
             </Text>
             <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-              Add an emergency checklist to have quick access to critical procedures.
+              {t('emergency.noChecklistsText')}
             </Text>
           </View>
         )}
 
         <View style={[styles.infoBox, { backgroundColor: colors.danger, borderColor: colors.dangerDark }]}>
           <Text style={[styles.infoTitle, { color: colors.textInverse }]}>
-            ⚠️ When to Use Emergency Checklists
+            ⚠️ {t('emergency.infoTitle')}
           </Text>
           <Text style={[styles.infoText, { color: colors.textInverse }]}>
-            • Life-threatening situations{'\n'}
-            • Equipment failure{'\n'}
-            • Man overboard{'\n'}
-            • Fire or flooding{'\n'}
-            • Medical emergencies{'\n'}
-            • Any situation requiring immediate action
+            {t('emergency.infoItems')}
           </Text>
         </View>
       </ScrollView>

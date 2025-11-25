@@ -4,6 +4,7 @@ import { Checklist, ChecklistStats } from '../types';
 import { getCategoryLabel } from '../utils/formatters';
 import { TouchTargets, Interactions } from '../constants/Colors';
 import { useThemedColors } from '../hooks/useThemedColors';
+import { useTranslation } from '../hooks/useTranslation';
 
 interface ChecklistCardProps {
   /**
@@ -37,6 +38,7 @@ interface ChecklistCardProps {
  */
 export default function ChecklistCard({ checklist, stats, onPress, onEditPress, onDeletePress }: ChecklistCardProps) {
   const colors = useThemedColors();
+  const { t } = useTranslation();
 
   const handlePress = () => {
     if (onPress) {
@@ -130,14 +132,14 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
           />
         </View>
         <Text style={[styles.progressText, { color: colors.textPrimary }]}>
-          {stats.completedTasks} / {stats.totalTasks} tasks
+          {t('checklist.tasksProgress', { completed: stats.completedTasks, total: stats.totalTasks })}
           {stats.isFullyCompleted && ' ✓'}
         </Text>
       </View>
 
       {!checklist.isActive && (
         <View style={[styles.inactiveBadge, { backgroundColor: colors.secondary }]}>
-          <Text style={[styles.inactiveText, { color: colors.textInverse }]}>Inactive</Text>
+          <Text style={[styles.inactiveText, { color: colors.textInverse }]}>{t('checklist.inactive')}</Text>
         </View>
       )}
     </TouchableOpacity>

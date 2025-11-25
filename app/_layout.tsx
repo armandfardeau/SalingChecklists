@@ -7,6 +7,7 @@ if (Analytics.vexoApiKey && (!Analytics.productionOnly || !__DEV__)) {
   vexo(Analytics.vexoApiKey);
 }
 import { RevenueCatProvider } from '../contexts/RevenueCatProvider';
+import '../utils/i18n'; // Initialize i18n
 
 export default function RootLayout() {
   return (

@@ -1,0 +1,139 @@
+{
+  "tabs": {
+    "checklists": "Listes",
+    "emergency": "Urgence",
+    "settings": "Réglages"
+  },
+  "home": {
+    "createChecklist": "Créer une liste",
+    "deleteChecklistTitle": "Supprimer la liste",
+    "deleteChecklistMessage": "Êtes-vous sûr de vouloir supprimer \"{{name}}\" ? Cette action est irréversible.",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "checklistLimitTitle": "Limite de listes atteinte",
+    "checklistLimitMessage": "Les utilisateurs gratuits peuvent créer jusqu'à {{limit}} listes. Abonnez-vous pour débloquer des listes illimitées.",
+    "viewSubscription": "Voir l'abonnement"
+  },
+  "settings": {
+    "title": "Réglages",
+    "description": "Configurez vos préférences d'application",
+    "appearance": "Apparence",
+    "darkMode": "Mode sombre",
+    "enabled": "Activé",
+    "disabled": "Désactivé",
+    "language": "Langue",
+    "languageDescription": "Sélectionnez votre langue préférée"
+  },
+  "emergency": {
+    "title": "URGENCE",
+    "subtitle": "Accès rapide aux procédures critiques",
+    "noChecklistsTitle": "Aucune liste d'urgence",
+    "noChecklistsText": "Ajoutez une liste d'urgence pour accéder rapidement aux procédures critiques.",
+    "start": "DÉMARRER",
+    "infoTitle": "Quand utiliser les listes d'urgence",
+    "infoItems": "• Situations mettant la vie en danger\n• Panne d'équipement\n• Homme à la mer\n• Incendie ou inondation\n• Urgences médicales\n• Toute situation nécessitant une action immédiate",
+    "criticalTasks": "{{count}} tâches critiques"
+  },
+  "checklist": {
+    "inactive": "Inactif",
+    "tasksProgress": "{{completed}} / {{total}} tâches"
+  },
+  "category": {
+    "pre_departure": "Pré Départ",
+    "departure": "Départ",
+    "navigation": "Navigation",
+    "arrival": "Arrivée",
+    "safety": "Sécurité",
+    "maintenance": "Maintenance",
+    "emergency": "Urgence",
+    "general": "Général"
+  },
+  "defaultChecklists": {
+    "preDeparture": {
+      "name": "Contrôle de sécurité avant départ",
+      "description": "Contrôles de sécurité essentiels avant le départ",
+      "tasks": {
+        "checkWeather": {
+          "title": "Vérifier les prévisions météo",
+          "description": "Examiner les conditions météorologiques locales et les prévisions marines"
+        },
+        "inspectLifeJackets": {
+          "title": "Inspecter les gilets de sauvetage",
+          "description": "S'assurer que tous les membres d'équipage ont des gilets de sauvetage bien ajustés"
+        },
+        "checkFuel": {
+          "title": "Vérifier le niveau de carburant",
+          "description": "Vérifier que le carburant est suffisant pour l'itinéraire prévu"
+        },
+        "testLights": {
+          "title": "Tester les feux de navigation",
+          "description": "S'assurer que tous les feux de navigation fonctionnent"
+        },
+        "verifyRadio": {
+          "title": "Vérifier la radio VHF",
+          "description": "Tester la communication radio VHF"
+        }
+      }
+    },
+    "emergency": {
+      "name": "Procédures d'urgence",
+      "description": "Liste de contrôle de réponse d'urgence critique",
+      "tasks": {
+        "assessSituation": {
+          "title": "Évaluer la situation",
+          "description": "Déterminer la nature et la gravité de l'urgence"
+        },
+        "alertCrew": {
+          "title": "Alerter l'équipage et les passagers",
+          "description": "Informer toutes les personnes à bord de l'urgence"
+        },
+        "lifeJackets": {
+          "title": "Mettre les gilets de sauvetage",
+          "description": "S'assurer que tout le monde enfile immédiatement son gilet de sauvetage"
+        },
+        "distressCall": {
+          "title": "Faire un appel de détresse",
+          "description": "Envoyer un MAYDAY sur le canal VHF 16 si la vie est en danger"
+        },
+        "deploySafety": {
+          "title": "Déployer l'équipement de sécurité",
+          "description": "Préparer le radeau de sauvetage, les fusées et la balise de détresse (EPIRB)"
+        },
+        "controlSituation": {
+          "title": "Tenter de contrôler la situation",
+          "description": "Prendre des mesures immédiates pour contenir/résoudre l'urgence"
+        },
+        "prepareEvacuation": {
+          "title": "Préparer l'évacuation",
+          "description": "Si nécessaire, se préparer à abandonner le navire"
+        }
+      }
+    },
+    "arrival": {
+      "name": "Procédures d'arrivée",
+      "description": "Tâches essentielles à accomplir à l'arrivée à destination.",
+      "tasks": {
+        "secureBoat": {
+          "title": "Sécuriser le bateau au quai ou au mouillage",
+          "description": "Amarrer correctement le navire avec les amarres et les pare-battages appropriés"
+        },
+        "engineShutdown": {
+          "title": "Arrêt du moteur et contrôles post-opération",
+          "description": "Éteindre le moteur et effectuer une inspection post-opération"
+        },
+        "checkLines": {
+          "title": "Vérifier toutes les amarres et les pare-battages",
+          "description": "Vérifier que toutes les amarres et les pare-battages sont correctement fixés et positionnés"
+        },
+        "logArrival": {
+          "title": "Enregistrer l'heure et le lieu d'arrivée",
+          "description": "Enregistrer l'heure d'arrivée, le lieu et les notes de navigation pertinentes"
+        },
+        "checkCrew": {
+          "title": "Vérifier l'équipage et les passagers",
+          "description": "S'assurer que tous les membres d'équipage et passagers ont débarqué en toute sécurité ou sont comptabilisés"
+        }
+      }
+    }
+  }
+}
