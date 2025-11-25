@@ -5,14 +5,7 @@ import { useRouter } from 'expo-router';
 import { usePreferencesStore, useThemeStore, Language, ThemeMode } from '../store';
 import { useThemedColors } from '../hooks/useThemedColors';
 import { TouchTargets, Typography } from '../constants/Colors';
-
-const LANGUAGES: { code: Language; name: string; flag: string }[] = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-];
+import { LANGUAGES } from '../constants/Languages';
 
 export default function OnboardingScreen() {
   const router = useRouter();

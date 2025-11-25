@@ -1,19 +1,12 @@
 import { useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity, Alert, Modal } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useThemeStore, useChecklistStore, usePreferencesStore, Language } from '../../store';
+import { useThemeStore, useChecklistStore, usePreferencesStore } from '../../store';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { TouchTargets, Typography } from '../../constants/Colors';
 import { Colors } from '../../constants/Colors';
 import SubscriptionStatus from '../../components/SubscriptionStatus';
-
-const LANGUAGES: { code: Language; name: string; flag: string }[] = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'es', name: 'Español', flag: '🇪🇸' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-  { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-];
+import { LANGUAGES } from '../../constants/Languages';
 
 export default function SettingsScreen() {
   const colors = useThemedColors();
@@ -144,8 +137,8 @@ export default function SettingsScreen() {
                   key={lang.code}
                   style={[
                     styles.languageOption,
+                    language === lang.code && styles.selectedLanguageOption,
                     {
-                      backgroundColor: language === lang.code ? colors.primary + '20' : 'transparent',
                       borderColor: language === lang.code ? colors.primary : colors.cardBorder,
                     },
                   ]}
@@ -262,6 +255,10 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 12,
     minHeight: TouchTargets.minimum,
+    backgroundColor: 'transparent',
+  },
+  selectedLanguageOption: {
+    backgroundColor: 'rgba(0, 102, 204, 0.1)', // 10% opacity of primary color
   },
   languageEmoji: {
     fontSize: 28,
