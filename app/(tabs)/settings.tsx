@@ -65,7 +65,7 @@ export default function SettingsScreen() {
               Checklists
             </Text>
             <TouchableOpacity
-              style={[styles.dangerButton, { backgroundColor: colors.cardBackground, borderColor: colors.danger }]}
+              style={[styles.settingItem, { backgroundColor: colors.cardBackground, borderColor: colors.danger }]}
               onPress={handleReloadChecklists}
               activeOpacity={0.7}
             >
@@ -136,14 +136,5 @@ const styles = StyleSheet.create({
   settingDescription: {
     fontSize: Typography.body,
     lineHeight: 22,
-  },
-  dangerButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 20,
-    borderRadius: 12,
-    borderWidth: 2,
-    minHeight: TouchTargets.minimum,
   },
 });
