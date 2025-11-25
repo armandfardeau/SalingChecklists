@@ -22,8 +22,12 @@ export default function SettingsScreen() {
           text: 'Reload',
           style: 'destructive',
           onPress: () => {
-            reloadDefaultChecklists();
-            Alert.alert('Success', 'Default checklists have been reloaded.');
+            try {
+              reloadDefaultChecklists();
+              Alert.alert('Success', 'Default checklists have been reloaded.');
+            } catch (error) {
+              Alert.alert('Error', 'Failed to reload default checklists. Please try again.');
+            }
           },
         },
       ]
