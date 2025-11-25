@@ -9,7 +9,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerShown: true,
+        headerShown: false,
         headerStyle: {
           backgroundColor: colors.primary,
         },
@@ -25,7 +25,7 @@ export default function TabLayout() {
           fontWeight: '600',
         },
         tabBarStyle: {
-          height: 64,  // Taller tab bar for larger touch targets
+          height: 100,  // Taller tab bar for larger touch targets
           paddingBottom: 8,
           paddingTop: 8,
           backgroundColor: colors.cardBackground,
