@@ -139,6 +139,8 @@ The JSON structure follows this format:
 - `npm run ios` - Launch app on iOS (macOS only)
 - `npm run web` - Launch app in browser
 - `npm test` - Run Jest tests
+- `npm run lint` - Run ESLint to check code quality
+- `npm run lint:fix` - Run ESLint and automatically fix issues
 
 ## 📊 Analytics Configuration
 
