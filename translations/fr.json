@@ -40,11 +40,13 @@
   },
   "category": {
     "pre_departure": "Pré Départ",
-    "emergency": "Urgence",
-    "arrival": "Arrivée",
-    "maintenance": "Maintenance",
+    "departure": "Départ",
     "navigation": "Navigation",
-    "safety": "Sécurité"
+    "arrival": "Arrivée",
+    "safety": "Sécurité",
+    "maintenance": "Maintenance",
+    "emergency": "Urgence",
+    "general": "Général"
   },
   "defaultChecklists": {
     "preDeparture": {
