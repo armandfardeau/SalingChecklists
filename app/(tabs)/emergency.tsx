@@ -8,6 +8,7 @@ import { ChecklistCategory } from '../../types';
 import { TouchTargets } from '../../constants/Colors';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { useTranslation } from '../../hooks/useTranslation';
+import { MaterialIcons } from '@expo/vector-icons';
 
 /**
  * Emergency tab - Quick access to emergency checklists
@@ -42,7 +43,10 @@ export default function Emergency() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.screenBackground }]}>
       <View style={[styles.header, { backgroundColor: colors.danger }]}>
-        <Text style={[styles.headerTitle, { color: colors.textInverse }]}>🚨 {t('emergency.title')}</Text>
+        <View style={styles.headerTitleContainer}>
+          <MaterialIcons name="emergency" size={32} color={colors.textInverse} style={styles.headerIcon} />
+          <Text style={[styles.headerTitle, { color: colors.textInverse }]}>{t('emergency.title')}</Text>
+        </View>
         <Text style={[styles.headerSubtitle, { color: colors.textInverse }]}>
           {t('emergency.subtitle')}
         </Text>
@@ -91,7 +95,7 @@ export default function Emergency() {
           })
         ) : (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyIcon}>⚠️</Text>
+            <MaterialIcons name="warning" size={80} color={colors.warning} style={styles.emptyIcon} />
             <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>
               {t('emergency.noChecklistsTitle')}
             </Text>
@@ -102,9 +106,12 @@ export default function Emergency() {
         )}
 
         <View style={[styles.infoBox, { backgroundColor: colors.danger, borderColor: colors.dangerDark }]}>
-          <Text style={[styles.infoTitle, { color: colors.textInverse }]}>
-            ⚠️ {t('emergency.infoTitle')}
-          </Text>
+          <View style={styles.infoTitleContainer}>
+            <MaterialIcons name="warning" size={24} color={colors.textInverse} style={styles.infoIcon} />
+            <Text style={[styles.infoTitle, { color: colors.textInverse }]}>
+              {t('emergency.infoTitle')}
+            </Text>
+          </View>
           <Text style={[styles.infoText, { color: colors.textInverse }]}>
             {t('emergency.infoItems')}
           </Text>
@@ -132,10 +139,18 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 8,
   },
+  headerTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 8,
+  },
+  headerIcon: {
+    marginRight: 12,
+  },
   headerTitle: {
     fontSize: 32,
     fontWeight: 'bold',
-    marginBottom: 8,
     textAlign: 'center',
   },
   headerSubtitle: {
@@ -210,7 +225,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
   },
   emptyIcon: {
-    fontSize: 80,
     marginBottom: 24,
   },
   emptyTitle: {
@@ -230,10 +244,17 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderWidth: 2,
   },
+  infoTitleContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  infoIcon: {
+    marginRight: 8,
+  },
   infoTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 12,
   },
   infoText: {
     fontSize: 16,

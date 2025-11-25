@@ -5,6 +5,7 @@ import { getCategoryLabel } from '../utils/formatters';
 import { TouchTargets, Interactions } from '../constants/Colors';
 import { useThemedColors } from '../hooks/useThemedColors';
 import { useTranslation } from '../hooks/useTranslation';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface ChecklistCardProps {
   /**
@@ -97,8 +98,9 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
                 style={styles.editButton}
                 onPress={handleEditPress}
                 activeOpacity={Interactions.activeOpacity.light}
+                testID="edit-button"
               >
-                <Text style={styles.editButtonText}>✏️</Text>
+                <MaterialIcons name="edit" size={24} color={colors.textPrimary} />
               </TouchableOpacity>
             )}
             {onDeletePress && (
@@ -106,8 +108,9 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
                 style={styles.deleteButton}
                 onPress={handleDeletePress}
                 activeOpacity={Interactions.activeOpacity.light}
+                testID="delete-button"
               >
-                <Text style={styles.deleteButtonText}>🗑️</Text>
+                <MaterialIcons name="delete" size={24} color={colors.danger} />
               </TouchableOpacity>
             )}
           </View>
@@ -131,10 +134,14 @@ export default function ChecklistCard({ checklist, stats, onPress, onEditPress, 
             ]}
           />
         </View>
-        <Text style={[styles.progressText, { color: colors.textPrimary }]}>
-          {t('checklist.tasksProgress', { completed: stats.completedTasks, total: stats.totalTasks })}
-          {stats.isFullyCompleted && ' ✓'}
-        </Text>
+        <View style={styles.progressTextContainer}>
+          <Text style={[styles.progressText, { color: colors.textPrimary }]}>
+            {t('checklist.tasksProgress', { completed: stats.completedTasks, total: stats.totalTasks })}
+          </Text>
+          {stats.isFullyCompleted && (
+            <MaterialIcons name="check-circle" size={16} color={colors.success} style={styles.completedIcon} />
+          )}
+        </View>
       </View>
 
       {!checklist.isActive && (
@@ -193,18 +200,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  editButtonText: {
-    fontSize: 24,  // Larger icon
-  },
   deleteButton: {
     padding: 12,  // Larger touch target
     minWidth: TouchTargets.minimum,
     minHeight: TouchTargets.minimum,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  deleteButtonText: {
-    fontSize: 24,  // Larger icon
   },
   icon: {
     fontSize: 32,  // Larger icon
@@ -249,10 +250,18 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 6,
   },
+  progressTextContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    gap: 4,
+  },
   progressText: {
     fontSize: 14,  // Larger font
-    textAlign: 'right',
     fontWeight: '600',  // Bolder
+  },
+  completedIcon: {
+    marginLeft: 4,
   },
   inactiveBadge: {
     position: 'absolute',

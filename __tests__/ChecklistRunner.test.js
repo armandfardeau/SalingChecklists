@@ -128,13 +128,13 @@ describe('ChecklistRunner', () => {
 
   it('should show complete and skip buttons for pending tasks', () => {
     const { getByText } = render(<ChecklistRunner />);
-    expect(getByText('✓ Complete')).toBeTruthy();
+    expect(getByText('Complete')).toBeTruthy();
     expect(getByText('Skip')).toBeTruthy();
   });
 
   it('should call updateTaskStatus when complete button is pressed', () => {
     const { getByText } = render(<ChecklistRunner />);
-    const completeButton = getByText('✓ Complete');
+    const completeButton = getByText('Complete');
     
     fireEvent.press(completeButton);
     
@@ -289,7 +289,7 @@ describe('ChecklistRunner', () => {
     
     const { getByText } = render(<ChecklistRunner />);
     
-    expect(getByText('🎉 Checklist Complete! All tasks finished.')).toBeTruthy();
+    expect(getByText('Checklist Complete! All tasks finished.')).toBeTruthy();
   });
 
   it('should render reset all button in header', () => {

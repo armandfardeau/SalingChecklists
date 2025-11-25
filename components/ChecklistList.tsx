@@ -3,6 +3,7 @@ import { FlatList, View, Text, StyleSheet } from 'react-native';
 import { Checklist, ChecklistStats } from '../types';
 import ChecklistCard from './ChecklistCard';
 import { useThemedColors } from '../hooks/useThemedColors';
+import { MaterialIcons } from '@expo/vector-icons';
 
 interface ChecklistListProps {
   /**
@@ -79,7 +80,7 @@ export default function ChecklistList({
 
     return (
       <View style={styles.emptyContainer}>
-        <Text style={styles.emptyIcon}>📋</Text>
+        <MaterialIcons name="checklist" size={72} color={colors.textDisabled} style={styles.emptyIcon} />
         <Text style={[styles.emptyTitle, { color: colors.textPrimary }]}>No Checklists Yet</Text>
         <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
           Create your first checklist to get started with your sailing preparations.
@@ -117,7 +118,6 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   emptyIcon: {
-    fontSize: 72,  // Larger icon
     marginBottom: 20,
   },
   emptyTitle: {
