@@ -47,49 +47,55 @@ const parseTask = (taskData: DefaultTasksJSON['checklists'][0]['tasks'][0], time
 };
 
 /**
+ * Mapping of default checklist IDs to translation keys
+ */
+const CHECKLIST_TRANSLATION_MAP: Record<string, string> = {
+  'pre-dep-1': 'preDeparture',
+  'emergency-1': 'emergency',
+  'arrival-1': 'arrival',
+};
+
+/**
+ * Mapping of default task IDs to translation keys
+ */
+const TASK_TRANSLATION_MAP: Record<string, Record<string, string>> = {
+  'pre-dep-1': {
+    'task-1': 'checkWeather',
+    'task-2': 'inspectLifeJackets',
+    'task-3': 'checkFuel',
+    'task-4': 'testLights',
+    'task-5': 'verifyRadio',
+  },
+  'emergency-1': {
+    'emerg-task-1': 'assessSituation',
+    'emerg-task-2': 'alertCrew',
+    'emerg-task-3': 'lifeJackets',
+    'emerg-task-4': 'distressCall',
+    'emerg-task-5': 'deploySafety',
+    'emerg-task-6': 'controlSituation',
+    'emerg-task-7': 'prepareEvacuation',
+  },
+  'arrival-1': {
+    'arrival-task-1': 'secureBoat',
+    'arrival-task-2': 'engineShutdown',
+    'arrival-task-3': 'checkLines',
+    'arrival-task-4': 'logArrival',
+    'arrival-task-5': 'checkCrew',
+  },
+};
+
+/**
  * Gets translation key for a default checklist
  */
 const getChecklistTranslationKey = (checklistId: string): string | null => {
-  if (checklistId === 'pre-dep-1') return 'preDeparture';
-  if (checklistId === 'emergency-1') return 'emergency';
-  if (checklistId === 'arrival-1') return 'arrival';
-  return null;
+  return CHECKLIST_TRANSLATION_MAP[checklistId] || null;
 };
 
 /**
  * Gets translation key for a default task
  */
 const getTaskTranslationKey = (checklistId: string, taskId: string): string | null => {
-  const checklistKey = getChecklistTranslationKey(checklistId);
-  if (!checklistKey) return null;
-
-  const taskMap: Record<string, Record<string, string>> = {
-    'pre-dep-1': {
-      'task-1': 'checkWeather',
-      'task-2': 'inspectLifeJackets',
-      'task-3': 'checkFuel',
-      'task-4': 'testLights',
-      'task-5': 'verifyRadio',
-    },
-    'emergency-1': {
-      'emerg-task-1': 'assessSituation',
-      'emerg-task-2': 'alertCrew',
-      'emerg-task-3': 'lifeJackets',
-      'emerg-task-4': 'distressCall',
-      'emerg-task-5': 'deploySafety',
-      'emerg-task-6': 'controlSituation',
-      'emerg-task-7': 'prepareEvacuation',
-    },
-    'arrival-1': {
-      'arrival-task-1': 'secureBoat',
-      'arrival-task-2': 'engineShutdown',
-      'arrival-task-3': 'checkLines',
-      'arrival-task-4': 'logArrival',
-      'arrival-task-5': 'checkCrew',
-    },
-  };
-
-  return taskMap[checklistId]?.[taskId] || null;
+  return TASK_TRANSLATION_MAP[checklistId]?.[taskId] || null;
 };
 
 /**
@@ -104,15 +110,15 @@ const parseChecklist = (checklistData: DefaultTasksJSON['checklists'][0]): Check
   let description = checklistData.description;
   
   if (checklistKey) {
-    const translatedName = i18n.t(`defaultChecklists.${checklistKey}.name`);
-    const translatedDesc = i18n.t(`defaultChecklists.${checklistKey}.description`);
+    const nameKey = `defaultChecklists.${checklistKey}.name`;
+    const descKey = `defaultChecklists.${checklistKey}.description`;
     
-    // Only use translation if it exists (not returning the key itself)
-    if (translatedName && !translatedName.startsWith('defaultChecklists.')) {
-      name = translatedName;
+    // Use i18n.exists() to check if translation exists
+    if (i18n.exists(nameKey)) {
+      name = i18n.t(nameKey);
     }
-    if (translatedDesc && !translatedDesc.startsWith('defaultChecklists.')) {
-      description = translatedDesc;
+    if (i18n.exists(descKey)) {
+      description = i18n.t(descKey);
     }
   }
 
@@ -131,14 +137,15 @@ const parseChecklist = (checklistData: DefaultTasksJSON['checklists'][0]): Check
       let taskDescription = task.description;
 
       if (checklistKey && taskKey) {
-        const translatedTitle = i18n.t(`defaultChecklists.${checklistKey}.tasks.${taskKey}.title`);
-        const translatedDesc = i18n.t(`defaultChecklists.${checklistKey}.tasks.${taskKey}.description`);
+        const titleKey = `defaultChecklists.${checklistKey}.tasks.${taskKey}.title`;
+        const descKey = `defaultChecklists.${checklistKey}.tasks.${taskKey}.description`;
 
-        if (translatedTitle && !translatedTitle.startsWith('defaultChecklists.')) {
-          taskTitle = translatedTitle;
+        // Use i18n.exists() to check if translation exists
+        if (i18n.exists(titleKey)) {
+          taskTitle = i18n.t(titleKey);
         }
-        if (translatedDesc && !translatedDesc.startsWith('defaultChecklists.')) {
-          taskDescription = translatedDesc;
+        if (i18n.exists(descKey)) {
+          taskDescription = i18n.t(descKey);
         }
       }
 
