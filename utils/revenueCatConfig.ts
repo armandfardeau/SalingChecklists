@@ -27,5 +27,9 @@ export const REVENUECAT_CONFIG = {
  */
 export const isRevenueCatConfigured = (): boolean => {
   const key = REVENUECAT_CONFIG.apiKey;
-  return key !== 'your_ios_api_key_here' && key !== 'your_android_api_key_here';
+  // Check that key exists, is not empty, and is not a placeholder
+  return !!key && 
+         key.trim() !== '' && 
+         key !== 'your_ios_api_key_here' && 
+         key !== 'your_android_api_key_here';
 };

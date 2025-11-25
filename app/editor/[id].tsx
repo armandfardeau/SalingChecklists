@@ -16,6 +16,8 @@ import { createTask } from '../../types/examples';
 import { getCategoryLabel } from '../../utils/formatters';
 import { areTaskArraysEqual } from '../../utils/comparisons';
 import { Colors, TouchTargets } from '../../constants/Colors';
+import { useRevenueCat } from '../../contexts/RevenueCatProvider';
+import { canCreateChecklist, FREE_CHECKLIST_LIMIT } from '../../types/revenuecat';
 
 /**
  * ChecklistEditor screen for creating and editing checklists
@@ -29,9 +31,11 @@ export default function ChecklistEditor() {
   const existingChecklist = useChecklistStore((state) => 
     isNewChecklist ? undefined : state.getChecklist(id || '')
   );
+  const checklists = useChecklistStore((state) => state.checklists);
   const addChecklistWithTasks = useChecklistStore((state) => state.addChecklistWithTasks);
   const updateChecklist = useChecklistStore((state) => state.updateChecklist);
   const updateChecklistTasks = useChecklistStore((state) => state.updateChecklistTasks);
+  const { customerInfo } = useRevenueCat();
 
   // Form state
   const [name, setName] = useState(existingChecklist?.name || '');
@@ -63,6 +67,18 @@ export default function ChecklistEditor() {
     }
 
     if (isNewChecklist) {
+      // Check if user can create more checklists
+      if (!canCreateChecklist(customerInfo, checklists.length)) {
+        Alert.alert(
+          'Checklist Limit Reached',
+          `Free users can create up to ${FREE_CHECKLIST_LIMIT} checklists. Subscribe to unlock unlimited checklists.`,
+          [
+            { text: 'OK' },
+          ]
+        );
+        return;
+      }
+      
       // Create new checklist with tasks using store method
       addChecklistWithTasks(
         {

@@ -7,6 +7,8 @@ import { Checklist } from '../../types';
 import ChecklistList from '../../components/ChecklistList';
 import { TouchTargets, Interactions } from '../../constants/Colors';
 import { useThemedColors } from '../../hooks/useThemedColors';
+import { useRevenueCat } from '../../contexts/RevenueCatProvider';
+import { canCreateChecklist, FREE_CHECKLIST_LIMIT } from '../../types/revenuecat';
 
 export default function App() {
   const router = useRouter();
@@ -17,6 +19,7 @@ export default function App() {
   const deleteChecklist = useChecklistStore((state) => state.deleteChecklist);
   const initializeSampleData = useChecklistStore((state) => state.initializeSampleData);
   const hasHydrated = useChecklistStore((state) => state._hasHydrated);
+  const { customerInfo } = useRevenueCat();
 
   // Initialize sample data after store has hydrated from storage
   useEffect(() => {
@@ -34,6 +37,22 @@ export default function App() {
   };
 
   const handleCreateChecklist = () => {
+    // Check if user can create more checklists
+    if (!canCreateChecklist(customerInfo, checklists.length)) {
+      Alert.alert(
+        'Checklist Limit Reached',
+        `Free users can create up to ${FREE_CHECKLIST_LIMIT} checklists. Subscribe to unlock unlimited checklists.`,
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { 
+            text: 'View Subscription', 
+            onPress: () => router.push('/(tabs)/settings'),
+          },
+        ]
+      );
+      return;
+    }
+    
     router.push('/editor/new');
   };
 

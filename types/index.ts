@@ -39,4 +39,6 @@ export {
   hasActiveSubscription,
   getActiveEntitlements,
   hasEntitlement,
+  canCreateChecklist,
+  FREE_CHECKLIST_LIMIT,
 } from './revenuecat';
