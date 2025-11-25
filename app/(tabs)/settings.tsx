@@ -1,6 +1,6 @@
-import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useThemeStore } from '../../store';
+import { useThemeStore, useChecklistStore } from '../../store';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { TouchTargets, Typography } from '../../constants/Colors';
 import { Colors } from '../../constants/Colors';
@@ -10,6 +10,30 @@ export default function SettingsScreen() {
   const colors = useThemedColors();
   const mode = useThemeStore((state) => state.mode);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
+  const reloadDefaultChecklists = useChecklistStore((state) => state.reloadDefaultChecklists);
+
+  const handleReloadChecklists = () => {
+    Alert.alert(
+      'Reload Default Checklists',
+      'This will restore unmodified default checklists while preserving your custom checklists and any modifications you made. Are you sure?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Reload',
+          style: 'destructive',
+          onPress: () => {
+            try {
+              reloadDefaultChecklists();
+              Alert.alert('Success', 'Default checklists have been reloaded.');
+            } catch (error) {
+              console.error('Failed to reload default checklists:', error);
+              Alert.alert('Error', 'Failed to reload default checklists. Please try again.');
+            }
+          },
+        },
+      ]
+    );
+  };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.screenBackground }]} edges={['bottom']}>
@@ -39,6 +63,26 @@ export default function SettingsScreen() {
                 thumbColor={colors.textInverse}
               />
             </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Checklists
+            </Text>
+            <TouchableOpacity
+              style={[styles.settingItem, { backgroundColor: colors.cardBackground, borderColor: colors.danger }]}
+              onPress={handleReloadChecklists}
+              activeOpacity={0.7}
+            >
+              <View style={styles.settingInfo}>
+                <Text style={[styles.settingLabel, { color: colors.danger }]}>
+                  Reload Default Checklists
+                </Text>
+                <Text style={[styles.settingDescription, { color: colors.textSecondary }]}>
+                  Restore unmodified defaults only
+                </Text>
+              </View>
+            </TouchableOpacity>
           </View>
           
           <SubscriptionStatus />
