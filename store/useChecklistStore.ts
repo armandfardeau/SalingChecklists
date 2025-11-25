@@ -251,13 +251,8 @@ export const useChecklistStore = create<ChecklistStoreState>()(
       },
 
       reloadDefaultChecklists: () => {
-        try {
-          const defaultChecklists = loadDefaultChecklists();
-          set({ checklists: defaultChecklists });
-        } catch (error) {
-          console.error('Failed to reload default checklists:', error);
-          // Don't modify state if loading fails - preserve existing checklists
-        }
+        const defaultChecklists = loadDefaultChecklists();
+        set({ checklists: defaultChecklists });
       },
     }),
     {
