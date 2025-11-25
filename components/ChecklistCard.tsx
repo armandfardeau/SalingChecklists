@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
   },
   titleContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     alignItems: 'flex-start',
     marginBottom: 8,
     flex: 1,
