@@ -390,13 +390,16 @@ describe('Checklist Store', () => {
     expect(afterReload.find(c => c.name === 'Custom Checklist 1')).toBeDefined();
     expect(afterReload.find(c => c.name === 'Custom Checklist 2')).toBeDefined();
     
-    // Should contain default checklist names
-    expect(afterReload[0].name).toBeTruthy();
-    expect(afterReload[0].tasks).toBeDefined();
-    expect(afterReload[0].tasks.length).toBeGreaterThan(0);
+    // Should contain default checklists with tasks
+    const defaultChecklists = afterReload.filter(c => 
+      c.id === 'pre-dep-1' || c.id === 'emergency-1' || c.id === 'arrival-1'
+    );
+    expect(defaultChecklists.length).toBeGreaterThan(0);
+    expect(defaultChecklists[0].tasks).toBeDefined();
+    expect(defaultChecklists[0].tasks.length).toBeGreaterThan(0);
   });
 
-  it('should replace modified default checklists when reloading', () => {
+  it('should preserve modified default checklists when reloading', () => {
     const state = useChecklistStore.getState();
     
     // First load defaults
@@ -429,12 +432,51 @@ describe('Checklist Store', () => {
 
     const afterReload = useChecklistStore.getState().checklists;
     
-    // Default checklist should be reset to original
-    const resetChecklist = afterReload.find(c => c.id === defaultId);
-    expect(resetChecklist?.name).not.toBe('Modified Default Name');
-    expect(resetChecklist?.name).toBe(originalName);
+    // Modified default checklist should be preserved (NOT reset)
+    const preservedChecklist = afterReload.find(c => c.id === defaultId);
+    expect(preservedChecklist?.name).toBe('Modified Default Name');
+    expect(preservedChecklist?.name).not.toBe(originalName);
     
     // Custom checklist should still exist
     expect(afterReload.find(c => c.name === 'My Custom Checklist')).toBeDefined();
+  });
+
+  it('should reload unmodified default checklists', () => {
+    const state = useChecklistStore.getState();
+    
+    // First load defaults
+    state.reloadDefaultChecklists();
+    
+    // Get two default checklists
+    const allChecklists = useChecklistStore.getState().checklists;
+    expect(allChecklists.length).toBeGreaterThanOrEqual(2);
+    
+    const firstDefault = allChecklists[0];
+    const secondDefault = allChecklists[1];
+    
+    // Modify only the first one
+    state.updateChecklist(firstDefault.id, { 
+      name: 'Modified First Default'
+    });
+    
+    // Mark completion status on the second one (this shouldn't count as modification)
+    // because we only check structural properties
+    const modifiedState = useChecklistStore.getState();
+    const modifiedFirst = modifiedState.checklists.find(c => c.id === firstDefault.id);
+    expect(modifiedFirst?.name).toBe('Modified First Default');
+    
+    // Reload default checklists
+    state.reloadDefaultChecklists();
+    
+    const afterReload = useChecklistStore.getState().checklists;
+    
+    // First default should remain modified (preserved)
+    const firstAfterReload = afterReload.find(c => c.id === firstDefault.id);
+    expect(firstAfterReload?.name).toBe('Modified First Default');
+    
+    // Second default should still exist with original name
+    const secondAfterReload = afterReload.find(c => c.id === secondDefault.id);
+    expect(secondAfterReload).toBeDefined();
+    expect(secondAfterReload?.name).toBe(secondDefault.name);
   });
 });

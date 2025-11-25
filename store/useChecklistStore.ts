@@ -254,14 +254,65 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         const defaultChecklists = loadDefaultChecklists();
         const currentChecklists = get().checklists;
         
-        // Create a set of default checklist IDs for quick lookup
-        const defaultIds = new Set(defaultChecklists.map(c => c.id));
+        // Create a map of default checklists by ID
+        const defaultMap = new Map(defaultChecklists.map(c => [c.id, c]));
         
-        // Keep all user-created checklists (not in defaults)
-        const userChecklists = currentChecklists.filter(c => !defaultIds.has(c.id));
+        // Helper function to check if a checklist has been modified from default
+        const isModified = (current: Checklist, defaultVersion: Checklist): boolean => {
+          // Check if basic properties have been modified
+          if (current.name !== defaultVersion.name) return true;
+          if (current.description !== defaultVersion.description) return true;
+          if (current.category !== defaultVersion.category) return true;
+          if (current.color !== defaultVersion.color) return true;
+          if (current.icon !== defaultVersion.icon) return true;
+          
+          // Check if tasks have been modified (compare count and content)
+          if (current.tasks.length !== defaultVersion.tasks.length) return true;
+          
+          // Check if any task differs
+          for (let i = 0; i < current.tasks.length; i++) {
+            const currentTask = current.tasks[i];
+            const defaultTask = defaultVersion.tasks[i];
+            
+            if (currentTask.title !== defaultTask.title) return true;
+            if (currentTask.description !== defaultTask.description) return true;
+            if (currentTask.priority !== defaultTask.priority) return true;
+            if (currentTask.order !== defaultTask.order) return true;
+          }
+          
+          return false;
+        };
         
-        // Merge: add default checklists + preserve user checklists
-        set({ checklists: [...defaultChecklists, ...userChecklists] });
+        // Process checklists
+        const mergedChecklists: Checklist[] = [];
+        const processedDefaultIds = new Set<string>();
+        
+        // First, process all current checklists
+        currentChecklists.forEach(current => {
+          const defaultVersion = defaultMap.get(current.id);
+          
+          if (!defaultVersion) {
+            // User-created checklist, keep it
+            mergedChecklists.push(current);
+          } else if (isModified(current, defaultVersion)) {
+            // Default checklist that was modified, keep the modified version
+            mergedChecklists.push(current);
+            processedDefaultIds.add(current.id);
+          } else {
+            // Unmodified default checklist, it will be replaced with fresh version
+            mergedChecklists.push(defaultVersion);
+            processedDefaultIds.add(current.id);
+          }
+        });
+        
+        // Add any default checklists that weren't in current (new defaults)
+        defaultChecklists.forEach(defaultChecklist => {
+          if (!processedDefaultIds.has(defaultChecklist.id)) {
+            mergedChecklists.push(defaultChecklist);
+          }
+        });
+        
+        set({ checklists: mergedChecklists });
       },
     }),
     {

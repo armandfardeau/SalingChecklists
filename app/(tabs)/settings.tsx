@@ -15,7 +15,7 @@ export default function SettingsScreen() {
   const handleReloadChecklists = () => {
     Alert.alert(
       'Reload Default Checklists',
-      'This will restore default checklists while preserving your custom checklists. Any changes to default checklists will be reset. Are you sure?',
+      'This will restore unmodified default checklists while preserving your custom checklists and any modifications you made. Are you sure?',
       [
         { text: 'Cancel', style: 'cancel' },
         {
@@ -79,7 +79,7 @@ export default function SettingsScreen() {
                   Reload Default Checklists
                 </Text>
                 <Text style={[styles.settingDescription, { color: colors.textSecondary }]}>
-                  Restore defaults, keep custom checklists
+                  Restore unmodified defaults only
                 </Text>
               </View>
             </TouchableOpacity>
