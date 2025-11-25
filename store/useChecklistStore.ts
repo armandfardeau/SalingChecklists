@@ -252,7 +252,16 @@ export const useChecklistStore = create<ChecklistStoreState>()(
 
       reloadDefaultChecklists: () => {
         const defaultChecklists = loadDefaultChecklists();
-        set({ checklists: defaultChecklists });
+        const currentChecklists = get().checklists;
+        
+        // Create a map of default checklist IDs for quick lookup
+        const defaultIds = new Set(defaultChecklists.map(c => c.id));
+        
+        // Keep all user-created checklists (not in defaults)
+        const userChecklists = currentChecklists.filter(c => !defaultIds.has(c.id));
+        
+        // Merge: add default checklists + preserve user checklists
+        set({ checklists: [...defaultChecklists, ...userChecklists] });
       },
     }),
     {

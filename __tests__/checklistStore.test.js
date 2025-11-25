@@ -361,7 +361,7 @@ describe('Checklist Store', () => {
     expect(checklist2.tasks[0].completedAt).toBeDefined();
   });
 
-  it('should reload default checklists, replacing all existing ones', () => {
+  it('should reload default checklists while preserving custom checklists', () => {
     const state = useChecklistStore.getState();
     
     // Add some custom checklists
@@ -383,16 +383,55 @@ describe('Checklist Store', () => {
 
     const afterReload = useChecklistStore.getState().checklists;
     
-    // Should have default checklists now
-    expect(afterReload.length).toBeGreaterThan(0);
+    // Should have default checklists + custom checklists
+    expect(afterReload.length).toBeGreaterThan(2);
     
-    // Should not contain the custom checklists
-    expect(afterReload.find(c => c.name === 'Custom Checklist 1')).toBeUndefined();
-    expect(afterReload.find(c => c.name === 'Custom Checklist 2')).toBeUndefined();
+    // Should still contain the custom checklists
+    expect(afterReload.find(c => c.name === 'Custom Checklist 1')).toBeDefined();
+    expect(afterReload.find(c => c.name === 'Custom Checklist 2')).toBeDefined();
     
     // Should contain default checklist names
     expect(afterReload[0].name).toBeTruthy();
     expect(afterReload[0].tasks).toBeDefined();
     expect(afterReload[0].tasks.length).toBeGreaterThan(0);
+  });
+
+  it('should replace modified default checklists when reloading', () => {
+    const state = useChecklistStore.getState();
+    
+    // First load defaults
+    state.reloadDefaultChecklists();
+    
+    // Get a default checklist and modify it
+    const defaultChecklist = useChecklistStore.getState().checklists.find(c => c.id === 'pre-dep-1');
+    expect(defaultChecklist).toBeDefined();
+    
+    state.updateChecklist(defaultChecklist.id, { 
+      name: 'Modified Default Name',
+      description: 'This was modified by user'
+    });
+
+    // Add a custom checklist
+    state.addChecklist({
+      name: 'My Custom Checklist',
+      category: ChecklistCategory.GENERAL,
+    });
+
+    const beforeReload = useChecklistStore.getState().checklists;
+    const modifiedChecklist = beforeReload.find(c => c.id === 'pre-dep-1');
+    expect(modifiedChecklist?.name).toBe('Modified Default Name');
+
+    // Reload default checklists
+    state.reloadDefaultChecklists();
+
+    const afterReload = useChecklistStore.getState().checklists;
+    
+    // Default checklist should be reset to original
+    const resetChecklist = afterReload.find(c => c.id === 'pre-dep-1');
+    expect(resetChecklist?.name).not.toBe('Modified Default Name');
+    expect(resetChecklist?.name).toBe('Pre-Departure Safety Check');
+    
+    // Custom checklist should still exist
+    expect(afterReload.find(c => c.name === 'My Custom Checklist')).toBeDefined();
   });
 });
