@@ -137,8 +137,8 @@ export default function SettingsScreen() {
                   key={lang.code}
                   style={[
                     styles.languageOption,
-                    language === lang.code && styles.selectedLanguageOption,
                     {
+                      backgroundColor: language === lang.code ? colors.selectionBackground : 'transparent',
                       borderColor: language === lang.code ? colors.primary : colors.cardBorder,
                     },
                   ]}
@@ -255,10 +255,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     marginBottom: 12,
     minHeight: TouchTargets.minimum,
-    backgroundColor: 'transparent',
-  },
-  selectedLanguageOption: {
-    backgroundColor: 'rgba(0, 102, 204, 0.1)', // 10% opacity of primary color
   },
   languageEmoji: {
     fontSize: 28,

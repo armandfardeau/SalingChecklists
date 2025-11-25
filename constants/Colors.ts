@@ -35,6 +35,7 @@ export const Colors = {
     screenBackground: '#F5F5F5',
     disabledBackground: '#BDBDBD',
     tabIconDefault: '#757575',  // Darker gray for inactive tabs
+    selectionBackground: 'rgba(0, 102, 204, 0.1)',  // 10% opacity primary for selections
     
     // Text colors (high contrast)
     textPrimary: '#000000',
@@ -121,6 +122,11 @@ export const Colors = {
      * Used for disabled buttons and inactive UI elements
      */
     disabledBackground: '#424242',
+    /**
+     * Selection background color for dark mode
+     * Used for selected items in lists and modals
+     */
+    selectionBackground: 'rgba(102, 179, 255, 0.1)',  // 10% opacity primary for selections
     
     // Text colors (high contrast)
     /**
