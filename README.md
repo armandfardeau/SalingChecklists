@@ -170,6 +170,81 @@ This app integrates [Vexo.co](https://vexo.co) for product analytics and user in
 
 For more information, visit the [Vexo documentation](https://docs.vexo.co/).
 
+## 🌐 Internationalization (i18n)
+
+This app supports multiple languages and automatically detects your device's language setting.
+
+### Supported Languages
+
+- **English** (en) - Default
+- **Français** (fr) - French
+
+### Changing Language
+
+1. Go to the **Settings** tab
+2. Tap on **Language**
+3. Select your preferred language from the list
+
+The app will remember your language preference across sessions.
+
+### Adding New Languages
+
+To add support for a new language:
+
+1. Create a new translation file in the `translations/` directory (e.g., `es.json` for Spanish)
+2. Copy the structure from `translations/en.json` and translate all values
+3. Add the language to `utils/i18n.ts` in the `LANGUAGES` array:
+   ```typescript
+   export const LANGUAGES = [
+     { code: 'en', name: 'English', nativeName: 'English' },
+     { code: 'fr', name: 'French', nativeName: 'Français' },
+     { code: 'es', name: 'Spanish', nativeName: 'Español' }, // Add your language
+   ] as const;
+   ```
+4. Import and add the translation resource in `utils/i18n.ts`:
+   ```typescript
+   import es from '../translations/es.json';
+   
+   i18n.use(initReactI18next).init({
+     resources: {
+       en: { translation: en },
+       fr: { translation: fr },
+       es: { translation: es }, // Add your language
+     },
+     // ...
+   });
+   ```
+
+### Translation Keys
+
+All UI text is stored in JSON files under `translations/`. Key categories include:
+
+- `tabs.*` - Navigation tab labels
+- `home.*` - Home screen text and alerts
+- `settings.*` - Settings screen labels
+- `emergency.*` - Emergency screen text
+- `checklist.*` - Checklist component text
+- `category.*` - Checklist category names
+- `defaultChecklists.*` - Pre-loaded checklist content
+
+### Technical Details
+
+- **Library**: [i18next](https://www.i18next.com/) with [react-i18next](https://react.i18next.com/)
+- **Language Detection**: Uses `expo-localization` to detect device language
+- **Persistence**: Language preference is saved using MMKV storage
+- **Fallback**: If a translation is missing, English is used as fallback
+- **Hook**: Use `useTranslation()` hook in components to access translations
+
+Example usage:
+```typescript
+import { useTranslation } from '../hooks/useTranslation';
+
+function MyComponent() {
+  const { t } = useTranslation();
+  return <Text>{t('home.createChecklist')}</Text>;
+}
+```
+
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to open an issue or pull request.
