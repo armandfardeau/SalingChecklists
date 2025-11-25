@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ActivityIndicator, TouchableOpacity } from 'rea
 import { useRevenueCat } from '../contexts/RevenueCatProvider';
 import { hasActiveSubscription, getActiveEntitlements } from '../types/revenuecat';
 import { Colors } from '../constants/Colors';
+import { MaterialIcons } from '@expo/vector-icons';
 
 export default function SubscriptionStatus() {
   const { isConfigured, customerInfo, isLoading, refreshCustomerInfo } = useRevenueCat();
