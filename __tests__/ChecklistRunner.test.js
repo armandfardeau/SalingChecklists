@@ -81,6 +81,7 @@ describe('ChecklistRunner', () => {
   const mockUpdateTaskStatus = jest.fn();
   const mockGetChecklist = jest.fn();
   const mockGetChecklistStats = jest.fn();
+  const mockResetChecklistRun = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -96,6 +97,7 @@ describe('ChecklistRunner', () => {
         getChecklist: mockGetChecklist,
         updateTaskStatus: mockUpdateTaskStatus,
         getChecklistStats: mockGetChecklistStats,
+        resetChecklistRun: mockResetChecklistRun,
       })
     );
   });
@@ -288,5 +290,35 @@ describe('ChecklistRunner', () => {
     const { getByText } = render(<ChecklistRunner />);
     
     expect(getByText('🎉 Checklist Complete! All tasks finished.')).toBeTruthy();
+  });
+
+  it('should render reset all button in header', () => {
+    const { getByText } = render(<ChecklistRunner />);
+    expect(getByText('↻ Reset All')).toBeTruthy();
+  });
+
+  it('should call resetChecklistRun when reset all button is pressed', () => {
+    const { getByText } = render(<ChecklistRunner />);
+    const resetAllButton = getByText('↻ Reset All');
+    
+    fireEvent.press(resetAllButton);
+    
+    expect(mockResetChecklistRun).toHaveBeenCalledWith('test-checklist-1');
+  });
+
+  it('should reset current task index to 0 when reset all is pressed', () => {
+    const { getByText } = render(<ChecklistRunner />);
+    
+    // Navigate to task 2
+    const nextButton = getByText('Next →');
+    fireEvent.press(nextButton);
+    expect(getByText('Task 2 of 3')).toBeTruthy();
+    
+    // Press reset all
+    const resetAllButton = getByText('↻ Reset All');
+    fireEvent.press(resetAllButton);
+    
+    // Should be back to task 1
+    expect(getByText('Task 1 of 3')).toBeTruthy();
   });
 });
