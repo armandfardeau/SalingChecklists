@@ -65,12 +65,12 @@ export default function SettingsScreen() {
               Checklists
             </Text>
             <TouchableOpacity
-              style={[styles.dangerButton, { backgroundColor: colors.cardBackground, borderColor: colors.error }]}
+              style={[styles.dangerButton, { backgroundColor: colors.cardBackground, borderColor: colors.danger }]}
               onPress={handleReloadChecklists}
               activeOpacity={0.7}
             >
               <View style={styles.settingInfo}>
-                <Text style={[styles.settingLabel, { color: colors.error }]}>
+                <Text style={[styles.settingLabel, { color: colors.danger }]}>
                   Reload Default Checklists
                 </Text>
                 <Text style={[styles.settingDescription, { color: colors.textSecondary }]}>
