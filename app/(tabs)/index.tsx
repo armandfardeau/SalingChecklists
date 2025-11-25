@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
-import { useChecklistStore, useThemeStore } from '../../store';
+import { useChecklistStore, useThemeStore, useLocaleStore } from '../../store';
 import { Checklist } from '../../types';
 import ChecklistList from '../../components/ChecklistList';
 import { TouchTargets, Interactions } from '../../constants/Colors';
@@ -20,14 +20,15 @@ export default function App() {
   const deleteChecklist = useChecklistStore((state) => state.deleteChecklist);
   const initializeSampleData = useChecklistStore((state) => state.initializeSampleData);
   const hasHydrated = useChecklistStore((state) => state._hasHydrated);
+  const locale = useLocaleStore((state) => state.locale);
   const { customerInfo } = useRevenueCat();
 
   // Initialize sample data after store has hydrated from storage
   useEffect(() => {
     if (hasHydrated) {
-      initializeSampleData();
+      initializeSampleData(locale);
     }
-  }, [hasHydrated, initializeSampleData]);
+  }, [hasHydrated, initializeSampleData, locale]);
 
   const handleChecklistPress = (checklist: Checklist) => {
     router.push(`/runner/${checklist.id}`);

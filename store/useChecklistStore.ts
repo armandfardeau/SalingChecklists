@@ -11,6 +11,7 @@ import {
 } from '../types';
 import { createChecklist, calculateChecklistStats, updateTask } from '../types/examples';
 import { loadDefaultChecklists } from '../utils/loadDefaultTasks';
+import type { SupportedLocale } from './useLocaleStore';
 
 /**
  * Checklist store state interface
@@ -69,7 +70,7 @@ interface ChecklistStoreState {
   /**
    * Initialize with sample data (for demo purposes)
    */
-  initializeSampleData: () => void;
+  initializeSampleData: (locale?: SupportedLocale) => void;
 
   /**
    * Update task status in a checklist
@@ -89,7 +90,7 @@ interface ChecklistStoreState {
   /**
    * Reload default checklists, replacing all existing checklists
    */
-  reloadDefaultChecklists: () => void;
+  reloadDefaultChecklists: (locale?: SupportedLocale) => void;
 }
 
 /**
@@ -187,10 +188,10 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         }));
       },
 
-      initializeSampleData: () => {
+      initializeSampleData: (locale?: SupportedLocale) => {
         // Only initialize if there are no checklists yet
         if (get().checklists.length === 0) {
-          const defaultChecklists = loadDefaultChecklists();
+          const defaultChecklists = loadDefaultChecklists(locale);
           set({ checklists: defaultChecklists });
         }
       },
@@ -250,8 +251,8 @@ export const useChecklistStore = create<ChecklistStoreState>()(
         }));
       },
 
-      reloadDefaultChecklists: () => {
-        const defaultChecklists = loadDefaultChecklists();
+      reloadDefaultChecklists: (locale?: SupportedLocale) => {
+        const defaultChecklists = loadDefaultChecklists(locale);
         const currentChecklists = get().checklists;
         
         // Create a map of default checklists by ID

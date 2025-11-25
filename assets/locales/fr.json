@@ -1,0 +1,176 @@
+{
+  "checklists": [
+    {
+      "id": "pre-dep-1",
+      "name": "Contrôle de sécurité avant départ",
+      "description": "Contrôles de sécurité essentiels avant le départ",
+      "category": "pre_departure",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#FF6B6B",
+      "icon": "sailboat",
+      "tasks": [
+        {
+          "id": "task-1",
+          "title": "Vérifier les prévisions météorologiques",
+          "description": "Examiner les conditions météorologiques locales et les prévisions marines",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "task-2",
+          "title": "Inspecter les gilets de sauvetage",
+          "description": "S'assurer que tous les membres d'équipage ont des gilets de sauvetage bien ajustés",
+          "status": "pending",
+          "priority": "high",
+          "order": 2
+        },
+        {
+          "id": "task-3",
+          "title": "Vérifier le niveau de carburant",
+          "description": "Vérifier qu'il y a suffisamment de carburant pour l'itinéraire prévu",
+          "status": "pending",
+          "priority": "high",
+          "order": 3
+        },
+        {
+          "id": "task-4",
+          "title": "Tester les feux de navigation",
+          "description": "S'assurer que tous les feux de navigation fonctionnent",
+          "status": "pending",
+          "priority": "medium",
+          "order": 4
+        },
+        {
+          "id": "task-5",
+          "title": "Vérifier la radio VHF",
+          "description": "Tester la communication radio VHF",
+          "status": "pending",
+          "priority": "high",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": "emergency-1",
+      "name": "Procédures d'urgence",
+      "description": "Liste de contrôle critique pour les situations d'urgence",
+      "category": "emergency",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#C62828",
+      "icon": "🚨",
+      "tasks": [
+        {
+          "id": "emerg-task-1",
+          "title": "Évaluer la situation",
+          "description": "Déterminer la nature et la gravité de l'urgence",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "emerg-task-2",
+          "title": "Alerter l'équipage et les passagers",
+          "description": "Informer toutes les personnes à bord de l'urgence",
+          "status": "pending",
+          "priority": "critical",
+          "order": 2
+        },
+        {
+          "id": "emerg-task-3",
+          "title": "Mettre les gilets de sauvetage",
+          "description": "S'assurer que tout le monde met immédiatement son gilet de sauvetage",
+          "status": "pending",
+          "priority": "critical",
+          "order": 3
+        },
+        {
+          "id": "emerg-task-4",
+          "title": "Faire un appel de détresse",
+          "description": "Envoyer MAYDAY sur le canal VHF 16 si danger de mort",
+          "status": "pending",
+          "priority": "critical",
+          "order": 4
+        },
+        {
+          "id": "emerg-task-5",
+          "title": "Déployer l'équipement de sécurité",
+          "description": "Préparer le radeau de sauvetage, les fusées éclairantes et la balise de détresse (EPIRB)",
+          "status": "pending",
+          "priority": "critical",
+          "order": 5
+        },
+        {
+          "id": "emerg-task-6",
+          "title": "Tenter de contrôler la situation",
+          "description": "Prendre des mesures immédiates pour contenir/résoudre l'urgence",
+          "status": "pending",
+          "priority": "high",
+          "order": 6
+        },
+        {
+          "id": "emerg-task-7",
+          "title": "Se préparer à l'évacuation",
+          "description": "Si nécessaire, se préparer à abandonner le navire",
+          "status": "pending",
+          "priority": "high",
+          "order": 7
+        }
+      ]
+    },
+    {
+      "id": "arrival-1",
+      "name": "Procédures d'arrivée",
+      "description": "Tâches essentielles à accomplir à l'arrivée à destination.",
+      "category": "arrival",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#3498db",
+      "icon": "anchor",
+      "tasks": [
+        {
+          "id": "arrival-task-1",
+          "title": "Sécuriser le bateau au quai ou au mouillage",
+          "description": "Amarrer correctement le navire avec les lignes et les pare-battages appropriés",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "arrival-task-2",
+          "title": "Arrêt du moteur et contrôles post-opération",
+          "description": "Éteindre le moteur et effectuer une inspection post-opération",
+          "status": "pending",
+          "priority": "high",
+          "order": 2
+        },
+        {
+          "id": "arrival-task-3",
+          "title": "Vérifier toutes les lignes et pare-battages",
+          "description": "Vérifier que toutes les lignes d'amarrage et les pare-battages sont correctement fixés et positionnés",
+          "status": "pending",
+          "priority": "high",
+          "order": 3
+        },
+        {
+          "id": "arrival-task-4",
+          "title": "Enregistrer l'heure et le lieu d'arrivée",
+          "description": "Enregistrer l'heure d'arrivée, le lieu et les notes de navigation pertinentes",
+          "status": "pending",
+          "priority": "medium",
+          "order": 4
+        },
+        {
+          "id": "arrival-task-5",
+          "title": "Vérifier l'équipage et les passagers",
+          "description": "S'assurer que tous les membres d'équipage et passagers ont débarqué en toute sécurité ou sont présents",
+          "status": "pending",
+          "priority": "high",
+          "order": 5
+        }
+      ]
+    }
+  ]
+}

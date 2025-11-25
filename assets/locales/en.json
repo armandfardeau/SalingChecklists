@@ -1,0 +1,176 @@
+{
+  "checklists": [
+    {
+      "id": "pre-dep-1",
+      "name": "Pre-Departure Safety Check",
+      "description": "Essential safety checks before departure",
+      "category": "pre_departure",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#FF6B6B",
+      "icon": "sailboat",
+      "tasks": [
+        {
+          "id": "task-1",
+          "title": "Check weather forecast",
+          "description": "Review local weather conditions and marine forecast",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "task-2",
+          "title": "Inspect life jackets",
+          "description": "Ensure all crew members have properly fitting life jackets",
+          "status": "pending",
+          "priority": "high",
+          "order": 2
+        },
+        {
+          "id": "task-3",
+          "title": "Check fuel level",
+          "description": "Verify sufficient fuel for planned route",
+          "status": "pending",
+          "priority": "high",
+          "order": 3
+        },
+        {
+          "id": "task-4",
+          "title": "Test navigation lights",
+          "description": "Ensure all navigation lights are functioning",
+          "status": "pending",
+          "priority": "medium",
+          "order": 4
+        },
+        {
+          "id": "task-5",
+          "title": "Verify VHF radio",
+          "description": "Test VHF radio communication",
+          "status": "pending",
+          "priority": "high",
+          "order": 5
+        }
+      ]
+    },
+    {
+      "id": "emergency-1",
+      "name": "Emergency Procedures",
+      "description": "Critical emergency response checklist",
+      "category": "emergency",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#C62828",
+      "icon": "🚨",
+      "tasks": [
+        {
+          "id": "emerg-task-1",
+          "title": "Assess the situation",
+          "description": "Determine the nature and severity of the emergency",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "emerg-task-2",
+          "title": "Alert crew and passengers",
+          "description": "Inform all persons on board of the emergency",
+          "status": "pending",
+          "priority": "critical",
+          "order": 2
+        },
+        {
+          "id": "emerg-task-3",
+          "title": "Put on life jackets",
+          "description": "Ensure everyone dons their life jackets immediately",
+          "status": "pending",
+          "priority": "critical",
+          "order": 3
+        },
+        {
+          "id": "emerg-task-4",
+          "title": "Make distress call",
+          "description": "Send MAYDAY on VHF Channel 16 if life-threatening",
+          "status": "pending",
+          "priority": "critical",
+          "order": 4
+        },
+        {
+          "id": "emerg-task-5",
+          "title": "Deploy safety equipment",
+          "description": "Prepare life raft, flares, and emergency beacon (EPIRB)",
+          "status": "pending",
+          "priority": "critical",
+          "order": 5
+        },
+        {
+          "id": "emerg-task-6",
+          "title": "Attempt to control situation",
+          "description": "Take immediate action to contain/resolve the emergency",
+          "status": "pending",
+          "priority": "high",
+          "order": 6
+        },
+        {
+          "id": "emerg-task-7",
+          "title": "Prepare for evacuation",
+          "description": "If necessary, prepare to abandon ship",
+          "status": "pending",
+          "priority": "high",
+          "order": 7
+        }
+      ]
+    },
+    {
+      "id": "arrival-1",
+      "name": "Arrival Procedures",
+      "description": "Essential tasks to complete upon arrival at destination.",
+      "category": "arrival",
+      "isActive": true,
+      "isTemplate": false,
+      "color": "#3498db",
+      "icon": "anchor",
+      "tasks": [
+        {
+          "id": "arrival-task-1",
+          "title": "Secure the boat at the dock or anchorage",
+          "description": "Properly moor the vessel with appropriate lines and fenders",
+          "status": "pending",
+          "priority": "critical",
+          "order": 1
+        },
+        {
+          "id": "arrival-task-2",
+          "title": "Engine shutdown and post-operation checks",
+          "description": "Turn off engine and perform post-operation inspection",
+          "status": "pending",
+          "priority": "high",
+          "order": 2
+        },
+        {
+          "id": "arrival-task-3",
+          "title": "Check all lines and fenders",
+          "description": "Verify all mooring lines and fenders are properly secured and positioned",
+          "status": "pending",
+          "priority": "high",
+          "order": 3
+        },
+        {
+          "id": "arrival-task-4",
+          "title": "Log arrival time and location",
+          "description": "Record arrival time, location, and relevant navigation notes",
+          "status": "pending",
+          "priority": "medium",
+          "order": 4
+        },
+        {
+          "id": "arrival-task-5",
+          "title": "Check crew and passengers",
+          "description": "Ensure all crew and passengers are safely disembarked or accounted for",
+          "status": "pending",
+          "priority": "high",
+          "order": 5
+        }
+      ]
+    }
+  ]
+}

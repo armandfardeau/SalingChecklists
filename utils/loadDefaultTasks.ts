@@ -1,9 +1,14 @@
 /**
  * Utility for loading default tasks from JSON data source
+ * Supports loading localized versions of default tasks
  */
 
 import { Checklist, Task } from '../types';
-import defaultTasksData from '../assets/defaultTasks.json';
+import type { SupportedLocale } from '../store/useLocaleStore';
+
+// Import all localized versions
+import enTasks from '../assets/locales/en.json';
+import frTasks from '../assets/locales/fr.json';
 
 /**
  * Interface matching the JSON structure
@@ -66,20 +71,43 @@ const parseChecklist = (checklistData: DefaultTasksJSON['checklists'][0]): Check
 };
 
 /**
+ * Map of locale to task data
+ */
+const localeTasksMap: Record<SupportedLocale, DefaultTasksJSON> = {
+  en: enTasks as DefaultTasksJSON,
+  fr: frTasks as DefaultTasksJSON,
+  es: enTasks as DefaultTasksJSON, // Fallback to English for now
+  de: enTasks as DefaultTasksJSON, // Fallback to English for now
+  it: enTasks as DefaultTasksJSON, // Fallback to English for now
+};
+
+/**
  * Loads default checklists from JSON data source
+ * @param locale - Optional locale to load localized tasks (defaults to English)
  * @returns Array of default checklists with proper TypeScript types
  */
-export const loadDefaultChecklists = (): Checklist[] => {
-  const data = defaultTasksData as DefaultTasksJSON;
+export const loadDefaultChecklists = (locale?: SupportedLocale): Checklist[] => {
+  // Use provided locale or fall back to English
+  const effectiveLocale = locale || 'en';
+  const data = localeTasksMap[effectiveLocale] || localeTasksMap.en;
   return data.checklists.map(parseChecklist);
 };
 
 /**
  * Gets a specific default checklist by ID
  * @param id - The checklist ID to find
+ * @param locale - Optional locale to load localized tasks
  * @returns The checklist if found, undefined otherwise
  */
-export const getDefaultChecklistById = (id: string): Checklist | undefined => {
-  const checklists = loadDefaultChecklists();
+export const getDefaultChecklistById = (id: string, locale?: SupportedLocale): Checklist | undefined => {
+  const checklists = loadDefaultChecklists(locale);
   return checklists.find(checklist => checklist.id === id);
+};
+
+/**
+ * Gets list of available locales for default tasks
+ * @returns Array of supported locales that have translations
+ */
+export const getAvailableLocales = (): SupportedLocale[] => {
+  return ['en', 'fr'];
 };

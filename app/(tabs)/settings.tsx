@@ -1,16 +1,61 @@
 import { StyleSheet, Text, View, ScrollView, Switch, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { useThemeStore, useChecklistStore } from '../../store';
+import { useThemeStore, useChecklistStore, useLocaleStore, type SupportedLocale } from '../../store';
 import { useThemedColors } from '../../hooks/useThemedColors';
 import { TouchTargets, Typography } from '../../constants/Colors';
-import { Colors } from '../../constants/Colors';
 import SubscriptionStatus from '../../components/SubscriptionStatus';
+import { getAvailableLocales } from '../../utils/loadDefaultTasks';
 
 export default function SettingsScreen() {
   const colors = useThemedColors();
   const mode = useThemeStore((state) => state.mode);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
   const reloadDefaultChecklists = useChecklistStore((state) => state.reloadDefaultChecklists);
+  const locale = useLocaleStore((state) => state.locale);
+  const setLocale = useLocaleStore((state) => state.setLocale);
+
+  const getLanguageName = (code: SupportedLocale): string => {
+    const names: Record<SupportedLocale, string> = {
+      en: 'English',
+      fr: 'Français',
+      es: 'Español',
+      de: 'Deutsch',
+      it: 'Italiano',
+    };
+    return names[code];
+  };
+
+  const handleLanguageChange = (newLocale: SupportedLocale) => {
+    if (newLocale === locale) return;
+
+    // Prompt user to load default tasks in the new language
+    Alert.alert(
+      'Load Default Tasks?',
+      `Do you want to load the default tasks for ${getLanguageName(newLocale)}? This will restore unmodified default checklists while preserving your custom checklists.`,
+      [
+        {
+          text: 'No, just change language',
+          onPress: () => {
+            setLocale(newLocale);
+            Alert.alert('Success', `Language changed to ${getLanguageName(newLocale)}.`);
+          },
+        },
+        {
+          text: 'Yes, load defaults',
+          onPress: () => {
+            try {
+              setLocale(newLocale);
+              reloadDefaultChecklists(newLocale);
+              Alert.alert('Success', `Language changed and default checklists reloaded in ${getLanguageName(newLocale)}.`);
+            } catch (error) {
+              console.error('Failed to reload default checklists:', error);
+              Alert.alert('Error', 'Failed to reload default checklists. Please try again.');
+            }
+          },
+        },
+      ]
+    );
+  };
 
   const handleReloadChecklists = () => {
     Alert.alert(
@@ -23,7 +68,7 @@ export default function SettingsScreen() {
           style: 'destructive',
           onPress: () => {
             try {
-              reloadDefaultChecklists();
+              reloadDefaultChecklists(locale);
               Alert.alert('Success', 'Default checklists have been reloaded.');
             } catch (error) {
               console.error('Failed to reload default checklists:', error);
@@ -62,6 +107,38 @@ export default function SettingsScreen() {
                 trackColor={{ false: colors.disabledBackground, true: colors.primary }}
                 thumbColor={colors.textInverse}
               />
+            </View>
+          </View>
+
+          <View style={styles.section}>
+            <Text style={[styles.sectionTitle, { color: colors.textPrimary }]}>
+              Language
+            </Text>
+            <View style={styles.languageOptions}>
+              {getAvailableLocales().map((localeOption) => (
+                <TouchableOpacity
+                  key={localeOption}
+                  style={[
+                    styles.languageOption,
+                    { 
+                      backgroundColor: colors.cardBackground,
+                      borderColor: locale === localeOption ? colors.primary : colors.cardBorder,
+                    }
+                  ]}
+                  onPress={() => handleLanguageChange(localeOption)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={[
+                    styles.languageLabel,
+                    { 
+                      color: locale === localeOption ? colors.primary : colors.textPrimary,
+                      fontWeight: locale === localeOption ? 'bold' : 'normal',
+                    }
+                  ]}>
+                    {getLanguageName(localeOption)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
             </View>
           </View>
 
@@ -141,5 +218,22 @@ const styles = StyleSheet.create({
   settingDescription: {
     fontSize: Typography.body,
     lineHeight: 22,
+  },
+  languageOptions: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 12,
+  },
+  languageOption: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    borderRadius: 8,
+    borderWidth: 2,
+    minHeight: TouchTargets.minimum,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  languageLabel: {
+    fontSize: Typography.body,
   },
 });

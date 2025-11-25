@@ -132,6 +132,16 @@ The JSON structure follows this format:
 }
 ```
 
+### Translations
+
+The app supports multiple languages for default checklists. Users can select their preferred language in Settings and optionally load default checklists in that language.
+
+**Currently supported languages:**
+- English (en)
+- Français (fr)
+
+Want to contribute a translation? See [TRANSLATIONS.md](TRANSLATIONS.md) for detailed instructions on how to add support for additional languages.
+
 ## 📝 Available Scripts
 
 - `npm start` - Start Expo development server
