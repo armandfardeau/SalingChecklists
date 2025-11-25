@@ -19,7 +19,15 @@ export default function SettingsScreen() {
   
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   
-  const currentLanguage = LANGUAGES.find(lang => lang.code === language) || LANGUAGES[0];
+  const currentLanguage = LANGUAGES.find(lang => lang.code === language);
+  
+  // Fallback to English if stored language is invalid
+  if (!currentLanguage) {
+    console.warn(`Invalid language code stored: ${language}. Falling back to English.`);
+    setLanguage('en');
+  }
+  
+  const displayLanguage = currentLanguage || LANGUAGES[0];
 
   const handleReloadChecklists = () => {
     Alert.alert(
@@ -66,7 +74,7 @@ export default function SettingsScreen() {
                   Language
                 </Text>
                 <Text style={[styles.settingDescription, { color: colors.textSecondary }]}>
-                  {currentLanguage.flag} {currentLanguage.name}
+                  {displayLanguage.flag} {displayLanguage.name}
                 </Text>
               </View>
               <Text style={[styles.chevron, { color: colors.textSecondary }]}>›</Text>
