@@ -360,4 +360,39 @@ describe('Checklist Store', () => {
     expect(checklist2.tasks[0].status).toBe(TaskStatus.COMPLETED);
     expect(checklist2.tasks[0].completedAt).toBeDefined();
   });
+
+  it('should reload default checklists, replacing all existing ones', () => {
+    const state = useChecklistStore.getState();
+    
+    // Add some custom checklists
+    state.addChecklist({
+      name: 'Custom Checklist 1',
+      category: ChecklistCategory.PRE_DEPARTURE,
+    });
+    state.addChecklist({
+      name: 'Custom Checklist 2',
+      category: ChecklistCategory.NAVIGATION,
+    });
+
+    const beforeReload = useChecklistStore.getState().checklists;
+    expect(beforeReload).toHaveLength(2);
+    expect(beforeReload[0].name).toBe('Custom Checklist 1');
+
+    // Reload default checklists
+    state.reloadDefaultChecklists();
+
+    const afterReload = useChecklistStore.getState().checklists;
+    
+    // Should have default checklists now
+    expect(afterReload.length).toBeGreaterThan(0);
+    
+    // Should not contain the custom checklists
+    expect(afterReload.find(c => c.name === 'Custom Checklist 1')).toBeUndefined();
+    expect(afterReload.find(c => c.name === 'Custom Checklist 2')).toBeUndefined();
+    
+    // Should contain default checklist names
+    expect(afterReload[0].name).toBeTruthy();
+    expect(afterReload[0].tasks).toBeDefined();
+    expect(afterReload[0].tasks.length).toBeGreaterThan(0);
+  });
 });

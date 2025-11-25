@@ -85,6 +85,11 @@ interface ChecklistStoreState {
    * Reset all tasks in a checklist run to PENDING status
    */
   resetChecklistRun: (checklistId: string) => void;
+
+  /**
+   * Reload default checklists, replacing all existing checklists
+   */
+  reloadDefaultChecklists: () => void;
 }
 
 /**
@@ -243,6 +248,11 @@ export const useChecklistStore = create<ChecklistStoreState>()(
             };
           }),
         }));
+      },
+
+      reloadDefaultChecklists: () => {
+        const defaultChecklists = loadDefaultChecklists();
+        set({ checklists: defaultChecklists });
       },
     }),
     {
